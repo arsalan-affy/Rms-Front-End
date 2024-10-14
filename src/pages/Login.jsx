@@ -1,0 +1,103 @@
+import React from "react";
+import {
+  Navbar,
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  InputGroup,
+} from "react-bootstrap";
+import { Mail, Lock, User } from "lucide-react";
+import image from "../assets/bg-auth.png";
+import { Link } from "react-router-dom";
+
+const Login = () => {
+  return (
+    <div className="vh-100 d-flex align-items-center justify-content-center flex-column position-relative text-white bg-signup">
+      <img
+        src={image}
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "absolute",
+          top: "0",
+          right: "0",
+        }}
+      />
+      <Navbar
+        expand="lg"
+        className="w-100 top-0 position-absolute pt-md-5 pt-sm-2"
+      >
+        <Container>
+          <Link to="/" className="text-decoration-none text-white fs-2">
+            Logo
+          </Link>
+        </Container>
+      </Navbar>
+      <Container className="mt-5">
+        <Row>
+          <Col
+            md={7}
+            className="d-flex justify-content-center align-items-center login-welcome-text "
+            style={{ zIndex: 100 }}
+          >
+            Welcome Back
+          </Col>
+          <Col
+            md={4}
+            style={{ zIndex: "100" }}
+            className="d-flex align-items-center justify-content-center flex-column"
+          >
+            <h2 className="mb-4 text-center">Login</h2>
+            <Form className="w-100 w-md-75">
+              <InputGroup className="mb-3 py-2">
+                <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
+                  <Mail size={20} />
+                </InputGroup.Text>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  className="p-2 bg-transparent text-white signup-input border-0"
+                  style={{
+                    color: "white",
+                    "::placeholder": { color: "white" },
+                  }}
+                />
+              </InputGroup>
+              <InputGroup className="mb-5 py-2">
+                <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
+                  <Lock size={20} />
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  className="p-2 bg-transparent text-white signup-input border-0"
+                  style={{
+                    color: "white",
+                    "::placeholder": { color: "white" },
+                  }}
+                />
+              </InputGroup>
+              <Button
+                type="submit"
+                className="w-100 signup-btn p-2 fs-5 rounded"
+              >
+                Login
+              </Button>
+              <p className="text-center mt-3 d-flex align-items-center justify-content-center gap-2">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-blue text-decoration-none">
+                  {" "}
+                  Create Account
+                </Link>
+              </p>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+export default Login;
