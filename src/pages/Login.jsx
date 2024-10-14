@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Container,
@@ -14,6 +14,10 @@ import { Link } from "react-router-dom";
 // import "./Login.css"; // Make sure to create this CSS file
 
 const Login = () => {
+  const [show, setShow] = useState(true);
+  const toggleShow = () => {
+    setShow(!show);
+  };
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center flex-column position-relative text-white bg-signup">
       <img
@@ -66,12 +70,12 @@ const Login = () => {
                   }}
                 />
               </InputGroup>
-              <InputGroup className="mb-5 py-2">
+              <InputGroup className="mb-5 py-2 d-md-flex align-items-center">
                 <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
                   <Lock size={20} />
                 </InputGroup.Text>
                 <Form.Control
-                  type="password"
+                  type={show ? "password" : "text"}
                   placeholder="Password"
                   className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
                   style={{
@@ -79,6 +83,17 @@ const Login = () => {
                     "::placeholder": { color: "white" },
                   }}
                 />
+                <div
+                  className="d-flex align-items-center justify-content-center h-100 cursor-pointer px-3 cursor-pointer "
+                  style={{ height: "100%" }}
+                  onClick={toggleShow}
+                >
+                  {show ? (
+                    <p className="m-0">Show</p>
+                  ) : (
+                    <p className="m-0">Hide</p>
+                  )}
+                </div>
               </InputGroup>
               <Button
                 type="submit"
