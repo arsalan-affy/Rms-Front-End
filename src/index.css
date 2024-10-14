@@ -2,6 +2,9 @@
 
 :root {
   --primary-color: #3b6abc;
+  --secondary-color: #444b8c;
+  --text-secondary: #fec445;
+  --card-shadow: 5px 5px 4px rgba(0, 0, 0, 0.233);
 }
 
 body {
@@ -9,6 +12,15 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/* utils */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+.text-yellow {
+  color: var(--text-secondary);
+}
+/* register and login */
 .signup-btn {
   background: var(--primary-color);
   border: none !important;
@@ -48,4 +60,40 @@ body {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* dashboard */
+.dashboard-nav {
+  margin: 0;
+  background: var(--secondary-color);
+  box-shadow: 4px 4px 6.9px 4px #001a78;
+  border-radius: 0 10px 10px 0;
+  width: 95px;
+}
+
+.dashboard-links {
+  width: 30px !important;
+  height: 30px !important;
+}
+.active-link {
+  color: var(--text-secondary);
+}
+.dashboard-cards {
+  height: 200px;
+  background: linear-gradient(to right, #b9c0ff, white);
+  border: 1px solid #ccc5c598;
+  box-shadow: var(--card-shadow);
+}
+.dashboard-lower-card {
+  height: 18rem;
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+}
+
+@media (max-width: 768px) {
+  .dashboard-nav {
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
+    margin: 0;
+  }
 }
