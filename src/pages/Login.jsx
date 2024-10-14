@@ -11,6 +11,7 @@ import {
 import { Mail, Lock, User } from "lucide-react";
 import image from "../assets/bg-auth.png";
 import { Link } from "react-router-dom";
+// import "./Login.css"; // Make sure to create this CSS file
 
 const Login = () => {
   return (
@@ -35,11 +36,11 @@ const Login = () => {
           </Link>
         </Container>
       </Navbar>
-      <Container className="mt-5">
+      <Container>
         <Row>
           <Col
             md={7}
-            className="d-flex justify-content-center align-items-center login-welcome-text "
+            className="d-flex justify-content-center align-items-center login-welcome-text"
             style={{ zIndex: 100 }}
           >
             Welcome Back
@@ -51,14 +52,14 @@ const Login = () => {
           >
             <h2 className="mb-4 text-center">Login</h2>
             <Form className="w-100 w-md-75">
-              <InputGroup className="mb-3 py-2">
+              <InputGroup className="mb-3 py-2 mt-3">
                 <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
                   <Mail size={20} />
                 </InputGroup.Text>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
-                  className="p-2 bg-transparent text-white signup-input border-0"
+                  className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
                   style={{
                     color: "white",
                     "::placeholder": { color: "white" },
@@ -72,7 +73,7 @@ const Login = () => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  className="p-2 bg-transparent text-white signup-input border-0"
+                  className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
                   style={{
                     color: "white",
                     "::placeholder": { color: "white" },
@@ -81,7 +82,7 @@ const Login = () => {
               </InputGroup>
               <Button
                 type="submit"
-                className="w-100 signup-btn p-2 fs-5 rounded"
+                className="w-100 signup-btn p-2 fs-5 rounded no-focus-outline"
               >
                 Login
               </Button>

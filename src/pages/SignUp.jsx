@@ -33,7 +33,7 @@ const SignUp = () => {
           <Link className="text-decoration-none text-white fs-2">Logo</Link>
         </Container>
       </Navbar>
-      <Container className="mt-5">
+      <Container >
         <Row>
           <Col
             md={7}
@@ -42,11 +42,11 @@ const SignUp = () => {
           <Col
             md={4}
             style={{ zIndex: "100" }}
-            className="d-flex align-items-center justify-content-center flex-column"
+            className="d-flex align-items-center justify-content-center flex-column "
           >
             <h2 className="mb-4 text-center">Create your account</h2>
-            <Form className="w-100 w-md-75">
-              <InputGroup className="mb-3 py-2 input-group">
+            <Form className="w-100 w-md-75 ">
+              <InputGroup className="mb-3 mt-3 py-2 input-group">
                 <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
                   <User size={20} />
                 </InputGroup.Text>
