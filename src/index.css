@@ -1,24 +1,59 @@
 @import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
+  --bs-primary: #3b6abc;
   --primary-color: #3b6abc;
   --secondary-color: #444b8c;
   --text-secondary: #fec445;
   --card-shadow: 5px 5px 4px rgba(0, 0, 0, 0.233);
 }
 
+/* utils */
+
+.text-primary-main {
+  background: #3b6abc !important;
+}
+
+.border-main-secondary {
+  border-bottom: 2px solid var(--text-secondary);
+}
 body {
   font-family: "Afacad", serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
 
+input::selection {
+  background: none !important;
+}
+/* For Chrome, Safari, Edge */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px black inset !important;
+  -webkit-text-fill-color: white !important;
+}
+
+input:-moz-autofill {
+  box-shadow: 0 0 0 30px transparent inset !important;
+  -moz-text-fill-color: white !important;
+}
+
+input:-ms-autofill {
+  box-shadow: 0 0 0 30px transparent inset !important;
+  -ms-text-fill-color: white !important;
+}
+
 /* utils */
 .text-primary {
   color: var(--primary-color) !important;
 }
+.bg-primary-main {
+  background: var(--primary-color);
+}
 .text-yellow {
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
+}
+.shadow-main {
+  box-shadow: var(--card-shadow) !important;
 }
 /* register and login */
 .signup-btn {
@@ -90,10 +125,89 @@ body {
   box-shadow: var(--card-shadow);
 }
 
+.dashboard-input {
+  border-radius: 4rem;
+  padding: 4px;
+  box-shadow: var(--card-shadow);
+}
+
+.dashboard-pages {
+  margin: 0 0 0 7rem;
+}
+
+input {
+  outline: none !important; /* Remove focus outline */
+  box-shadow: none !important; /* Remove the focus border shadow */
+}
+select {
+  outline: none !important; /* Remove focus outline */
+  box-shadow: none !important; /* Remove the focus border shadow */
+  box-shadow: var(--card-shadow);
+}
+
+.not-found-page {
+  background: var(--primary-color);
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.circle-div {
+  background-color: var(--text-secondary); /* Custom background color */
+  border-radius: 50%; /* Make the div circular */
+  position: absolute; /* Position absolutely */
+  top: -25%; /* Position from the top */
+  right: 25%; /* Position from the right */
+  width: 400px; /* Set the width of the circle */
+  height: 400px; /* Set the height of the circle */
+}
+
+/* navbar */
+.navbar {
+  background: var(--primary-color);
+}
+.bg-primary-main {
+  background: var(--primary-color);
+}
+
 @media (max-width: 768px) {
   .dashboard-nav {
     width: 100%;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: none;
     margin: 0;
   }
+  .dashboard-pages {
+    margin: 0;
+  }
+}
+/*  */
+.profile-card {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.job-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.apply-btn {
+  background-color: #ffcc66;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.apply-btn:hover {
+  background-color: #ffb84d;
+}
+
+.rating-stars {
+  color: #ffcc00;
 }

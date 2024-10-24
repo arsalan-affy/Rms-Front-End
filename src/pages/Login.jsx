@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Navbar,
   Container,
@@ -8,16 +8,76 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import image from "../assets/bg-auth.png";
-import { Link } from "react-router-dom";
-// import "./Login.css"; // Make sure to create this CSS file
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [show, setShow] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const toggleShow = () => {
     setShow(!show);
   };
+
+  // Using React Hook Form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigateByRole = (role) => {
+    switch (role) {
+      case "SUPER_ADMIN":
+        navigate("/superadmin");
+        break;
+      case "ADMIN":
+        navigate("/admin");
+        break;
+      case "RMS":
+        navigate("/rms");
+        break;
+      case "USER":
+        navigate("/user");
+        break;
+      default:
+        navigate("/");
+    }
+  };
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("/login", data);
+      console.log(response)
+      const token = response.data.response;
+      const decoded = jwtDecode(token);
+      // console.log(decoded);
+
+      // Store token and user info in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", decoded?.claims?.role);
+      // console.log(userData);
+      navigateByRole(localStorage.getItem("role"));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Check authentication and role on page load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+    if (token) {
+      navigateByRole(role);
+    }
+  }, [navigate]);
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center flex-column position-relative text-white bg-signup">
       <img
@@ -32,10 +92,13 @@ const Login = () => {
       />
       <Navbar
         expand="lg"
-        className="w-100 top-0 position-absolute pt-md-5 pt-sm-2"
+        className="w-100 top-0 position-absolute pt-md-5 pt-sm-2 bg-transparent"
       >
         <Container>
-          <Link to="/" className="text-decoration-none text-white fs-2">
+          <Link
+            to="/"
+            className="text-decoration-none bg-transparent text-white fs-2"
+          >
             Logo
           </Link>
         </Container>
@@ -55,56 +118,74 @@ const Login = () => {
             className="d-flex align-items-center justify-content-center flex-column"
           >
             <h2 className="mb-4 text-center">Login</h2>
-            <Form className="w-100 w-md-75">
-              <InputGroup className="mb-3 py-2 mt-3">
-                <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
-                  <Mail size={20} />
-                </InputGroup.Text>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
-                  style={{
-                    color: "white",
-                    "::placeholder": { color: "white" },
-                  }}
-                />
-              </InputGroup>
-              <InputGroup className="mb-5 py-2 d-md-flex align-items-center">
-                <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
-                  <Lock size={20} />
-                </InputGroup.Text>
-                <Form.Control
-                  type={show ? "password" : "text"}
-                  placeholder="Password"
-                  className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
-                  style={{
-                    color: "white",
-                    "::placeholder": { color: "white" },
-                  }}
-                />
-                <div
-                  className="d-flex align-items-center justify-content-center h-100 cursor-pointer px-3 cursor-pointer "
-                  style={{ height: "100%" }}
-                  onClick={toggleShow}
-                >
-                  {show ? (
-                    <p className="m-0">Show</p>
-                  ) : (
-                    <p className="m-0">Hide</p>
-                  )}
-                </div>
-              </InputGroup>
+            <Form
+              className="w-100 w-md-75"
+              onSubmit={handleSubmit(onSubmit)} // React Hook Form's handleSubmit
+            >
+              {/* Email Field */}
+              <div className="mb-3">
+                <InputGroup className="py-2 mt-3">
+                  <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
+                    <Mail size={20} />
+                  </InputGroup.Text>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
+                    style={{ color: "white" }}
+                    {...register("email", { required: "Email is required" })}
+                  />
+                </InputGroup>
+                {errors.email && (
+                  <p className="text-danger">{errors.email.message}</p>
+                )}
+              </div>
+              {/* Password Field */}
+              <div className="mb-3">
+                <InputGroup className="py-2 d-md-flex align-items-center">
+                  <InputGroup.Text className="bg-transparent text-white border-0 pe-3">
+                    <Lock size={20} />
+                  </InputGroup.Text>
+                  <Form.Control
+                    type={show ? "password" : "text"}
+                    placeholder="Password"
+                    className="p-2 bg-transparent text-white signup-input border-0 no-focus-outline"
+                    style={{ color: "white" }}
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                    })}
+                  />
+                  <div
+                    className="d-flex align-items-center justify-content-center h-100 cursor-pointer px-3 cursor-pointer"
+                    style={{ height: "100%" }}
+                    onClick={toggleShow}
+                  >
+                    {show ? (
+                      <p className="m-0">Show</p>
+                    ) : (
+                      <p className="m-0">Hide</p>
+                    )}
+                  </div>
+                </InputGroup>
+                {errors.password && (
+                  <p className="text-danger">{errors.password.message}</p>
+                )}
+              </div>
+
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-100 signup-btn p-2 fs-5 rounded no-focus-outline"
               >
                 Login
               </Button>
               <p className="text-center mt-3 d-flex align-items-center justify-content-center gap-2">
-                Don't have an account?{" "}
+                {"Don't"} have an account?{" "}
                 <Link to="/signup" className="text-blue text-decoration-none">
-                  {" "}
                   Create Account
                 </Link>
               </p>
