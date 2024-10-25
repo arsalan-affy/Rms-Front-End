@@ -326,7 +326,7 @@ export const ReusableInput = ({
   ...props
 }) => {
   return (
-    <Form.Group className={`mb-4 ${className}`} controlId={`form${name}`}>
+    <Form.Group className={`mb-2 ${className}`} controlId={`form${name}`}>
       <InputGroup>
         <FormControl
           type={type}

@@ -1,9 +1,13 @@
 import { Search } from "lucide-react";
 
-const DashboardInput = () => {
+const DashboardInput = ({ onChange = () => {} ,onClick}) => {
   return (
     <div className=" dashboard-input w-100 overflow-hidden border mx-auto  d-flex align-items-center justify-content-center px-4">
-      <input className=" w-100 border-1 p-2 border-0 " placeholder="Search" />
+      <input
+        className=" w-100 border-1 p-2 border-0 "
+        placeholder="Search"
+        onChange={onchange}
+      />
       <Search />
     </div>
   );

@@ -1,18 +1,23 @@
-import { BaggageClaim } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { SquareKanban } from "lucide-react";
 import Title from "../dashboard/Title";
 import DashboardInput from "../dashboard/DashboardInput";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
-const Company = () => {
-  const [companies, setCompanies] = useState([]);
+const Managers = () => {
+  const [managers, setManagers] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const userData = token && jwtDecode(token);
   const fetchCompanies = async () => {
     try {
-      const response = await axios.get("/admin/all");
+      const response = await axios.get(
+        "/recruitment-manager/parent/" + userData?.claims?.id
+      );
       console.log(response.data);
-      setCompanies(() => response.data);
+      setManagers(() => response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -20,11 +25,10 @@ const Company = () => {
   useEffect(() => {
     fetchCompanies();
   }, []);
-
   return (
     <div className="me-md-3">
       <div>
-        <Title icon={BaggageClaim} title={"Company"} />
+        <Title icon={SquareKanban} title={"Manager"} />
       </div>
       <div className="w-75 mx-auto mt-4">
         <DashboardInput />
@@ -60,14 +64,15 @@ const Company = () => {
             className="btn btn-outline-dark"
             onClick={() => navigate("create")}
           >
-            Create Company
+            Create Managers
           </button>
         </div>
       </div>
-      <JobTable jobs={companies} />
+      <JobTable jobs={managers} />
     </div>
   );
 };
+
 export function JobTable({ jobs = [] }) {
   const navigate = useNavigate();
   // Job data array
@@ -95,7 +100,6 @@ export function JobTable({ jobs = [] }) {
               <td>{job?.name}</td>
               <td>{job?.companyName}</td>
               <td>{job?.email}</td>
-
               <td>{job?.phoneNumber}</td>
               <td>{job?.username}</td>
             </tr>
@@ -106,4 +110,4 @@ export function JobTable({ jobs = [] }) {
   );
 }
 
-export default Company;
+export default Managers;

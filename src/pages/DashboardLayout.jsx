@@ -4,6 +4,7 @@ import {
   Book,
   Factory,
   Grid2x2Check,
+  Grid2x2CheckIcon,
   LogOut,
   ShieldMinus,
   User2,
@@ -79,7 +80,7 @@ const DashboardLayout = () => {
       {
         path: "/admin",
         name: "Dashboard",
-        icon: <ShieldMinus className="icon-size" />,
+        icon: <Grid2x2CheckIcon className="icon-size" />,
       },
       {
         path: "/admin/sub-admin",
@@ -87,19 +88,9 @@ const DashboardLayout = () => {
         icon: <UserIcon className="icon-size" />,
       },
       {
-        path: "/admin/teachers",
+        path: "/admin/managers",
         name: "Teachers",
         icon: <Users className="icon-size" />,
-      },
-      {
-        path: "/admin/students",
-        name: "Students",
-        icon: <User2 strokeWidth={2} className="icon-size" />,
-      },
-      {
-        path: "/admin/courses",
-        name: "Courses",
-        icon: <Book className="icon-size" />,
       },
     ],
     RECRIUTMENT_DASHBOARD: [
@@ -119,37 +110,36 @@ const DashboardLayout = () => {
         icon: <Users className="icon-size" />,
       },
     ],
-    USER: [
+    EMPLOYEE: [
       {
-        path:
-          userInfo?.claims?.type == "EXTERNAL"
-            ? "/external-student"
-            : "/student",
+        path: "/employee",
         name: "Dashboard",
         icon: <ShieldMinus className="icon-size" />,
       },
       {
-        path:
-          userInfo?.claims?.type == "EXTERNAL"
-            ? "/external-student/courses"
-            : "/student/courses",
+        path: "/employee/courses",
         name: "Courses",
         icon: <Book className="icon-size" />,
       },
+      {
+        path: "/employee/students",
+        name: "Students",
+        icon: <Users className="icon-size" />,
+      },
     ],
   };
-  // const role = localStorage.getItem("role");
+  const role = localStorage.getItem("role");
 
-  // const linksToDisplay = role ? navLinks[role] : navLinks[0];
-  const linksToDisplay = navLinks["SUPER_ADMIN"];
+  const linksToDisplay = role ? navLinks[role] : navLinks[0];
+  // const linksToDisplay = navLinks[role];
   console.log(linksToDisplay);
 
   return (
     <div className="vh-100 d-md-flex w-100 ">
-      <div className="dashboard-nav d-flex align-items-center justify-content-center d-md-block me-md-3 py-md-5 d-none d-md-block  position-relative">
+      <div className="dashboard-nav d-flex align-items-center justify-content-center d-md-block me-md-3 py-md-5 d-none d-md-block  position-relative position-fixed h-100">
         <div
           className="logo fs-4 w-100 text-center text-white cursor-pointer fw-semibold fs-4"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/")}
         >
           Logo
         </div>
@@ -190,7 +180,7 @@ const DashboardLayout = () => {
           </div>
         </ul>
       </div>
-      <div className="w-100 ">
+      <div className="w-100 dashboard-pages">
         <div className="dashboard-nav p-3 d-flex align-items-center justify-content-between d-md-none d-block">
           <div className="fs-3 text-white">Logo</div>
           <div className="d-flex gap-4 align-items-center justify-content-between">

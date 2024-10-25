@@ -12,7 +12,6 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    localStorage.removeItem("adminId");
     toggleUser();
     navigate("/login");
   };
@@ -20,7 +19,7 @@ const Navbar = () => {
   const navLinks = {
     SUPER_ADMIN: [{ path: "/superadmin", name: "Dashboard" }],
     ADMIN: [{ path: "/admin", name: "Dashboard" }],
-    TEACHER: [{ path: "/teacher", name: "Dashboard" }],
+    EMPLOYEE: [{ path: "/employee", name: "Dashboard" }],
     STUDENT: [{ path: "/student", name: "Dashboard" }],
     SUB_ADMIN: [{ path: "/subadmin", name: "Dashboard" }],
   };
@@ -68,7 +67,7 @@ const Navbar = () => {
             {/* User Icon */}
             <div className=" ms-auto">
               <User
-                className="bg-lime text-black rounded-5 icon-small cursor-pointer"
+                className="bg-white shadow-lg text-black rounded-5 icon-small cursor-pointer"
                 style={{ padding: "7px", width: "2.2rem", height: "2.2rem" }}
                 onClick={toggleUser}
               />

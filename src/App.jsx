@@ -21,6 +21,8 @@ import Home from "./components/Home";
 import User from "./components/user/User";
 import Company from "./components/company/Company";
 import Create from "./components/company/Create";
+import Managers from "./components/manager/Managers";
+import CreateManager from "./components/manager/CreateManager";
 
 axios.defaults.baseURL = "http://localhost:8081/api/";
 // export const baseUrl = "http://localhost:3001";
@@ -49,6 +51,54 @@ const App = () => {
                   <Route path="/users" element={<User />} />
                   <Route path="/company" element={<Company />} />
                   <Route path="/company/create" element={<Create />} />
+                  <Route
+                    path="/jobs/job-profile/:id"
+                    element={<JobProfile />}
+                  />
+                  <Route
+                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    element={<ApplicantProfile />}
+                  />
+                </Route>
+              </Routes>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <Routes>
+                <Route path="/" element={<DashboardLayout />}>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/users" element={<User />} />
+                  <Route path="/managers" element={<Managers />} />
+                  <Route path="/managers/create" element={<CreateManager />} />
+                  <Route
+                    path="/jobs/job-profile/:id"
+                    element={<JobProfile />}
+                  />
+                  <Route
+                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    element={<ApplicantProfile />}
+                  />
+                </Route>
+              </Routes>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee/*"
+          element={
+            <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+              <Routes>
+                <Route path="/" element={<DashboardLayout />}>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/users" element={<User />} />
+                  <Route path="/managers" element={<Managers />} />
+                  <Route path="/managers/create" element={<CreateManager />} />
                   <Route
                     path="/jobs/job-profile/:id"
                     element={<JobProfile />}
@@ -106,28 +156,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/users" element={<User />} />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
+
         <Route path="/add-candidates" element={<AddCandidates />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not-found" />} />

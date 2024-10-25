@@ -1,12 +1,13 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { ReusableInput } from "../candidates/AddCandidates";
 import { useState } from "react";
-import { Hotel, MoveLeft } from "lucide-react";
+import { Hotel, MartiniIcon, MoveLeft } from "lucide-react";
 import Title from "../dashboard/Title";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-const Create = () => {
+const CreateManager = () => {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -15,6 +16,8 @@ const Create = () => {
     username: "",
     password: "",
   });
+  const token = localStorage.getItem("token");
+  const userData = token && jwtDecode(token);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +31,10 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/admin/create", formData);
+      const response = await axios.post(
+        "/recruitment-manager/create/" + userData.claims.id,
+        formData
+      );
       console.log(response);
       navigate(-1);
     } catch (error) {
@@ -42,7 +48,7 @@ const Create = () => {
       style={{ zIndex: 100 }}
     >
       <form onSubmit={handleSubmit}>
-        <Title title={"Create Company"} icon={Hotel} />
+        <Title title={"Create Manager"} icon={MartiniIcon} />
 
         <div
           className=" d-flex flex-grow-1 px-5 flex-column"
@@ -83,7 +89,6 @@ const Create = () => {
                   <label className="mx-2 my-1 fs-5 fw-semibold">
                     Phone Number
                   </label>
-
                   <ReusableInput
                     label="Location"
                     name="phoneNumber"
@@ -106,7 +111,6 @@ const Create = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">Username</label>
-
                   <ReusableInput
                     label="Username"
                     type="text"
@@ -117,7 +121,6 @@ const Create = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">Password</label>
-
                   <ReusableInput
                     label="Password"
                     type="text"
@@ -133,12 +136,7 @@ const Create = () => {
           </Row>
         </div>
         <div className="p-3  d-flex align-items-center justify-content-end gap-5">
-          <Button
-            type="submit"
-            variant="warning"
-            className="fw-semibold"
-            onClick={() => console.log(formData)}
-          >
+          <Button type="submit" variant="warning" className="fw-semibold">
             {" "}
             Add Company
           </Button>
@@ -148,4 +146,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreateManager;
