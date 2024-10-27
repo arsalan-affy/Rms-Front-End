@@ -3,121 +3,32 @@ import { BaggageClaim } from "lucide-react";
 import Title from "./Title";
 import DashboardInput from "./DashboardInput";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Jobs = () => {
-  const jobs = [
-    {
-      title: "Sr. Test Engineer",
-      location: "Bangalore, Karnataka",
-      recruiter: "Abc",
-      new: 2,
-      inReview: 2,
-      interview: "-",
-      offered: "-",
-      hired: "-",
-      leads: 1,
-    },
-    {
-      title: "Software Developer",
-      location: "Mumbai, Maharashtra",
-      recruiter: "Def",
-      new: 3,
-      inReview: 1,
-      interview: 1,
-      offered: "-",
-      hired: 1,
-      leads: 1,
-    },
-    {
-      title: "Sr. Test Engineer",
-      location: "Bangalore, Karnataka",
-      recruiter: "Abc",
-      new: 2,
-      inReview: 2,
-      interview: "-",
-      offered: "-",
-      hired: "-",
-      leads: 1,
-    },
-    {
-      title: "Software Developer",
-      location: "Mumbai, Maharashtra",
-      recruiter: "Def",
-      new: 3,
-      inReview: 1,
-      interview: 1,
-      offered: "-",
-      hired: 1,
-      leads: 1,
-    },
-    {
-      title: "Sr. Test Engineer",
-      location: "Bangalore, Karnataka",
-      recruiter: "Abc",
-      new: 2,
-      inReview: 2,
-      interview: "-",
-      offered: "-",
-      hired: "-",
-      leads: 1,
-    },
-    {
-      title: "Software Developer",
-      location: "Mumbai, Maharashtra",
-      recruiter: "Def",
-      new: 3,
-      inReview: 1,
-      interview: 1,
-      offered: "-",
-      hired: 1,
-      leads: 1,
-    },
-    {
-      title: "Sr. Test Engineer",
-      location: "Bangalore, Karnataka",
-      recruiter: "Abc",
-      new: 2,
-      inReview: 2,
-      interview: "-",
-      offered: "-",
-      hired: "-",
-      leads: 1,
-    },
-    {
-      title: "Software Developer",
-      location: "Mumbai, Maharashtra",
-      recruiter: "Def",
-      new: 3,
-      inReview: 1,
-      interview: 1,
-      offered: "-",
-      hired: 1,
-      leads: 1,
-    },
-    {
-      title: "Sr. Test Engineer",
-      location: "Bangalore, Karnataka",
-      recruiter: "Abc",
-      new: 2,
-      inReview: 2,
-      interview: "-",
-      offered: "-",
-      hired: "-",
-      leads: 1,
-    },
-    {
-      title: "Software Developer",
-      location: "Mumbai, Maharashtra",
-      recruiter: "Def",
-      new: 3,
-      inReview: 1,
-      interview: 1,
-      offered: "-",
-      hired: 1,
-      leads: 1,
-    },
-    // Add more job objects as needed
-  ];
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const getJobs = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/job/all");
+      setJobs(response.data); // Assuming the response data is an array of jobs
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching jobs:", err);
+      setError("Failed to fetch jobs. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch jobs on component mount
+  useEffect(() => {
+    getJobs();
+  }, []);
+  const navigate = useNavigate();
   return (
     <div className="me-md-3">
       <div>
@@ -166,6 +77,14 @@ const Jobs = () => {
             </div>
           </div>
         </div>
+        <div className="d-flex align-items-center justify-content-center">
+          <button
+            className="btn btn-outline-dark"
+            onClick={() => navigate("create-jobs")}
+          >
+            Create Jobs
+          </button>
+        </div>
       </div>
       <JobTable jobs={jobs} />
     </div>
@@ -180,15 +99,12 @@ export function JobTable({ jobs = [] }) {
       <table className="table table-striped table-hover border">
         <thead className="table-light">
           <tr>
-            <th scope="col">Jobs</th>
-            <th scope="col">Recruiter</th>
-            <th scope="col">Hiring Manager</th>
-            <th scope="col">New</th>
-            <th scope="col">In-review</th>
-            <th scope="col">Interview</th>
-            <th scope="col">Offered</th>
-            <th scope="col">Hired</th>
-            <th scope="col">Leads</th>
+            <th scope="col">Title</th>
+            <th scope="col">jDescription</th>
+            <th scope="col">jLocation</th>
+            <th scope="col">companyDescription</th>
+            <th scope="col">jQualification</th>
+            <th scope="col">jAdditionalInformation</th>
           </tr>
         </thead>
         <tbody>
@@ -199,15 +115,12 @@ export function JobTable({ jobs = [] }) {
               className="cursor-pointer"
               onClick={() => navigate("job-profile/" + job?.title)}
             >
-              <td>{job?.title}</td>
-              <td>{job?.location}</td>
-              <td>{job?.recruiter}</td>
-              <td>{job?.new}</td>
-              <td>{job?.inReview}</td>
-              <td>{job?.interview}</td>
-              <td>{job?.offered}</td>
-              <td>{job?.hired}</td>
-              <td>{job?.leads}</td>
+              <td>{job?.jobTitle}</td>
+              <td>{job?.jobDescription}</td>
+              <td>{job?.jobLocation}</td>
+              <td>{job?.companyDescription}</td>
+              <td>{job?.jobQualification}</td>
+              <td>{job?.jobAdditionalInformation}</td>
             </tr>
           ))}
         </tbody>

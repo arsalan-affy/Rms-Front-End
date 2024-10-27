@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   BaggageClaim,
   Book,
+  CableIcon,
   Factory,
   Grid2x2Check,
   Grid2x2CheckIcon,
@@ -12,7 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-
+import { FaJoint, FaUserNurse } from "react-icons/fa6";
 const DashboardLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -93,20 +94,20 @@ const DashboardLayout = () => {
         icon: <Users className="icon-size" />,
       },
     ],
-    RECRIUTMENT_DASHBOARD: [
+    RECRUITMENT_MANAGER: [
       {
-        path: "/teacher",
+        path: "/recruitment_manager",
         name: "Dashboard",
         icon: <ShieldMinus className="icon-size" />,
       },
       {
-        path: "/teacher/courses",
-        name: "Courses",
-        icon: <Book className="icon-size" />,
+        path: "/recruitment_manager/jobs",
+        name: "Jobs",
+        icon: <FaJoint className="icon-size" />,
       },
       {
-        path: "/teacher/students",
-        name: "Students",
+        path: "/recruitment_manager/employee",
+        name: "Employee",
         icon: <Users className="icon-size" />,
       },
     ],
@@ -125,6 +126,11 @@ const DashboardLayout = () => {
         path: "/employee/students",
         name: "Students",
         icon: <Users className="icon-size" />,
+      },
+      {
+        path: "/employee/candidates",
+        name: "Cadidates",
+        icon: <FaUserNurse size={24} />,
       },
     ],
   };
