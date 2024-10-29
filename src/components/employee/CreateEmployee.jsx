@@ -10,7 +10,6 @@ import { jwtDecode } from "jwt-decode";
 const CreateEmployee = () => {
   const [formData, setFormData] = useState({
     name: "",
-    companyName: "",
     email: "",
     phoneNumber: "",
     username: "",
@@ -127,8 +126,7 @@ const CreateEmployee = () => {
         </div>
         <div className="p-3  d-flex align-items-center justify-content-end gap-5">
           <Button type="submit" variant="warning" className="fw-semibold">
-            {" "}
-            Add Employee
+            Create Employee
           </Button>
         </div>
       </form>

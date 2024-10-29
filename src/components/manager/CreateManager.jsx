@@ -10,7 +10,6 @@ import { jwtDecode } from "jwt-decode";
 const CreateManager = () => {
   const [formData, setFormData] = useState({
     name: "",
-    companyName: "",
     email: "",
     phoneNumber: "",
     username: "",
@@ -75,7 +74,7 @@ const CreateManager = () => {
                     value={formData.name}
                     required
                   />
-                  <label className="mx-2 my-1 fs-5 fw-semibold">
+                  {/* <label className="mx-2 my-1 fs-5 fw-semibold">
                     Company Name
                   </label>
                   <ReusableInput
@@ -85,7 +84,7 @@ const CreateManager = () => {
                     onChange={handleChange}
                     value={formData.companyName}
                     required
-                  />
+                  /> */}
                   <label className="mx-2 my-1 fs-5 fw-semibold">
                     Phone Number
                   </label>
@@ -138,7 +137,7 @@ const CreateManager = () => {
         <div className="p-3  d-flex align-items-center justify-content-end gap-5">
           <Button type="submit" variant="warning" className="fw-semibold">
             {" "}
-            Add Company
+            Create Manager
           </Button>
         </div>
       </form>

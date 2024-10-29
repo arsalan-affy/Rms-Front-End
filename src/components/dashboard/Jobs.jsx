@@ -96,15 +96,16 @@ export function JobTable({ jobs = [] }) {
 
   return (
     <div className="">
-      <table className="table table-striped table-hover border">
+      <table className="table table-striped table-hover border text-center">
         <thead className="table-light">
           <tr>
+            <th scope="col">S No.</th>
             <th scope="col">Title</th>
-            <th scope="col">jDescription</th>
-            <th scope="col">jLocation</th>
-            <th scope="col">companyDescription</th>
-            <th scope="col">jQualification</th>
-            <th scope="col">jAdditionalInformation</th>
+            <th scope="col">Job Description</th>
+            <th scope="col">Job Location</th>
+            <th scope="col">Company Description</th>
+            <th scope="col">Job Qualification</th>
+            <th scope="col">Job Additional Information</th>
           </tr>
         </thead>
         <tbody>
@@ -113,8 +114,9 @@ export function JobTable({ jobs = [] }) {
             <tr
               key={index}
               className="cursor-pointer"
-              onClick={() => navigate("job-profile/" + job?.title)}
+              onClick={() => navigate("job-profile/" + job?.id)}
             >
+              <td>{index + 1}</td>
               <td>{job?.jobTitle}</td>
               <td>{job?.jobDescription}</td>
               <td>{job?.jobLocation}</td>

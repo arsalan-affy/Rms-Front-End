@@ -28,8 +28,10 @@ import CreateEmployee from "./components/employee/CreateEmployee";
 import Candidates from "./components/candidates/Candidates";
 import CreateCandidates from "./components/candidates/CreateCandidates";
 import CreateJob from "./components/dashboard/CreateJob";
+import Careers from "./pages/Careers";
 
-axios.defaults.baseURL = "http://localhost:8081/api/";
+// axios.defaults.baseURL = "http://localhost:8081/api/";
+axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
 // export const baseUrl = "http://localhost:3001";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -44,6 +46,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/superadmin/*"
@@ -77,9 +80,12 @@ const App = () => {
                 <Route path="/" element={<DashboardLayout />}>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/jobs/create-jobs" element={<CreateJob />} />
                   <Route path="/users" element={<User />} />
                   <Route path="/managers" element={<Managers />} />
                   <Route path="/managers/create" element={<CreateManager />} />
+                  <Route path="/sub-admin" element={<Employee />} />
+                  <Route path="/sub-admin/create" element={<CreateEmployee />} />
                   <Route
                     path="/jobs/job-profile/:id"
                     element={<JobProfile />}
@@ -102,6 +108,9 @@ const App = () => {
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/users" element={<User />} />
                   <Route path="/candidates" element={<Candidates />} />
+                  <Route path="/candidates/add" element={<AddCandidates />} />
+                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/jobs/create-jobs" element={<CreateJob />} />
                   <Route
                     path="/candidates/create"
                     element={<CreateCandidates />}

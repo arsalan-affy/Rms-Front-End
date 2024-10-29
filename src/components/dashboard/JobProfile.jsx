@@ -1,11 +1,31 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ArrowLeft, BaggageClaimIcon } from "lucide-react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import Title from "./Title";
 import DashboardInput from "./DashboardInput";
 
 export function JobProfile() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [jobDetail, setJobDetail] = useState("");
+
+  useEffect(() => {
+    // Fetch job data using the ID from the URL
+    const fetchJobData = async () => {
+      try {
+        const response = await axios.get(`/job/${id}`);
+        console.log(response);
+        setJobDetail(response.data);
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+      }
+    };
+
+    fetchJobData();
+  }, [id]);
+
   const applicantsData = [
     {
       id: 1,
@@ -64,12 +84,14 @@ export function JobProfile() {
           background: "linear-gradient(to bottom right, #B9C0FF, #fff)", // Gradient from top left to bottom right
         }}
       >
-        <div className="d-flex align-items-start gap-4   justify-content-center">
+        <div className="d-flex align-items-start gap-4 justify-content-center">
           <ArrowLeft onClick={() => navigate(-1)} className="cursor-pointer" />
           <div>
-            <h4>Sr. Test Engineer</h4>
-            <p>Bangalore, Karnataka</p>
-            <p className="text-muted">Not Published</p>
+            <h4>{jobDetail?.jobTitle}</h4>
+            <p className="mb-0">Created By: {jobDetail?.createdBy?.name}</p>
+            <p className="mb-0">{jobDetail?.jobLocation}</p>
+            <p className="text-muted mb-0">{jobDetail?.jobApproval}</p>
+            <p className="text-muted mb-0">{jobDetail?.createdAt}</p>
           </div>
         </div>
         <div>

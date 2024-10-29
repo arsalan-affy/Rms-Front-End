@@ -11,6 +11,7 @@ import {
   User2,
   UserIcon,
   Users,
+  BriefcaseBusiness 
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaJoint, FaUserNurse } from "react-icons/fa6";
@@ -90,8 +91,13 @@ const DashboardLayout = () => {
       },
       {
         path: "/admin/managers",
-        name: "Teachers",
+        name: "Managers",
         icon: <Users className="icon-size" />,
+      },
+      {
+        path: "/admin/jobs",
+        name: "Jobs",
+        icon: <BriefcaseBusiness  className="icon-size" />,
       },
     ],
     RECRUITMENT_MANAGER: [
@@ -115,22 +121,17 @@ const DashboardLayout = () => {
       {
         path: "/employee",
         name: "Dashboard",
-        icon: <ShieldMinus className="icon-size" />,
+        icon: <Grid2x2CheckIcon className="icon-size" />,
       },
       {
-        path: "/employee/courses",
-        name: "Courses",
-        icon: <Book className="icon-size" />,
-      },
-      {
-        path: "/employee/students",
-        name: "Students",
-        icon: <Users className="icon-size" />,
+        path: "/employee/jobs",
+        name: "Jobs",
+        icon: <BriefcaseBusiness className="icon-size" />,
       },
       {
         path: "/employee/candidates",
-        name: "Cadidates",
-        icon: <FaUserNurse size={24} />,
+        name: "Candidates",
+        icon: <Users className="icon-size" />,
       },
     ],
   };

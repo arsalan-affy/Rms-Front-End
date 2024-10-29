@@ -53,7 +53,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post("/login", data);
-      console.log(response)
+      console.log(response);
       const token = response.data.response;
       const decoded = jwtDecode(token);
       // console.log(decoded);

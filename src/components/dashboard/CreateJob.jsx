@@ -95,7 +95,7 @@ const CreateJob = () => {
                 </div>
                 <Col>
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    job Title
+                  Job Title
                   </label>
 
                   <ReusableInput
@@ -107,18 +107,18 @@ const CreateJob = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    job Description
+                    Job Description
                   </label>
                   <ReusableInput
-                    label="job Description"
+                    label="Job Description"
                     name="jobDescription"
-                    placeholder="job Description"
+                    placeholder="Job Description"
                     onChange={handleChange}
                     value={formData.jobDescription}
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    job Location
+                  Job Location
                   </label>
                   <ReusableInput
                     label="jobLocation"
@@ -130,7 +130,7 @@ const CreateJob = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    company Description
+                    Company Description
                   </label>
                   <ReusableInput
                     label="company Description"
@@ -142,7 +142,7 @@ const CreateJob = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    job Additional Information
+                    Job Additional Information
                   </label>
                   <ReusableInput
                     label="job Additional Information"
@@ -154,7 +154,7 @@ const CreateJob = () => {
                     required
                   />
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    job Qualification
+                    Job Qualification
                   </label>
                   <ReusableInput
                     label="job job Qualification"
@@ -178,7 +178,7 @@ const CreateJob = () => {
             disabled={loading}
           >
             {" "}
-            {!loading ? "Add Jobs" : "loading"}
+            {!loading ? "Create Jobs" : "loading"}
           </Button>
         </div>
       </form>
