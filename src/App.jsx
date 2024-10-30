@@ -178,9 +178,11 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
         <Route path="/not-found" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not-found" />} />
         <Route path="/" element={<Home />} />
+        <Route path="/careers" element={<Careers />} />
       </Routes>
     </BrowserRouter>
   );
