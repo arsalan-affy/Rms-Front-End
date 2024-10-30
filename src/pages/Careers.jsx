@@ -310,9 +310,9 @@ export default function Careers() {
                               required: "First name is required",
                             })}
                           />
-                          <div className="invalid-feedback">
-                            {errors.firstName?.message}
-                          </div>
+                        </div>
+                        <div className="invalid-feedback">
+                          {errors.firstName?.message}
                         </div>
                         <div className="mb-3">
                           <label className="form-label">Last Name</label>
@@ -327,10 +327,10 @@ export default function Careers() {
                             })}
                           />
                         </div>
-                        <span className="invalid-feedback">
-                          {errors.lastName?.message}
-                        </span>
                       </div>
+                      <span className="invalid-feedback">
+                        {errors.lastName?.message}
+                      </span>
                       <div className="mb-3">
                         <label className="form-label">Email</label>
                         <input
@@ -348,9 +348,9 @@ export default function Careers() {
                             },
                           })}
                         />
-                        <div className="invalid-feedback">
-                          {errors.email?.message}
-                        </div>
+                      </div>
+                      <div className="invalid-feedback">
+                        {errors.email?.message}
                       </div>
                       <div className="mb-3">
                         <label className="form-label">Mobile</label>
@@ -370,10 +370,10 @@ export default function Careers() {
                             },
                           })}
                         />
-                        <span className="invalid-feedback">
-                          {errors.phone?.message}
-                        </span>
                       </div>
+                      <span className="invalid-feedback">
+                        {errors.phone?.message}
+                      </span>
                       <div className="mb-3">
                         <label className="form-label">Resume/CV</label>
                         <input
