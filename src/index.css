@@ -228,12 +228,19 @@ select {
   color: var(--primary-color) !important;
 }
 
-
-.jobs-table .card{
+.jobs-table .card {
   width: 50px;
   margin: auto;
 }
 
-.jobs-table td{
+.jobs-table td {
   vertical-align: middle;
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none !important;
+}
+
+.status-list-item:hover {
+  background: rgba(0, 0, 0, 0.089) !important ;
 }

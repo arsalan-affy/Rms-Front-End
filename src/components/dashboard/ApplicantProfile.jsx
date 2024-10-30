@@ -10,9 +10,20 @@ import {
   Container,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { useState } from "react";
 
 const ApplicantProfile = () => {
   const navigate = useNavigate();
+  const [isStatusPanel, setIsStatusPanel] = useState(false);
+  const [isOption, setIsOpen] = useState(false);
+  function toggleIsOption() {
+    setIsOpen((prev) => !prev);
+  }
+  function toggleStatusBar() {
+    setIsStatusPanel((prev) => !prev);
+  }
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
@@ -43,8 +54,12 @@ const ApplicantProfile = () => {
                       className="d-flex align-items-center justify-content-center rounded-2 "
                     >
                       <div
-                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main rounded-circle ms-md-4"
-                        style={{ height: "100px", width: "100px" }}
+                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main ms-md-4"
+                        style={{
+                          height: "100px",
+                          width: "100px",
+                          borderRadius: 999,
+                        }}
                       >
                         TJ
                       </div>
@@ -78,11 +93,15 @@ const ApplicantProfile = () => {
                   <Card.Body style={{ border: "none" }}>
                     <h6>Experience</h6>
                     <p>No experience details for this candidate yet.</p>
-                    <a href="#">ADD EXPERIENCE</a>
+                    <a href="#" className="text-decoration-none ">
+                      ADD EXPERIENCE
+                    </a>
 
                     <h6 className="mt-4">Education</h6>
                     <p>No education details for this candidate yet.</p>
-                    <a href="#">ADD EDUCATION</a>
+                    <a href="#" className="text-decoration-none ">
+                      ADD EDUCATION
+                    </a>
                   </Card.Body>
                 </Card>
               </Card>
@@ -98,7 +117,7 @@ const ApplicantProfile = () => {
                   <div className="my-2 fs-1 fw-bold">Sr. Test Engineer</div>
                   <div>Bangalore, Karnataka</div>
 
-                  <div className="mb-2">Rating: ★★★☆☆</div>
+                  <div className="mb-1 fs-3">Rating: ★★★☆☆</div>
 
                   <ProgressBar
                     now={75}
@@ -107,14 +126,51 @@ const ApplicantProfile = () => {
                     className="mb-3"
                   />
 
-                  <div className="d-flex justify-content-between mt-auto">
-                    <button
-                      style={{ background: "#29b447" }}
-                      className="btn text-white"
-                    >
-                      Move Forward
-                    </button>
-                    <Button variant="outline-danger">Reject</Button>
+                  <div className="d-flex justify-content-between mt-auto align-items-center">
+                    <div className="d-flex justify-content-start gap-3">
+                      <div className="position-relative">
+                        <button
+                          style={{ background: "#29b447" }}
+                          className="btn text-white d-flex justify-content-between gap-2 align-items-center "
+                          onClick={toggleStatusBar}
+                        >
+                          Move Forward
+                          {isStatusPanel ? <IoChevronDown /> : <IoChevronUp />}
+                        </button>
+                        {isStatusPanel && (
+                          <div
+                            className="position-absolute"
+                            style={{
+                              top: "-1050%",
+                              minWidth: "200px",
+                              height: "100%",
+                            }}
+                          >
+                            <StatusPanel />
+                          </div>
+                        )}
+                      </div>
+
+                      <Button variant="outline-danger">Reject</Button>
+                    </div>
+                    <div className="position-relative">
+                      <button className="btn " onClick={toggleIsOption}>
+                        <HiOutlineDotsVertical />
+                      </button>
+                      {isOption && (
+                        <div
+                          className="position-absolute"
+                          style={{
+                            top: "-500%",
+                            left: "-400%",
+                            minWidth: "200px",
+                            height: "100%",
+                          }}
+                        >
+                          <ActionPanel />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </Card.Body>
               </Card>
@@ -125,5 +181,80 @@ const ApplicantProfile = () => {
     </Container>
   );
 };
+
+export function StatusPanel() {
+  return (
+    <Card
+      className=" mb-3 shadow-lg scroll-hide  p-2"
+      style={{ height: "400px", overflow: "auto" }}
+    >
+      <div className="fw-semibold">New</div>
+      <div className="mb-1">
+        <div className="fw-bold">In Review</div>
+        <ul className="list-unstyled">
+          <li className="p-1 cursor-pointer status-list-item ">
+            *Recruiter Screen
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            *HM Profile Review
+          </li>
+        </ul>
+      </div>
+      <div className="mb-1">
+        <div className="fw-bold">Interview</div>
+        <ul className="list-unstyled">
+          <li className="p-1 cursor-pointer status-list-item ">
+            *HM Interview
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            Tech Interview
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            Optional Interviews
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            *HR Interview
+          </li>
+        </ul>
+      </div>
+      <div className="mb-1">
+        <div className="fw-bold">Offered</div>
+        <ul className="list-unstyled">
+          <li className="p-1 cursor-pointer status-list-item ">
+            Offer Approval
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            Offer Pending
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">
+            *Offer Accepted
+          </li>
+          <li className="p-1 cursor-pointer status-list-item ">*Onboarding</li>
+        </ul>
+      </div>
+      <div className="fw-semibold">Hired</div>
+    </Card>
+  );
+}
+
+export function ActionPanel() {
+  return (
+    <Card
+      className="p-2 shadow-sm scroll-hide"
+      style={{ height: "180px", overflow: "auto" }}
+    >
+      <ul className="list-unstyled">
+        <li className="cursor-pointer p-2 mb-2 ">Mark as withdrawn</li>
+        <li className="cursor-pointer p-2 mb-2 ">Add to job</li>
+        <li className="cursor-pointer p-2 mb-2 ">Add to community</li>
+        <li className="cursor-pointer p-2 mb-2 ">Remove from this job</li>
+        <li className="cursor-pointer p-2 mb-2 ">Defer</li>
+        <li className="cursor-pointer p-2 mb-2 ">Add employee badge</li>
+        <li className="text-danger">Delete candidate</li>
+        <li className="text-danger">Delete job application</li>
+      </ul>
+    </Card>
+  );
+}
 
 export default ApplicantProfile;
