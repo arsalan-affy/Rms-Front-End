@@ -105,9 +105,9 @@ export function JobProfile() {
                 onClick={() => navigate("job-applicants/" + data?.id)}
               >
                 <td>{data?.candidateName  || "-"}</td>
-                <td>{data?.company}</td>
-                <td>{data?.location}</td>
-                <td>{data?.status}</td>
+                <td>{data?.company || "-"}</td>
+                <td>{data?.location || "-"}</td>
+                <td>{data?.status || "-"}</td>
                 <td>{data?.createdAt  || "-"}</td>
               </tr>
             ))}
