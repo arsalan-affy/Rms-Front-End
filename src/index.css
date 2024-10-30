@@ -237,3 +237,7 @@ select {
 .jobs-table td{
   vertical-align: middle;
 }
+
+.careers-job-modal p{
+  margin-bottom: 0 !important;
+}

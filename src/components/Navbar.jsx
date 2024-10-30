@@ -30,7 +30,6 @@ const Navbar = () => {
   };
   const token = localStorage.getItem("token");
   const userInfo = token && jwtDecode(token);
-  console.log(userInfo);
   useEffect(() => {
     // Click outside logic
     const handleClickOutside = (event) => {
