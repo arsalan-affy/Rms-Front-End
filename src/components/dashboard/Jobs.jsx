@@ -14,7 +14,8 @@ const Jobs = () => {
     try {
       setLoading(true);
       const response = await axios.get("/job/all");
-      setJobs(response.data); // Assuming the response data is an array of jobs
+      console.log(response.data);
+      setJobs(response.data);
       setError(null);
     } catch (err) {
       console.error("Error fetching jobs:", err);
@@ -101,15 +102,22 @@ export function JobTable({ jobs = [] }) {
           <tr>
             <th scope="col">S No.</th>
             <th scope="col">Title</th>
-            <th scope="col">Job Description</th>
+            <th scope="col">Recruiter</th>
+            <th scope="col">Hiring Manager</th>
+            <th scope="col">New</th>
+            <th scope="col">In-review</th>
+            <th scope="col">Interview</th>
+            <th scope="col">Offered</th>
+            <th scope="col">Hired</th>
+
+            {/* <th scope="col">Job Description</th>
             <th scope="col">Job Location</th>
             <th scope="col">Company Description</th>
             <th scope="col">Job Qualification</th>
-            <th scope="col">Job Additional Information</th>
+            <th scope="col">Job Additional Information</th> */}
           </tr>
         </thead>
-        <tbody>
-          {/* Map through the jobs array */}
+        <tbody className="jobs-table">
           {jobs?.map((job, index) => (
             <tr
               key={index}
@@ -117,12 +125,39 @@ export function JobTable({ jobs = [] }) {
               onClick={() => navigate("job-profile/" + job?.id)}
             >
               <td>{index + 1}</td>
-              <td>{job?.jobTitle}</td>
-              <td>{job?.jobDescription}</td>
+              <td className="text-capitalize">{job?.jobTitle}</td>
+              <td className="text-capitalize">
+                {job?.createdBy?.parent?.name}
+              </td>
+              <td className="text-capitalize">{job?.createdBy?.name}</td>
+              <td className="text-capitalize">
+                <div className="card p-2">
+                  {job?.pending ? job?.pending : "-"}
+                </div>
+              </td>
+              <td className="text-capitalize">
+                <div className="card p-2">
+                  {job?.review ? job?.review : "-"}
+                </div>
+              </td>
+              <td className="text-capitalize">
+                <div className="card p-2">
+                  {job?.interview ? job?.interview : "-"}
+                </div>
+              </td>
+              <td className="text-capitalize">
+                <div className="card p-2">
+                  {job?.offered ? job?.offered : "-"}
+                </div>
+              </td>
+              <td className="text-capitalize">
+                <div className="card p-2">{job?.hired ? job?.hired : "-"}</div>
+              </td>
+              {/* <td dangerouslySetInnerHTML={{ __html: job?.jobDescription }}></td>
               <td>{job?.jobLocation}</td>
-              <td>{job?.companyDescription}</td>
-              <td>{job?.jobQualification}</td>
-              <td>{job?.jobAdditionalInformation}</td>
+              <td dangerouslySetInnerHTML={{ __html: job?.companyDescription }}></td>
+              <td dangerouslySetInnerHTML={{ __html: job?.jobQualification }}></td>
+              <td dangerouslySetInnerHTML={{ __html: job?.jobAdditionalInformation }}></td> */}
             </tr>
           ))}
         </tbody>
