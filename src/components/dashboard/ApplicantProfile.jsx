@@ -1,4 +1,4 @@
-import { ArrowLeft, BaggageClaim, Mail } from "lucide-react";
+import { ArrowLeft, BaggageClaim, Mail, MapPin, Phone } from "lucide-react";
 import Title from "./Title";
 import {
   Button,
@@ -9,10 +9,11 @@ import {
   Row,
   Container,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const ApplicantProfile = () => {
   const navigate = useNavigate();
@@ -24,6 +25,25 @@ const ApplicantProfile = () => {
   function toggleStatusBar() {
     setIsStatusPanel((prev) => !prev);
   }
+
+  const { jobId, applicantId } = useParams();
+  const [applicantData, setApplicantData] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`job-applications/${applicantId}`);
+        console.log(response.data);
+        setApplicantData(response.data);
+      } catch (error) {
+        console.error("Error fetching job applicant data:", error);
+      }
+    };
+
+    if (applicantId) {
+      fetchData();
+    }
+  }, [jobId, applicantId]);
+
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
@@ -56,8 +76,8 @@ const ApplicantProfile = () => {
                       <div
                         className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main ms-md-4"
                         style={{
-                          height: "100px",
-                          width: "100px",
+                          height: "65px",
+                          width: "65px",
                           borderRadius: 999,
                         }}
                       >
@@ -67,12 +87,21 @@ const ApplicantProfile = () => {
 
                     {/* Applicant Info */}
                     <Col xs={6} className="fw-bold ">
-                      <div className="fs-3 fw-bold">Tom Jones</div>
+                      <div className="fs-3 fw-bold">
+                        {applicantData?.candidateName}
+                      </div>
                       <div className="d-flex flex-column justify-content-between mt-2 w-100 fs-6">
-                        <div>Bangalore, Karnataka</div>
+                        <div className="d-flex align-items-center gap-2 mt-2">
+                          <MapPin />
+                          {applicantData?.location || "-"}
+                        </div>
                         <div className="d-flex align-items-center gap-2 mt-2">
                           <Mail />
-                          abc@gmail.com
+                          {applicantData?.email || "-"}
+                        </div>
+                        <div className="d-flex align-items-center gap-2 mt-2">
+                          <Phone />
+                          {applicantData?.phone || "-"}
                         </div>
                       </div>
                     </Col>
@@ -114,8 +143,12 @@ const ApplicantProfile = () => {
                   <div className="fs-6 bg-warning fw-bold p-1 px-3 rounded-3 w-50">
                     Applicant Profile
                   </div>
-                  <div className="my-2 fs-1 fw-bold">Sr. Test Engineer</div>
+                  <div className="my-2 fs-1 fw-bold text-capitalize">
+                    {" "}
+                    {applicantData?.jobTitle || "-"}
+                  </div>
                   <div>Bangalore, Karnataka</div>
+                  <div>{applicantData?.status || "-"}</div>
 
                   <div className="mb-1 fs-3">Rating: ★★★☆☆</div>
 
