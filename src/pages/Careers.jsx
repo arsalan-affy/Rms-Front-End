@@ -6,20 +6,19 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
 
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    resume: null,
-  });
+  const [formData, setFormData] = useState({ resume: null });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   useEffect(() => {
@@ -32,25 +31,20 @@ export default function Careers() {
         console.error("Error fetching jobs:", error);
       });
   }, []);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const handleFileChange = (e) => {
     setFormData({ ...formData, resume: e.target.files[0] });
   };
 
-  const handleSubmit = async () => {
+  const onSubmit = async (data) => {
     setIsSubmitting(true); // Disable the button and show spinner
     const formDataToSend = new FormData();
-    formDataToSend.append("firstName", formData.firstName);
-    formDataToSend.append("lastName", formData.lastName);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("phone", formData.phone);
+    formDataToSend.append("firstName", data.firstName);
+    formDataToSend.append("lastName", data.lastName);
+    formDataToSend.append("email", data.email);
+    formDataToSend.append("phone", data.phone);
     formDataToSend.append("resume", formData.resume);
     formDataToSend.append("jobId", selectedJob?.id);
-
     try {
       const response = await axios.post(
         "/job-applications/apply",
@@ -61,11 +55,12 @@ export default function Careers() {
       );
       console.log("Application submitted successfully:", response.data);
       toast.success("Application submitted successfully!");
-      setFormData()
+      setFormData();
       setShowSuccess(true); // Show success alert
       setIsSubmitting(false); // Enable button
     } catch (error) {
       console.error("Error submitting application:", error);
+    } finally {
       setIsSubmitting(false); // Enable button even if there's an error
     }
   };
@@ -298,56 +293,86 @@ export default function Careers() {
                   </div>
 
                   <div className="col-md-4">
-                    <form className="card p-3">
+                    <form
+                      className="card p-3"
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
                       <div>
                         <div className="mb-3">
                           <label className="form-label">First Name</label>
                           <input
                             type="text"
-                            className="form-control"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleInputChange}
+                            className={`form-control ${
+                              errors.firstName ? "is-invalid" : ""
+                            }`}
                             placeholder="Enter First Name"
-                            required
+                            {...register("firstName", {
+                              required: "First name is required",
+                            })}
                           />
+                          <div className="invalid-feedback">
+                            {errors.firstName?.message}
+                          </div>
                         </div>
                         <div className="mb-3">
                           <label className="form-label">Last Name</label>
                           <input
                             type="text"
-                            className="form-control"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleInputChange}
+                            className={`form-control ${
+                              errors.lastName ? "is-invalid" : ""
+                            }`}
                             placeholder="Enter Last Name"
-                            required
+                            {...register("lastName", {
+                              required: "Last name is required",
+                            })}
                           />
                         </div>
+                        <span className="invalid-feedback">
+                          {errors.lastName?.message}
+                        </span>
                       </div>
                       <div className="mb-3">
                         <label className="form-label">Email</label>
                         <input
                           type="email"
-                          className="form-control"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
+                          className={`form-control ${
+                            errors.email ? "is-invalid" : ""
+                          }`}
                           placeholder="Enter Email"
-                          required
+                          {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                              value:
+                                /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                              message: "Invalid email format",
+                            },
+                          })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.email?.message}
+                        </div>
                       </div>
                       <div className="mb-3">
                         <label className="form-label">Mobile</label>
                         <input
                           type="tel"
-                          className="form-control"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
+                          maxLength={10} // This limits the input to 10 characters
+                          className={`form-control ${
+                            errors.phone ? "is-invalid" : ""
+                          }`}
                           placeholder="Enter Mobile"
-                          required
+                          {...register("phone", {
+                            required: "Phone number is required",
+                            pattern: {
+                              value: /^[0-9]{10,}$/,
+                              message:
+                                "Phone number must be at least 10 digits",
+                            },
+                          })}
                         />
+                        <span className="invalid-feedback">
+                          {errors.phone?.message}
+                        </span>
                       </div>
                       <div className="mb-3">
                         <label className="form-label">Resume/CV</label>
