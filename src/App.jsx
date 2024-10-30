@@ -160,7 +160,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<DashboardLayout />}>
                   <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/jobs" element={<Jobs />} /> 
                   <Route path="/jobs/create-jobs" element={<CreateJob />} />
                   <Route path="/users" element={<User />} />
                   <Route path="/employee" element={<Employee />} />

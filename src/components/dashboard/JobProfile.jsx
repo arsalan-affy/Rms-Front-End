@@ -10,12 +10,14 @@ export function JobProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [jobDetail, setJobDetail] = useState("");
+  const [jobApplicant, setJobApplicant] = useState([])
 
   useEffect(() => {
     // Fetch job data using the ID from the URL
     const fetchJobData = async () => {
       try {
         const response = await axios.get(`/job/${id}`);
+        
         console.log(response);
         setJobDetail(response.data);
       } catch (error) {
@@ -24,55 +26,22 @@ export function JobProfile() {
     };
 
     fetchJobData();
+
+    const fetchJobApplicant = async () => {
+      try {
+        const response = await axios.get(`/job-applications/by-jobId/${id}`);
+        
+        console.log(response);
+        setJobApplicant(response.data)
+      } catch (error) {
+        console.error("Error fetching job data:", error);
+      }
+    };
+
+    fetchJobApplicant()
   }, [id]);
 
-  const applicantsData = [
-    {
-      id: 1,
-      applicant: "Sarah Connor",
-      company: "Tech Corp",
-      location: "New York, USA",
-      status: "Interview Scheduled",
-      rating: "★★★★☆",
-      applicationDate: "Oct 12, 2024",
-    },
-    {
-      id: 2,
-      applicant: "John Doe",
-      company: "Innovate Ltd.",
-      location: "London, UK",
-      status: "In-review",
-      rating: "★★★☆☆",
-      applicationDate: "Oct 9, 2024",
-    },
-    {
-      id: 3,
-      applicant: "Alice Smith",
-      company: "Future Works",
-      location: "Berlin, Germany",
-      status: "Offered",
-      rating: "★★★★★",
-      applicationDate: "Oct 15, 2024",
-    },
-    {
-      id: 4,
-      applicant: "Michael Brown",
-      company: "Dev Solutions",
-      location: "Sydney, Australia",
-      status: "In-review",
-      rating: "★★☆☆☆",
-      applicationDate: "Oct 11, 2024",
-    },
-    {
-      id: 5,
-      applicant: "Emily Davis",
-      company: "CodeGen",
-      location: "Toronto, Canada",
-      status: "Hired",
-      rating: "★★★★★",
-      applicationDate: "Oct 8, 2024",
-    },
-  ];
+  
 
   return (
     <div className="me-md-2">
@@ -117,7 +86,7 @@ export function JobProfile() {
       </div>
 
       {/* Applicants Table */}
-      <div className="mt-4">
+      <div className="mt-4 text-center">
         <Table striped bordered hover>
           <thead className="table-light">
             <tr>
@@ -125,23 +94,21 @@ export function JobProfile() {
               <th>Company</th>
               <th>Location</th>
               <th>Status</th>
-              <th>Rating</th>
               <th>Application Date</th>
             </tr>
           </thead>
           <tbody>
-            {applicantsData.map((data, index) => (
+            {jobApplicant?.map((data, index) => (
               <tr
                 key={index}
                 className="cursor-pointer"
                 onClick={() => navigate("job-applicants/" + data?.id)}
               >
-                <td>{data.applicant}</td>
-                <td>{data.company}</td>
-                <td>{data.location}</td>
-                <td>{data.status}</td>
-                <td>{data.rating}</td>
-                <td>{data.applicationDate}</td>
+                <td>{data?.candidateName  || "-"}</td>
+                <td>{data?.company}</td>
+                <td>{data?.location}</td>
+                <td>{data?.status}</td>
+                <td>{data?.createdAt  || "-"}</td>
               </tr>
             ))}
           </tbody>
