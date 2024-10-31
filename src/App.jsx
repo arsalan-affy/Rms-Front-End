@@ -64,7 +64,7 @@ const App = () => {
                     element={<JobProfile />}
                   />
                   <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
                     element={<ApplicantProfile />}
                   />
                 </Route>
@@ -94,7 +94,7 @@ const App = () => {
                     element={<JobProfile />}
                   />
                   <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
                     element={<ApplicantProfile />}
                   />
                 </Route>
@@ -123,7 +123,7 @@ const App = () => {
                     element={<JobProfile />}
                   />
                   <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
                     element={<ApplicantProfile />}
                   />
                 </Route>
@@ -145,7 +145,7 @@ const App = () => {
                     element={<JobProfile />}
                   />
                   <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
                     element={<ApplicantProfile />}
                   />
                 </Route>
@@ -170,7 +170,7 @@ const App = () => {
                     element={<JobProfile />}
                   />
                   <Route
-                    path="/jobs/job-profile/:id/job-applicants/:id"
+                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
                     element={<ApplicantProfile />}
                   />
                 </Route>
