@@ -44,6 +44,8 @@ const ApplicantProfile = () => {
     }
   }, [jobId, applicantId]);
 
+  // const abc = job-applications/status
+
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
@@ -219,9 +221,26 @@ export function StatusPanel() {
   return (
     <Card
       className=" mb-3 shadow-lg scroll-hide  p-2"
-      style={{ height: "400px", overflow: "auto" }}
+      style={{ height: "auto", overflow: "auto" }}
     >
-      <div className="fw-semibold">New</div>
+      <ul className="list-unstyled">
+        <li className="p-1 cursor-pointer status-list-item ">
+         New
+        </li>
+        <li className="p-1 cursor-pointer status-list-item ">
+          In-Review
+        </li>
+        <li className="p-1 cursor-pointer status-list-item ">
+          Interview
+        </li>
+        <li className="p-1 cursor-pointer status-list-item ">
+          Offered
+        </li>
+        <li className="p-1 cursor-pointer status-list-item ">
+          Hired
+        </li>
+      </ul>
+      {/* <div className="fw-semibold">New</div>
       <div className="mb-1">
         <div className="fw-bold">In Review</div>
         <ul className="list-unstyled">
@@ -265,7 +284,7 @@ export function StatusPanel() {
           <li className="p-1 cursor-pointer status-list-item ">*Onboarding</li>
         </ul>
       </div>
-      <div className="fw-semibold">Hired</div>
+      <div className="fw-semibold">Hired</div> */}
     </Card>
   );
 }
