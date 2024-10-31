@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { IoChevronDown, IoChevronUp, IoReorderThree } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -19,6 +19,16 @@ const ApplicantProfile = () => {
   const navigate = useNavigate();
   const [isStatusPanel, setIsStatusPanel] = useState(false);
   const [isOption, setIsOpen] = useState(false);
+  const [progressCount, setProgressCount] = useState(25);
+
+  const handleProgress = () => {
+    if (progressCount == 100) {
+      setProgressCount(0);
+      return;
+    }
+    setProgressCount((prev) => prev + 25);
+  };
+
   function toggleIsOption() {
     setIsOpen((prev) => !prev);
   }
@@ -153,58 +163,88 @@ const ApplicantProfile = () => {
                   <div>{applicantData?.status || "-"}</div>
 
                   <div className="mb-1 fs-3">Rating: ★★★☆☆</div>
-
-                  <ProgressBar
-                    now={75}
-                    label="Offered"
-                    variant="success"
-                    className="mb-3"
-                  />
+                  <div className="d-flex align-content-center flex-column ">
+                    <ProgressBar
+                      now={progressCount}
+                      label={
+                        (progressCount == 0 && "Offered") ||
+                        (progressCount == 25 && "In-Review") ||
+                        (progressCount == 50 && "Interview") ||
+                        (progressCount == 75 && "Offered") ||
+                        (progressCount == 100 && "Hired")
+                      }
+                      variant="success"
+                      className="mb-2"
+                    />
+                    <div className="d-flex w-100 justify-content-between align-items-center">
+                      <span>New</span>
+                      <span>In-Review</span>
+                      <span>Interview</span>
+                      <span>Offered</span>
+                      <span>Hired</span>
+                    </div>
+                  </div>
 
                   <div className="d-flex justify-content-between mt-auto align-items-center">
                     <div className="d-flex justify-content-start gap-3">
-                      <div className="position-relative">
+                      <div className="position-relative d-flex align-items-center justify-content-center gap-2">
                         <button
                           style={{ background: "#29b447" }}
                           className="btn text-white d-flex justify-content-between gap-2 align-items-center "
-                          onClick={toggleStatusBar}
+                          onClick={handleProgress}
                         >
                           Move Forward
-                          {isStatusPanel ? <IoChevronDown /> : <IoChevronUp />}
                         </button>
+
+                        {/* <div
+                          onClick={toggleStatusBar}
+                          className="cursor-pointer btn text-white"
+                          style={{ background: "#29b447" }}
+                        >
+                          {isStatusPanel ? <IoChevronDown /> : <IoChevronUp />}
+                        </div>
                         {isStatusPanel && (
                           <div
                             className="position-absolute"
                             style={{
-                              top: "-1050%",
+                              top: "-500%",
+
                               minWidth: "200px",
                               height: "100%",
                             }}
                           >
                             <StatusPanel />
                           </div>
-                        )}
+                        )} */}
+                        <div className="btn-group dropup">
+                          <button
+                            type="button"
+                            className="btn btn-secondary dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          ></button>
+                          <ul className="dropdown-menu">
+                            <StatusPanel />
+                          </ul>
+                        </div>
                       </div>
 
                       <Button variant="outline-danger">Reject</Button>
                     </div>
                     <div className="position-relative">
-                      <button className="btn " onClick={toggleIsOption}>
-                        <HiOutlineDotsVertical />
-                      </button>
-                      {isOption && (
+                      <div className="btn-group dropup">
                         <div
-                          className="position-absolute"
-                          style={{
-                            top: "-500%",
-                            left: "-400%",
-                            minWidth: "200px",
-                            height: "100%",
-                          }}
+                          type="button"
+                          className=""
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
                         >
-                          <ActionPanel />
+                          <HiOutlineDotsVertical />
                         </div>
-                      )}
+                        <ul className="dropdown-menu">
+                          <ActionPanel />
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </Card.Body>
@@ -219,93 +259,44 @@ const ApplicantProfile = () => {
 
 export function StatusPanel() {
   return (
-    <Card
-      className=" mb-3 shadow-lg scroll-hide  p-2"
-      style={{ height: "auto", overflow: "auto" }}
-    >
-      <ul className="list-unstyled">
-        <li className="p-1 cursor-pointer status-list-item ">
-         New
-        </li>
-        <li className="p-1 cursor-pointer status-list-item ">
-          In-Review
-        </li>
-        <li className="p-1 cursor-pointer status-list-item ">
-          Interview
-        </li>
-        <li className="p-1 cursor-pointer status-list-item ">
-          Offered
-        </li>
-        <li className="p-1 cursor-pointer status-list-item ">
-          Hired
-        </li>
-      </ul>
-      {/* <div className="fw-semibold">New</div>
-      <div className="mb-1">
-        <div className="fw-bold">In Review</div>
-        <ul className="list-unstyled">
-          <li className="p-1 cursor-pointer status-list-item ">
-            *Recruiter Screen
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            *HM Profile Review
-          </li>
-        </ul>
-      </div>
-      <div className="mb-1">
-        <div className="fw-bold">Interview</div>
-        <ul className="list-unstyled">
-          <li className="p-1 cursor-pointer status-list-item ">
-            *HM Interview
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            Tech Interview
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            Optional Interviews
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            *HR Interview
-          </li>
-        </ul>
-      </div>
-      <div className="mb-1">
-        <div className="fw-bold">Offered</div>
-        <ul className="list-unstyled">
-          <li className="p-1 cursor-pointer status-list-item ">
-            Offer Approval
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            Offer Pending
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">
-            *Offer Accepted
-          </li>
-          <li className="p-1 cursor-pointer status-list-item ">*Onboarding</li>
-        </ul>
-      </div>
-      <div className="fw-semibold">Hired</div> */}
-    </Card>
+    <ul className="list-unstyled ">
+      <li className="p-2 cursor-pointer status-list-item ">New</li>
+      <li className="p-2 cursor-pointer status-list-item ">In-Review</li>
+      <li className="p-2 cursor-pointer status-list-item ">Interview</li>
+      <li className="p-2 cursor-pointer status-list-item ">Offered</li>
+      <li className="p-2 cursor-pointer status-list-item ">Hired</li>
+    </ul>
   );
 }
 
 export function ActionPanel() {
   return (
-    <Card
-      className="p-2 shadow-sm scroll-hide"
-      style={{ height: "180px", overflow: "auto" }}
-    >
-      <ul className="list-unstyled">
-        <li className="cursor-pointer p-2 mb-2 ">Mark as withdrawn</li>
-        <li className="cursor-pointer p-2 mb-2 ">Add to job</li>
-        <li className="cursor-pointer p-2 mb-2 ">Add to community</li>
-        <li className="cursor-pointer p-2 mb-2 ">Remove from this job</li>
-        <li className="cursor-pointer p-2 mb-2 ">Defer</li>
-        <li className="cursor-pointer p-2 mb-2 ">Add employee badge</li>
-        <li className="text-danger">Delete candidate</li>
-        <li className="text-danger">Delete job application</li>
-      </ul>
-    </Card>
+    <ul className="list-unstyled">
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Mark as withdrawn
+      </li>
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Add to job
+      </li>
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Add to community
+      </li>
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Remove from this job
+      </li>
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Defer
+      </li>
+      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+        Add employee badge
+      </li>
+      <li className="text-danger p-2 cursor-pointer status-list-item">
+        Delete candidate
+      </li>
+      <li className="text-danger p-2 cursor-pointer status-list-item">
+        Delete job application
+      </li>
+    </ul>
   );
 }
 
