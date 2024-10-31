@@ -14,19 +14,23 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IoChevronDown, IoChevronUp, IoReorderThree } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ApplicantProfile = () => {
   const navigate = useNavigate();
   const [isStatusPanel, setIsStatusPanel] = useState(false);
   const [isOption, setIsOpen] = useState(false);
-  const [progressCount, setProgressCount] = useState(25);
+  const [progressCount, setProgressCount] = useState(0);
 
-  const handleProgress = () => {
-    if (progressCount == 100) {
-      setProgressCount(0);
-      return;
-    }
-    setProgressCount((prev) => prev + 25);
+  const handleProgress = (status) => {
+    const statusProgress = {
+      "NEW": 10,
+      "IN_REVIEW": 25,
+      "INTERVIEW": 50,
+      "OFFERED": 75,
+      "HIRED": 100,
+    };
+    setProgressCount(statusProgress[status] || 0);
   };
 
   function toggleIsOption() {
@@ -54,39 +58,33 @@ const ApplicantProfile = () => {
     }
   }, [jobId, applicantId]);
 
-  // const abc = job-applications/status
-
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
       <Row>
-        {/* Main Content */}
         <Col xs={12} className="p-4">
-          {/* Row with d-flex to make columns equal height */}
           <Row className="d-flex" style={{ height: "100%" }}>
-            {/* Left Section */}
             <Col md={8} className="h-100 m-0 p-0">
               <Card className="border-0">
                 <Card.Body
                   className="border-black rounded-2 shadow-main"
                   style={{
                     background:
-                      "linear-gradient(to bottom right, #B9C0FF, #fff)", // Gradient from top left to bottom right
+                      "linear-gradient(to bottom right, #B9C0FF, #fff)",
                   }}
                 >
                   <ArrowLeft
                     onClick={() => navigate(-1)}
                     className="position-absolute cursor-pointer "
                   />
-                  <Row>
-                    {/* TJ Circle */}
+                  <Row className="jusitfy-content-center mt-2">
                     <Col
-                      xs={6}
+                      xs={2}
                       sm={2}
                       className="d-flex align-items-center justify-content-center rounded-2 "
                     >
                       <div
-                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main ms-md-4"
+                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main"
                         style={{
                           height: "65px",
                           width: "65px",
@@ -96,25 +94,40 @@ const ApplicantProfile = () => {
                         TJ
                       </div>
                     </Col>
-
-                    {/* Applicant Info */}
-                    <Col xs={6} className="fw-bold ">
+                    <Col xs={4} className="fw-bold ">
                       <div className="fs-3 fw-bold">
                         {applicantData?.candidateName}
                       </div>
-                      <div className="d-flex flex-column justify-content-between mt-2 w-100 fs-6">
-                        <div className="d-flex align-items-center gap-2 mt-2">
-                          <MapPin />
-                          {applicantData?.location || "-"}
-                        </div>
-                        <div className="d-flex align-items-center gap-2 mt-2">
-                          <Mail />
+                      <div className="d-flex flex-column justify-content-between w-100 fs-6">
+                        <div className="d-flex align-items-center gap-2">
+                          <Mail size={16} />
                           {applicantData?.email || "-"}
                         </div>
-                        <div className="d-flex align-items-center gap-2 mt-2">
-                          <Phone />
+                        <div className="d-flex align-items-center gap-2">
+                          <Phone size={16} />
                           {applicantData?.phone || "-"}
                         </div>
+                      </div>
+                    </Col>
+
+                    <Col xs={5}>
+                      <div className="d-flex align-items-center gap-2 mt-2">
+                        <label>
+                          <b>Applied On:</b>
+                        </label>
+                        {applicantData?.appliedAt
+                          ? new Date(applicantData.appliedAt).toLocaleString({
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })
+                          : "-"}
+                      </div>
+                      <div className="d-flex align-items-center gap-2 mt-2">
+                        <MapPin size={16} />
+                        {applicantData?.location || "-"}
                       </div>
                     </Col>
                   </Row>
@@ -148,7 +161,6 @@ const ApplicantProfile = () => {
               </Card>
             </Col>
 
-            {/* Right Section */}
             <Col md={4} className="h-100 ">
               <Card className="mb-4 shadow-main h-100 ms-md-2">
                 <Card.Body className="d-flex flex-column justify-content-between">
@@ -167,7 +179,7 @@ const ApplicantProfile = () => {
                     <ProgressBar
                       now={progressCount}
                       label={
-                        (progressCount == 0 && "Offered") ||
+                        (progressCount == 10 && "New") ||
                         (progressCount == 25 && "In-Review") ||
                         (progressCount == 50 && "Interview") ||
                         (progressCount == 75 && "Offered") ||
@@ -224,7 +236,7 @@ const ApplicantProfile = () => {
                             aria-expanded="false"
                           ></button>
                           <ul className="dropdown-menu">
-                            <StatusPanel />
+                            <StatusPanel setApplicantData={setApplicantData} handleProgress ={handleProgress } />
                           </ul>
                         </div>
                       </div>
@@ -257,15 +269,66 @@ const ApplicantProfile = () => {
   );
 };
 
-export function StatusPanel() {
+export function StatusPanel({ setApplicantData,handleProgress  }) {
+  const { applicantId } = useParams();
+  const token = localStorage.getItem("token");
+  const userInfo = token && jwtDecode(token);
+
+ 
+
+  const updateApplicationStatus = async (newStatus) => {
+    try {
+      const response = await axios.put("/job-applications/status", {
+        applicationId: applicantId,
+        status: newStatus,
+        updatedBy: userInfo.claims.id,
+      });
+      setApplicantData((prev) => ({ ...prev, status: newStatus }));
+      handleProgress(newStatus);
+    } catch (error) {
+      console.error("Error updating application status:", error);
+    }
+  };
   return (
-    <ul className="list-unstyled ">
-      <li className="p-2 cursor-pointer status-list-item ">New</li>
-      <li className="p-2 cursor-pointer status-list-item ">In-Review</li>
-      <li className="p-2 cursor-pointer status-list-item ">Interview</li>
-      <li className="p-2 cursor-pointer status-list-item ">Offered</li>
-      <li className="p-2 cursor-pointer status-list-item ">Hired</li>
-    </ul>
+    // <ul className="list-unstyled ">
+    //   <li
+    //     className="p-2 cursor-pointer status-list-item"
+    //     onClick={() => handleStatusChange("PENDING")}
+    //   >
+    //     New
+    //   </li>
+    //   <li
+    //     className="p-2 cursor-pointer status-list-item"
+    //     onClick={() => handleStatusChange("IN_REVIEW")}
+    //   >
+    //     In-Review
+    //   </li>
+    //   <li
+    //     className="p-2 cursor-pointer status-list-item"
+    //     onClick={() => handleStatusChange("INTERVIEW")}
+    //   >
+    //     Interview
+    //   </li>
+    //   <li
+    //     className="p-2 cursor-pointer status-list-item"
+    //     onClick={() => handleStatusChange("OFFERED")}
+    //   >
+    //     Offered
+    //   </li>
+    //   <li
+    //     className="p-2 cursor-pointer status-list-item"
+    //     onClick={() => handleStatusChange("HIRED")}
+    //   >
+    //     Hired
+    //   </li>
+    // </ul>
+    <ul className="list-unstyled">
+    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("NEW")}>New</li>
+    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("IN_REVIEW")}>In-Review</li>
+    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("INTERVIEW")}>Interview</li>
+    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("OFFERED")}>Offered</li>
+    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("HIRED")}>Hired</li>
+  </ul>
   );
 }
 
