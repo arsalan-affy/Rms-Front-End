@@ -228,10 +228,11 @@ const ApplicantProfile = () => {
                             <StatusPanel />
                           </div>
                         )} */}
-                        <div className="btn-group dropup">
+                        <div className="btn-group dropup text-white">
                           <button
                             type="button"
-                            className="btn btn-secondary dropdown-toggle"
+                            style={{ background: "#29b447" }}
+                            className="btn  dropdown-toggle"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           ></button>
