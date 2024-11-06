@@ -7,10 +7,13 @@ import "react-quill/dist/quill.snow.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
+  const {parentId} = useParams()
+  console.log(parentId)
 
   const [formData, setFormData] = useState({ resume: null });
   const {
@@ -23,7 +26,8 @@ export default function Careers() {
   const [showSuccess, setShowSuccess] = useState(false);
   useEffect(() => {
     axios
-      .get("/job/by-approval?approval=PUBLISHED")
+      // .get("/job/by-approval?approval=PUBLISHED")
+      .get(`/job/published/byParent/${parentId}`)
       .then((response) => {
         setJobs(response.data);
       })
