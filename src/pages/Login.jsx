@@ -38,11 +38,14 @@ const Login = () => {
       case "ADMIN":
         navigate("/admin");
         break;
-      case "RMS":
-        navigate("/rms");
+      case "RECRUITMENT_MANAGER":
+        navigate("/recruitment_manager");
         break;
       case "USER":
         navigate("/user");
+        break;
+      case "EMPLOYEE":
+        navigate("/employee");
         break;
       default:
         navigate("/");
@@ -62,7 +65,9 @@ const Login = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("role", decoded?.claims?.role);
       // console.log(userData);
-      navigateByRole(localStorage.getItem("role"));
+      const role = localStorage.getItem("role");
+      console.log(role);
+      navigateByRole(role);
     } catch (error) {
       console.error(error);
     } finally {

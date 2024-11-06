@@ -11,6 +11,7 @@ const Employee = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const userData = token && jwtDecode(token);
+  console.log(userData,"EMPLOYEE DETAILS")
   const fetchCompanies = async () => {
     try {
       const response = await axios.get(

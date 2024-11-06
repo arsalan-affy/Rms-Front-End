@@ -11,6 +11,8 @@ const Candidates = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const userData = token && jwtDecode(token);
+  const role = localStorage.getItem("role");
+  console.log(role, "CANDIDATES ROLE");
   const fetchCompanies = async () => {
     try {
       const response = await axios.get(
@@ -23,7 +25,7 @@ const Candidates = () => {
     }
   };
   useEffect(() => {
-    fetchCompanies();
+    role == "RECRUITMENT_MANAGER" && fetchCompanies();
   }, []);
   return (
     <div className="me-md-3">

@@ -11,7 +11,6 @@ import {
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoChevronDown, IoChevronUp, IoReorderThree } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -33,12 +32,12 @@ const ApplicantProfile = () => {
     setProgressCount(statusProgress[status] || 0);
   };
 
-  function toggleIsOption() {
-    setIsOpen((prev) => !prev);
-  }
-  function toggleStatusBar() {
-    setIsStatusPanel((prev) => !prev);
-  }
+  // function toggleIsOption() {
+  //   setIsOpen((prev) => !prev);
+  // }
+  // function toggleStatusBar() {
+  //   setIsStatusPanel((prev) => !prev);
+  // }
 
   const { jobId, applicantId } = useParams();
   const [applicantData, setApplicantData] = useState("");
