@@ -31,7 +31,7 @@ import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
 
 // axios.defaults.baseURL = "http://localhost:8081/api/";
-axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
+axios.defaults.baseURL = "http://192.168.1.74:8080/api/";
 // export const baseUrl = "http://localhost:3001";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -39,7 +39,7 @@ const App = () => {
     const role = localStorage.getItem("role");
     if (!role || !allowedRoles.includes(role)) {
       return <Navigate to="/not-found" state={{ from: location }} />;
-    }
+    } 
     return children;
   }
   return (
