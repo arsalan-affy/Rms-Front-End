@@ -33,7 +33,7 @@ import Careers from "./pages/Careers";
 axios.defaults.baseURL = "http://localhost:8081/api/";
 // axios.defaults.baseURL = "http://192.168.1.74:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
-axios.defaults.baseURL = "http://192.168.1.67:8080/api/";
+axios.defaults.baseURL = "http://192.168.1.38:8081/api/";
 // export const baseUrl = "http://localhost:3001";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
