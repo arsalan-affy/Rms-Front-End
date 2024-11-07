@@ -2,9 +2,28 @@
 import { User2 } from "lucide-react";
 import Title from "../dashboard/Title";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const User = () => {
   const jobList = [
+    {
+      title: "Sr. Test Engineer",
+      location: "Bangalore, Karnataka",
+      experience: "2-5 years",
+      rating: 5,
+    },
+    {
+      title: "Sr. Test Engineer",
+      location: "Bangalore, Karnataka",
+      experience: "2-5 years",
+      rating: 5,
+    },
+    {
+      title: "Sr. Test Engineer",
+      location: "Bangalore, Karnataka",
+      experience: "2-5 years",
+      rating: 5,
+    },
     {
       title: "Sr. Test Engineer",
       location: "Bangalore, Karnataka",
@@ -29,9 +48,9 @@ const User = () => {
     <>
       <Title icon={User2} title={active == "Home" ? "Users" : "Jobs"} />
       <div className="me-md-4 m-md-0 m-3 mt-4">
-        <div className="row mt-2">
+        <div className="row mt-2 container-fluid mx-auto">
           {/* Profile Section */}
-          <div className="col-lg-3 col-md-4">
+          <div className="col-lg-3 col-md-3">
             <ProfileCard setActive={setActive} active={active} />
           </div>
           {active === "Home" && (
@@ -46,7 +65,10 @@ const User = () => {
                   </button>
                 </div>
               </div>
-              <div>
+              <div
+                className="scroll-hide"
+                style={{ overflow: "auto", height: "40rem" }}
+              >
                 {jobList?.map((job, index) => (
                   <JobCard key={index} job={job} />
                 ))}
@@ -60,13 +82,13 @@ const User = () => {
             </div>
           )}
           {active === "Jobs" && (
-            <div className="col-lg-10">
+            <div className="col-lg-9">
               <div className="mb-3 fs-2 fw-semibold ">Jobs for you</div>
-              <div>
+              <>
                 {jobList?.map((job, index) => (
                   <JobCard key={index} job={job} />
                 ))}
-              </div>
+              </>
             </div>
           )}
         </div>
@@ -77,7 +99,7 @@ const User = () => {
 
 const ProfileCard = ({ setActive, active }) => {
   return (
-    <div className="profile-card text-center d-flex flex-column">
+    <div className="profile-card text-center d-flex flex-column w-100 mx-auto">
       <div
         className="rounded-circle  mx-auto mb-4 d-flex align-items-center justify-content-center "
         style={{
@@ -117,20 +139,26 @@ const ProfileCard = ({ setActive, active }) => {
 };
 
 const JobCard = ({ job = {} }) => {
+  const location = useLocation();
   const stars = "★".repeat(job.rating) + "☆".repeat(5 - job.rating);
+  const routeTo = location.pathname.includes("/jobs")
+    ? job.title
+    : "/user/jobs/" + job.title;
 
   return (
-    <div className="job-card mb-3 border">
+    <div className="job-card mb-3 mx-2 border">
       <div className="mb-2 fs-4 fw-bold d-flex align-items-center justify-content-between w-100">
-        {job.title}
         <div className="rating-stars">{stars}</div>
       </div>
       <div className="mb-1">{job?.location}</div>
       <div className="mb-1">{job?.experience}</div>
       <div className="d-flex justify-content-between">
-        <button className="apply-btn btn rounded-2 shadow-sm fw-bold text-white bg-yellow">
+        <Link
+          to={routeTo}
+          className="apply-btn btn rounded-2 shadow-sm fw-bold text-white bg-yellow"
+        >
           Apply
-        </button>
+        </Link>
       </div>
     </div>
   );
@@ -140,7 +168,7 @@ const JobSearchJourney = () => {
   return (
     <div>
       <div>Where are you in your job search journey?</div>
-      <div className="col-12 ">
+      <div className="row g-2 ">
         <button className="btn btn-outline-primary col-6 btn-sm ">
           Actively searching jobs
         </button>
