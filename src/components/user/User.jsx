@@ -2,7 +2,7 @@
 import { User2 } from "lucide-react";
 import Title from "../dashboard/Title";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const User = () => {
   const jobList = [
@@ -77,7 +77,7 @@ const User = () => {
           )}
           {/* Job Search Journey Section */}
           {active === "Home" && (
-            <div className="col-lg-3 col-md-12 ">
+            <div className="col-lg-3 col-md-12  border">
               <JobSearchJourney />
             </div>
           )}
@@ -141,12 +141,16 @@ const ProfileCard = ({ setActive, active }) => {
 const JobCard = ({ job = {} }) => {
   const location = useLocation();
   const stars = "★".repeat(job.rating) + "☆".repeat(5 - job.rating);
+  const navigate = useNavigate();
   const routeTo = location.pathname.includes("/jobs")
     ? job.title
-    : "/user/jobs/" + job.title;
+    : "/users/jobs/" + job.title;
 
   return (
-    <div className="job-card mb-3 mx-2 border">
+    <div
+      className="job-card mb-3 mx-2 border cursor-pointer"
+      onClick={() => navigate(routeTo)}
+    >
       <div className="mb-2 fs-4 fw-bold d-flex align-items-center justify-content-between w-100">
         <div className="rating-stars">{stars}</div>
       </div>
@@ -164,27 +168,103 @@ const JobCard = ({ job = {} }) => {
   );
 };
 
+const JobDescription = ({ job }) => {
+  return (
+    <div className="container mt-5">
+      <div className="card p-4 shadow-sm" style={{ borderRadius: "10px" }}>
+        <div className="d-flex justify-content-between align-items-start">
+          <div>
+            <h4>Sr. Test Engineer</h4>
+            <p className="text-muted mb-1">Bangalore, Karnataka</p>
+            <p className="text-muted">2-5 years</p>
+          </div>
+          <div className="text-end">
+            <span className="text-warning">☆☆☆☆☆</span>
+          </div>
+        </div>
+        <h5 className="mt-3">Job Description</h5>
+        <div className="row mt-3">
+          <div className="col-md-4">
+            <div
+              className="card p-3 shadow-sm text-white"
+              style={{ backgroundColor: "#6A5ACD", borderRadius: "10px" }}
+            >
+              <h6 className="mb-3">
+                Desired Profile <i className="bi bi-person-circle"></i>
+              </h6>
+              <ul className="list-unstyled">
+                <li>abc</li>
+                <li>abc</li>
+                <li>abc</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div
+              className="card p-3 shadow-sm text-white"
+              style={{ backgroundColor: "#40E0D0", borderRadius: "10px" }}
+            >
+              <h6 className="mb-3">
+                Qualification <i className="bi bi-file-earmark-text"></i>
+              </h6>
+              <ul className="list-unstyled">
+                <li>abc</li>
+                <li>abc</li>
+                <li>abc</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div
+              className="card p-3 shadow-sm text-white"
+              style={{ backgroundColor: "#3B5998", borderRadius: "10px" }}
+            >
+              <h6 className="mb-3">
+                Skills Required <i className="bi bi-box-seam"></i>
+              </h6>
+              <ul className="list-unstyled">
+                <li>abc</li>
+                <li>abc</li>
+                <li>abc</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <button
+          className="btn btn-warning mt-4"
+          style={{ borderRadius: "5px" }}
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const JobSearchJourney = () => {
   return (
     <div>
       <div>Where are you in your job search journey?</div>
-      <div className="row g-2 ">
-        <button className="btn btn-outline-primary col-6 btn-sm ">
+      <div className="col-12 ">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Actively searching jobs
         </button>
-        <button className="btn btn-outline-primary col-6 btn-sm">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Preparing for interview
         </button>
-        <button className="btn btn-outline-primary col-6 btn-sm">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Appearing for interview
         </button>
-        <button className="btn btn-outline-primary col-6 btn-sm">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Received a job offer
         </button>
-        <button className="btn btn-outline-primary col-6 btn-sm">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Casually exploring jobs
         </button>
-        <button className="btn btn-outline-primary col-6 btn-sm">
+        <button className="btn btn-outline-primary col-5 btn-sm m-2">
           Not looking for jobs
         </button>
       </div>
