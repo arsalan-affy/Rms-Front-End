@@ -12,10 +12,11 @@ import { useParams } from "react-router-dom";
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  const {parentId} = useParams()
-  console.log(parentId)
+  const { parentId } = useParams();
+  console.log(parentId);
 
   const [formData, setFormData] = useState({ resume: null });
+  const [isUploading, setIsUploading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,6 +25,7 @@ export default function Careers() {
   } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
   useEffect(() => {
     axios
       // .get("/job/by-approval?approval=PUBLISHED")
@@ -36,12 +38,49 @@ export default function Careers() {
       });
   }, []);
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, resume: e.target.files[0] });
+  // const handleFileChange = (e) => {
+  //   setFormData({ ...formData, resume: e.target.files[0] });
+  // };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    setFormData({ ...formData, resume: file });
+
+    // Disable fields during upload
+    setIsUploading(true);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("resume", file);
+
+    try {
+      const response = await axios.post(
+        "/job-applications/get-resume",
+        formDataToSend,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log("CV data:", response.data); // Log CV data to console
+      const cvData = response.data;
+      reset({
+        firstName: cvData.Full_Name.split(" ")[0] || "",
+        lastName: cvData.Full_Name.split(" ").slice(1).join(" ") || "",
+        email: cvData.Email || "",
+        phone: cvData.Phone || "",
+        address: cvData.Address || "",
+        professionalSummary: cvData.Professional_Summary || "",
+        profileTitle: cvData.Profile_Title || "",
+      });
+    } catch (error) {
+      console.error("Error uploading CV:", error);
+    } finally {
+      // Re-enable fields after upload
+      setIsUploading(false);
+    }
   };
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true); // Disable the button and show spinner
+    setIsSubmitting(true);
     const formDataToSend = new FormData();
     formDataToSend.append("firstName", data.firstName);
     formDataToSend.append("lastName", data.lastName);
@@ -296,8 +335,114 @@ export default function Careers() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-4 position-relative loader-box">
+                    {isUploading && (
+                      <div className="overlay d-flex justify-content-center align-items-center">
+                        <div
+                          className="spinner-border text-primary"
+                          role="status"
+                        >
+                        </div>
+                      </div>
+                    )}
                     <form
+                      className="card p-3"
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
+                      <div className="mb-3">
+                        <label className="form-label">Resume/CV</label>
+                        <input
+                          type="file"
+                          className="form-control"
+                          name="resume"
+                          onChange={handleFileChange}
+                          required
+                          disabled={isUploading || isSubmitting}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">First Name</label>
+                        <input
+                          type="text"
+                          className={`form-control ${
+                            errors.firstName ? "is-invalid" : ""
+                          }`}
+                          placeholder="Enter First Name"
+                          {...register("firstName", {
+                            required: "First name is required",
+                          })}
+                          disabled={isUploading || isSubmitting} // Disable field if uploading
+                        />
+                      </div>
+                      <div className="invalid-feedback">
+                        {errors.firstName?.message}
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Last Name</label>
+                        <input
+                          type="text"
+                          className={`form-control ${
+                            errors.lastName ? "is-invalid" : ""
+                          }`}
+                          placeholder="Enter Last Name"
+                          {...register("lastName", {
+                            required: "Last name is required",
+                          })}
+                          disabled={isUploading || isSubmitting}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                          type="email"
+                          className={`form-control ${
+                            errors.email ? "is-invalid" : ""
+                          }`}
+                          placeholder="Enter Email"
+                          {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                              value:
+                                /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                              message: "Invalid email format",
+                            },
+                          })}
+                          disabled={isUploading || isSubmitting}
+                        />
+                      </div>
+                      <div className="invalid-feedback">
+                        {errors.email?.message}
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Mobile</label>
+                        <input
+                          type="tel"
+                          maxLength={10}
+                          className={`form-control ${
+                            errors.phone ? "is-invalid" : ""
+                          }`}
+                          placeholder="Enter Mobile"
+                          {...register("phone", {
+                            required: "Phone number is required",
+                            pattern: {
+                              value: /^[0-9]{10,}$/,
+                              message:
+                                "Phone number must be at least 10 digits",
+                            },
+                          })}
+                          disabled={isUploading || isSubmitting}
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="btn btn-primary my-3 w-100"
+                        disabled={isUploading || isSubmitting}
+                      >
+                        {isSubmitting ? "Submitting..." : "Submit Application"}
+                      </button>
+                    </form>
+                    {/* <form
                       className="card p-3"
                       onSubmit={handleSubmit(onSubmit)}
                     >
@@ -404,7 +549,7 @@ export default function Careers() {
                           "Submit Application"
                         )}
                       </button>
-                    </form>
+                    </form> */}
                   </div>
                 </div>
                 <div className="modal-footer">
