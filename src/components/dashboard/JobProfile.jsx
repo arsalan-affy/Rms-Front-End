@@ -18,7 +18,7 @@ export function JobProfile() {
     const fetchJobData = async () => {
       try {
         const response = await axios.get(`/job/${id}`);
-
+        
         const timeParse = new Date(response.data.createdAt).toUTCString();
         setTime(timeParse);
 

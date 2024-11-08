@@ -86,6 +86,32 @@ const ApplicantProfile = () => {
     }
   };
 
+  const [file, setFile] = useState(null);
+  const handleFetchAndUpload = async () => {
+    console.log(applicantData?.resumeUrl)
+    try {
+      const response = await fetch(applicantData?.resumeUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch file");
+      }
+  
+      const blob = await response.blob();
+      const fileName = applicantData?.resumeUrl.split("/").pop();
+      const file = new File([blob], fileName, { type: blob.type });
+  
+      setFile(file); // Sets the file to state for further processing
+      console.log("File ready for upload:", file);
+    } catch (error) {
+      console.error("Error fetching file:", error);
+    }
+  };
+
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
@@ -191,10 +217,30 @@ const ApplicantProfile = () => {
                     ) : (
                       <>
                         <h6>Resume</h6>
-                        <p>No Resume found for this candidate yet.</p>
-                        <a href="#" className="text-decoration-none text-blue">
-                          ADD RESUME
-                        </a>
+                        {/* <div>
+                          <button onClick={handleFetchAndUpload}>
+                            Upload Resume
+                          </button>
+                          {file && <p>File ready: {file.name}</p>}
+                        </div> */}
+                        {applicantData?.resumeUrl ? (
+                          <iframe
+                            src={applicantData?.resumeUrl}
+                            width="100%"
+                            height="300px"
+                            title="Applicant Resume"
+                          />
+                        ) : (
+                          <>
+                            <p>No Resume found for this candidate yet.</p>
+                            <a
+                              href="#"
+                              className="text-decoration-none text-blue"
+                            >
+                              ADD RESUME
+                            </a>
+                          </>
+                        )}
                       </>
                     )}
                   </Card.Body>
