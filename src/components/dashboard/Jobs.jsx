@@ -38,8 +38,8 @@ const Jobs = () => {
       <div className="w-75 mx-auto mt-4">
         <DashboardInput />
       </div>
-      <div className="d-flex gap-4 w-100">
-        <div className="my-md-4">
+      <div className="d-flex gap-4 w-100  mt-md-0 ">
+        <div className="my-3 mx-2">
           <div className="row">
             <div className="col">
               <select className="form-select rounded-3">
@@ -69,7 +69,7 @@ const Jobs = () => {
                 <option>Option 2</option>
               </select>
             </div>
-            <div className="col">
+            <div className="col d-none d-md-block">
               <select className="form-select rounded-3">
                 <option>Hiring Manager</option>
                 <option>Option 1</option>
@@ -80,7 +80,7 @@ const Jobs = () => {
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <button
-            className="btn btn-outline-dark"
+            className="btn  btn-outline-dark"
             onClick={() => navigate("create-jobs")}
           >
             Create Jobs
@@ -97,8 +97,8 @@ export function JobTable({ jobs = [] }) {
 
   return (
     <div className="">
-      <table className="table table-striped table-hover border text-center">
-        <thead className="table-light">
+      <table className="table table-striped table-hover border text-center ">
+        <thead className="table-light ">
           <tr>
             <th scope="col">S No.</th>
             <th scope="col">Title</th>
@@ -117,7 +117,7 @@ export function JobTable({ jobs = [] }) {
             <th scope="col">Job Additional Information</th> */}
           </tr>
         </thead>
-        <tbody className="jobs-table">
+        <tbody className="jobs-table ">
           {jobs?.map((job, index) => (
             <tr
               key={index}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect,  useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, BaggageClaimIcon } from "lucide-react";
@@ -10,15 +10,18 @@ export function JobProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [jobDetail, setJobDetail] = useState("");
-  const [jobApplicant, setJobApplicant] = useState([])
+  const [jobApplicant, setJobApplicant] = useState([]);
+  const [time, setTime] = useState("-");
 
   useEffect(() => {
     // Fetch job data using the ID from the URL
     const fetchJobData = async () => {
       try {
         const response = await axios.get(`/job/${id}`);
-        
-        console.log(response);
+
+        const timeParse = new Date(response.data.createdAt).toUTCString();
+        setTime(timeParse);
+
         setJobDetail(response.data);
       } catch (error) {
         console.error("Error fetching job data:", error);
@@ -30,37 +33,37 @@ export function JobProfile() {
     const fetchJobApplicant = async () => {
       try {
         const response = await axios.get(`/job-applications/by-jobId/${id}`);
-        
         console.log(response);
-        setJobApplicant(response.data)
+        setJobApplicant(response.data);
+        // setTime(new Date(response?.data?.createdAt));
+        const time = response?.data?.createdAt;
+        console.log(time);
       } catch (error) {
         console.error("Error fetching job data:", error);
       }
     };
 
-    fetchJobApplicant()
+    fetchJobApplicant();
   }, [id]);
-
-  
 
   return (
     <div className="me-md-2">
       {/* Profile Header */}
       <Title icon={BaggageClaimIcon} title={"Job-profile"} />
       <div
-        className="d-flex justify-content-between align-items-start align-items-md-center p-3 flex-sm-row flex-column rounded border mt-3"
+        className="d-flex justify-content-between align-items-start align-items-md-center p-3 flex-sm-row flex-column rounded border mt-3 mx-2"
         style={{
           background: "linear-gradient(to bottom right, #B9C0FF, #fff)", // Gradient from top left to bottom right
         }}
       >
-        <div className="d-flex align-items-start gap-4 justify-content-center">
+        <div className="d-flex align-items-start gap-4 justify-content-center ">
           <ArrowLeft onClick={() => navigate(-1)} className="cursor-pointer" />
           <div>
             <h4>{jobDetail?.jobTitle}</h4>
             <p className="mb-0">Created By: {jobDetail?.createdBy?.name}</p>
             <p className="mb-0">{jobDetail?.jobLocation}</p>
             <p className="text-muted mb-0">{jobDetail?.jobApproval}</p>
-            <p className="text-muted mb-0">{jobDetail?.createdAt}</p>
+            <p className="text-muted mb-0">{time}</p>
           </div>
         </div>
         <div>
@@ -74,9 +77,9 @@ export function JobProfile() {
       </div>
 
       {/* Search & Filters */}
-      <div className="mt-4 p-3 bg-white rounded border">
+      <div className="mt-4 p-3 bg-white rounded border mx-2">
         <div className="d-flex align-items-md-center gap-2 justify-content-between flex-column flex-sm-row">
-          <div className="text-primary fs-4 fw-bolder text-center text-sm-start">
+          <div className="text-primary fs-4 fw-bolder text-center text-sm-start d-flex align-items-center justify-content-center">
             Applicants
           </div>
           <div className="w-75">
@@ -86,7 +89,7 @@ export function JobProfile() {
       </div>
 
       {/* Applicants Table */}
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center mx-2">
         <Table striped bordered hover>
           <thead className="table-light">
             <tr>
@@ -104,11 +107,11 @@ export function JobProfile() {
                 className="cursor-pointer"
                 onClick={() => navigate("job-applicants/" + data?.id)}
               >
-                <td>{data?.candidateName  || "-"}</td>
+                <td>{data?.candidateName || "-"}</td>
                 <td>{data?.company || "-"}</td>
                 <td>{data?.location || "-"}</td>
                 <td>{data?.status || "-"}</td>
-                <td>{data?.appliedAt  || "-"}</td>
+                <td>{data?.appliedAt || "-"}</td>
               </tr>
             ))}
           </tbody>

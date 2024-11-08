@@ -33,7 +33,7 @@ import Careers from "./pages/Careers";
 axios.defaults.baseURL = "http://localhost:8081/api/";
 // axios.defaults.baseURL = "http://192.168.1.74:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
-axios.defaults.baseURL = "http://192.168.1.38:8081/api/";
+// axios.defaults.baseURL = "http://192.168.1.38:8081/api/";
 // export const baseUrl = "http://localhost:3001";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -58,7 +58,6 @@ const App = () => {
                 <Route path="/" element={<DashboardLayout />}>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/users" element={<User />} />
                   <Route path="/company" element={<Company />} />
                   <Route path="/company/create" element={<Create />} />
                   <Route
@@ -83,7 +82,6 @@ const App = () => {
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/jobs" element={<Jobs />} />
                   <Route path="/jobs/create-jobs" element={<CreateJob />} />
-                  <Route path="/users" element={<User />} />
                   <Route path="/managers" element={<Managers />} />
                   <Route path="/managers/create" element={<CreateManager />} />
                   <Route path="/sub-admin" element={<Employee />} />

@@ -9,7 +9,7 @@ const Dashboard = ({ navlinks }) => {
   console.log(navlinks);
 
   return (
-    <div>
+    <>
       <Title icon={Grid2x2Check} title={"Dashboard"} />
       <div className="row m-0 p-2 p-md-0">
         <div className="col-12 col-md-7 border-end h-100 p-md-4 px-2">
@@ -92,7 +92,7 @@ const Dashboard = ({ navlinks }) => {
           <DashboardInput />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

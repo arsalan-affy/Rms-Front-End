@@ -1,8 +1,5 @@
-import { jwtDecode } from "jwt-decode";
 import {
   BaggageClaim,
-  Book,
-  CableIcon,
   Factory,
   Grid2x2Check,
   Grid2x2CheckIcon,
@@ -11,15 +8,15 @@ import {
   User2,
   UserIcon,
   Users,
-  BriefcaseBusiness 
+  BriefcaseBusiness,
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FaJoint, FaUserNurse } from "react-icons/fa6";
+import { FaJoint } from "react-icons/fa6";
 const DashboardLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const userInfo = token && jwtDecode(token);
+  // const token = localStorage.getItem("token");
+  // const userInfo = token && jwtDecode(token);
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -32,7 +29,7 @@ const DashboardLayout = () => {
         name: "Dashboard",
         icon: (
           <Grid2x2Check
-            className={`dashboard-links cursor-pointer ${
+            className={` icon-size cursor-pointer ${
               location.pathname === "/superadmin" ? "text-yellow" : "text-white"
             } `}
           />
@@ -43,7 +40,7 @@ const DashboardLayout = () => {
         name: "School",
         icon: (
           <User2
-            className={`dashboard-links cursor-pointer ${
+            className={` icon-size cursor-pointer ${
               location.pathname === "/superadmin/users"
                 ? "text-yellow"
                 : "text-white"
@@ -56,7 +53,7 @@ const DashboardLayout = () => {
         name: "School",
         icon: (
           <BaggageClaim
-            className={`dashboard-links cursor-pointer ${
+            className={` icon-size cursor-pointer ${
               location.pathname === "/superadmin/jobs"
                 ? "text-yellow"
                 : "text-white"
@@ -69,7 +66,7 @@ const DashboardLayout = () => {
         name: "School",
         icon: (
           <Factory
-            className={`dashboard-links cursor-pointer ${
+            className={` icon-size cursor-pointer ${
               location.pathname === "/superadmin/company"
                 ? "text-yellow"
                 : "text-white"
@@ -97,7 +94,7 @@ const DashboardLayout = () => {
       {
         path: "/admin/jobs",
         name: "Jobs",
-        icon: <BriefcaseBusiness  className="icon-size" />,
+        icon: <BriefcaseBusiness className="icon-size" />,
       },
     ],
     RECRUITMENT_MANAGER: [
@@ -143,9 +140,9 @@ const DashboardLayout = () => {
 
   return (
     <div className="vh-100 d-md-flex w-100 ">
-      <div className="dashboard-nav d-flex align-items-center justify-content-center d-md-block me-md-3 py-md-5 d-none d-md-block  position-relative position-fixed h-100">
+      <div className="dashboard-nav d-flex align-items-center flex-column  d-md-block me-md-3 py-md-5 d-none d-md-block  position-relative position-fixed h-100  ">
         <div
-          className="logo fs-4 w-100 text-center text-white cursor-pointer fw-semibold fs-4"
+          className="logo fs-4  w-100 mb-2 text-center text-white cursor-pointer fw-semibold fs-4"
           onClick={() => navigate("/")}
         >
           Logo
@@ -174,49 +171,48 @@ const DashboardLayout = () => {
               </Link>
             </li>
           ))}
-          <div
-            className="mx-3 mb-4"
-            style={{ position: "absolute", bottom: 0 }}
-          >
-            <button
-              className={"text-yellow btn text-center w-100 mt-5 "}
-              onClick={handleLogout} // Close dropdown when clicked
-            >
-              <LogOut />
-            </button>
-          </div>
         </ul>
+        <div className=" w-100 " style={{ position: "absolute", bottom: 40 }}>
+          <button
+            className={"text-yellow btn text-center w-100"}
+            onClick={handleLogout} // Close dropdown when clicked
+          >
+            <LogOut />
+          </button>
+        </div>
       </div>
       <div className="w-100 dashboard-pages">
         <div className="dashboard-nav p-3 d-flex align-items-center justify-content-between d-md-none d-block">
           <div className="fs-3 text-white">Logo</div>
           <div className="d-flex gap-4 align-items-center justify-content-between">
-            <div className="">
-              <Grid2x2Check
-                className={`dashboard-links cursor-pointer ${
-                  location.pathname === "/dashboard"
-                    ? "active-link"
-                    : "text-white"
-                } `}
-              />
-            </div>
-            <div className="" onClick={() => navigate("/dashboard/users")}>
-              <User2
-                className={`dashboard-links cursor-pointer ${
-                  location.pathname === "/dashboard/users"
-                    ? "active-link"
-                    : "text-white"
-                } `}
-              />
-            </div>
-            <div className="">
-              <BaggageClaim
-                className={`dashboard-links cursor-pointer ${
-                  location.pathname === "/dashboard/jobs"
-                    ? "active-link"
-                    : "text-white"
-                } `}
-              />
+            <div>
+              <ul className="nav d-flex gap-4 mb-auto w-100 ">
+                {linksToDisplay.map((link, index) => (
+                  <li
+                    key={index}
+                    className="nav-item mb-2 d-flex align-items-center justify-content-center mt-3"
+                  >
+                    <Link
+                      to={link.path}
+                      className={`fs-6 d-flex align-items-center justify-content-start  text-decoration-none ${
+                        location.pathname === link.path
+                          ? "text-yellow"
+                          : "text-white"
+                      }`}
+                    >
+                      <span
+                        className={`${
+                          location.pathname === link.path
+                            ? "text-yellow"
+                            : "text-lime"
+                        }`}
+                      >
+                        {link.icon}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
               <button

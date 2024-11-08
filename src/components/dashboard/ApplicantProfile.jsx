@@ -17,36 +17,35 @@ import { jwtDecode } from "jwt-decode";
 
 const ApplicantProfile = () => {
   const navigate = useNavigate();
-  const [isStatusPanel, setIsStatusPanel] = useState(false);
-  const [isOption, setIsOpen] = useState(false);
   const [progressCount, setProgressCount] = useState(0);
+  const [status, setStatus] = useState("");
+
+  const token = localStorage.getItem("token");
+  const userInfo = token && jwtDecode(token);
+  console.log(userInfo, "move forward");
 
   const handleProgress = (status) => {
     const statusProgress = {
-      "NEW": 10,
-      "IN_REVIEW": 25,
-      "INTERVIEW": 50,
-      "OFFERED": 75,
-      "HIRED": 100,
+      NEW: 10,
+      IN_REVIEW: 25,
+      INTERVIEW: 50,
+      OFFERED: 75,
+      HIRED: 100,
     };
     setProgressCount(statusProgress[status] || 0);
   };
 
-  // function toggleIsOption() {
-  //   setIsOpen((prev) => !prev);
-  // }
-  // function toggleStatusBar() {
-  //   setIsStatusPanel((prev) => !prev);
-  // }
-
   const { jobId, applicantId } = useParams();
   const [applicantData, setApplicantData] = useState("");
+  const [profile, setProfile] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`job-applications/${applicantId}`);
-        console.log(response.data);
-        setApplicantData(response.data);
+        console.log(response?.data);
+        setApplicantData(response?.data);
+        handleProgress(response?.data?.status);
+        setStatus(() => response?.data?.status);
       } catch (error) {
         console.error("Error fetching job applicant data:", error);
       }
@@ -57,13 +56,43 @@ const ApplicantProfile = () => {
     }
   }, [jobId, applicantId]);
 
+  const onMoveForward = async () => {
+    try {
+      console.log("onMoveForward", status);
+      const payloadStatus =
+        status == "PENDING"
+          ? "IN_REVIEW"
+          : status == "IN_REVIEW"
+          ? "INTERVIEW"
+          : status == "INTERVIEW"
+          ? "OFFERED"
+          : status == "OFFERED"
+          ? "HIRED"
+          : status == "HIRED"
+          ? "PENDING"
+          : "";
+      console.log(payloadStatus, "payload status sending");
+      const response = await axios.put("/job-applications/status", {
+        applicationId: applicantId,
+        status: payloadStatus,
+        updatedBy: userInfo?.claims?.id,
+      });
+
+      console.log(response.data, "status response");
+      handleProgress(response?.data?.status);
+      setStatus(response?.data?.status);
+    } catch (error) {
+      console.log("Error moving forward", error);
+    }
+  };
+
   return (
     <Container fluid className="p-3">
       <Title icon={BaggageClaim} title={"Job Applicants"} />
       <Row>
         <Col xs={12} className="p-4">
           <Row className="d-flex" style={{ height: "100%" }}>
-            <Col md={8} className="h-100 m-0 p-0">
+            <Col md={8} className="h-md-100 m-0 p-0 mb-4">
               <Card className="border-0">
                 <Card.Body
                   className="border-black rounded-2 shadow-main"
@@ -83,14 +112,15 @@ const ApplicantProfile = () => {
                       className="d-flex align-items-center justify-content-center rounded-2 "
                     >
                       <div
-                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main"
+                        className="text-light text-center p-3 d-flex align-items-center justify-content-center fs-3 bg-primary-main text-capitalize"
                         style={{
                           height: "65px",
                           width: "65px",
                           borderRadius: 999,
                         }}
                       >
-                        TJ
+                        {applicantData?.candidateName &&
+                          applicantData?.candidateName[0]}
                       </div>
                     </Col>
                     <Col xs={4} className="fw-bold ">
@@ -115,7 +145,7 @@ const ApplicantProfile = () => {
                           <b>Applied On:</b>
                         </label>
                         {applicantData?.appliedAt
-                          ? new Date(applicantData.appliedAt).toLocaleString({
+                          ? new Date(applicantData?.appliedAt).toLocaleString({
                               year: "numeric",
                               month: "long",
                               day: "numeric",
@@ -135,33 +165,45 @@ const ApplicantProfile = () => {
                 <Card className="shadow-main h-100 mt-4">
                   <Card.Header className="bg-light" style={{ border: "none" }}>
                     <Nav variant="tabs" defaultActiveKey="profile">
-                      <Nav.Item>
+                      <Nav.Item onClick={() => setProfile(true)}>
                         <Nav.Link eventKey="profile">Profile</Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
+                      <Nav.Item onClick={() => setProfile(false)}>
                         <Nav.Link eventKey="resume">Resume</Nav.Link>
                       </Nav.Item>
                     </Nav>
                   </Card.Header>
                   <Card.Body style={{ border: "none" }}>
-                    <h6>Experience</h6>
-                    <p>No experience details for this candidate yet.</p>
-                    <a href="#" className="text-decoration-none ">
-                      ADD EXPERIENCE
-                    </a>
+                    {profile ? (
+                      <>
+                        <h6>Experience</h6>
+                        <p>No experience details for this candidate yet.</p>
+                        <a href="#" className="text-decoration-none text-blue">
+                          ADD EXPERIENCE
+                        </a>
 
-                    <h6 className="mt-4">Education</h6>
-                    <p>No education details for this candidate yet.</p>
-                    <a href="#" className="text-decoration-none ">
-                      ADD EDUCATION
-                    </a>
+                        <h6 className="mt-4">Education</h6>
+                        <p>No education details for this candidate yet.</p>
+                        <a href="#" className="text-decoration-none text-blue">
+                          ADD EDUCATION
+                        </a>
+                      </>
+                    ) : (
+                      <>
+                        <h6>Resume</h6>
+                        <p>No Resume found for this candidate yet.</p>
+                        <a href="#" className="text-decoration-none text-blue">
+                          ADD RESUME
+                        </a>
+                      </>
+                    )}
                   </Card.Body>
                 </Card>
               </Card>
             </Col>
 
-            <Col md={4} className="h-100 ">
-              <Card className="mb-4 shadow-main h-100 ms-md-2">
+            <Col md={4} className="">
+              <Card className="mb-4 mb-md-0 shadow-main  ms-md-2">
                 <Card.Body className="d-flex flex-column justify-content-between">
                   <div className="fs-6 bg-warning fw-bold p-1 px-3 rounded-3 w-50">
                     Applicant Profile
@@ -171,9 +213,9 @@ const ApplicantProfile = () => {
                     {applicantData?.jobTitle || "-"}
                   </div>
                   <div>Bangalore, Karnataka</div>
-                  <div>{applicantData?.status || "-"}</div>
+                  <div>{status == "PENDING" ? "NEW" : status || "-"}</div>
 
-                  <div className="mb-1 fs-3">Rating: ★★★☆☆</div>
+                  <div className="mb-1 fs-4">Rating: ★★★☆☆</div>
                   <div className="d-flex align-content-center flex-column ">
                     <ProgressBar
                       now={progressCount}
@@ -187,7 +229,7 @@ const ApplicantProfile = () => {
                       variant="success"
                       className="mb-2"
                     />
-                    <div className="d-flex w-100 justify-content-between align-items-center">
+                    <div className="d-flex w-100 justify-content-between mb-3 align-items-center">
                       <span>New</span>
                       <span>In-Review</span>
                       <span>Interview</span>
@@ -202,7 +244,7 @@ const ApplicantProfile = () => {
                         <button
                           style={{ background: "#29b447" }}
                           className="btn text-white d-flex justify-content-between gap-2 align-items-center "
-                          onClick={handleProgress}
+                          onClick={onMoveForward}
                         >
                           Move Forward
                         </button>
@@ -231,12 +273,16 @@ const ApplicantProfile = () => {
                           <button
                             type="button"
                             style={{ background: "#29b447" }}
-                            className="btn  dropdown-toggle"
+                            className="btn  dropdown-toggle text-white"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           ></button>
                           <ul className="dropdown-menu">
-                            <StatusPanel setApplicantData={setApplicantData} handleProgress ={handleProgress } />
+                            <StatusPanel
+                              setApplicantData={setApplicantData}
+                              handleProgress={handleProgress}
+                              setStatus={setStatus}
+                            />
                           </ul>
                         </div>
                       </div>
@@ -269,12 +315,10 @@ const ApplicantProfile = () => {
   );
 };
 
-export function StatusPanel({ setApplicantData,handleProgress  }) {
+export function StatusPanel({ setApplicantData, handleProgress, setStatus }) {
   const { applicantId } = useParams();
   const token = localStorage.getItem("token");
   const userInfo = token && jwtDecode(token);
-
- 
 
   const updateApplicationStatus = async (newStatus) => {
     try {
@@ -284,51 +328,45 @@ export function StatusPanel({ setApplicantData,handleProgress  }) {
         updatedBy: userInfo.claims.id,
       });
       setApplicantData((prev) => ({ ...prev, status: newStatus }));
+      setStatus(newStatus);
       handleProgress(newStatus);
     } catch (error) {
       console.error("Error updating application status:", error);
     }
   };
   return (
-    // <ul className="list-unstyled ">
-    //   <li
-    //     className="p-2 cursor-pointer status-list-item"
-    //     onClick={() => handleStatusChange("PENDING")}
-    //   >
-    //     New
-    //   </li>
-    //   <li
-    //     className="p-2 cursor-pointer status-list-item"
-    //     onClick={() => handleStatusChange("IN_REVIEW")}
-    //   >
-    //     In-Review
-    //   </li>
-    //   <li
-    //     className="p-2 cursor-pointer status-list-item"
-    //     onClick={() => handleStatusChange("INTERVIEW")}
-    //   >
-    //     Interview
-    //   </li>
-    //   <li
-    //     className="p-2 cursor-pointer status-list-item"
-    //     onClick={() => handleStatusChange("OFFERED")}
-    //   >
-    //     Offered
-    //   </li>
-    //   <li
-    //     className="p-2 cursor-pointer status-list-item"
-    //     onClick={() => handleStatusChange("HIRED")}
-    //   >
-    //     Hired
-    //   </li>
-    // </ul>
     <ul className="list-unstyled">
-    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("NEW")}>New</li>
-    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("IN_REVIEW")}>In-Review</li>
-    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("INTERVIEW")}>Interview</li>
-    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("OFFERED")}>Offered</li>
-    <li className="p-2 cursor-pointer" onClick={() => updateApplicationStatus("HIRED")}>Hired</li>
-  </ul>
+      <li
+        className="p-2 cursor-pointer status-list-item"
+        onClick={() => updateApplicationStatus("PENDING")}
+      >
+        New
+      </li>
+      <li
+        className="p-2 cursor-pointer status-list-item"
+        onClick={() => updateApplicationStatus("IN_REVIEW")}
+      >
+        In-Review
+      </li>
+      <li
+        className="p-2 cursor-pointer status-list-item"
+        onClick={() => updateApplicationStatus("INTERVIEW")}
+      >
+        Interview
+      </li>
+      <li
+        className="p-2 cursor-pointer status-list-item"
+        onClick={() => updateApplicationStatus("OFFERED")}
+      >
+        Offered
+      </li>
+      <li
+        className="p-2 cursor-pointer status-list-item"
+        onClick={() => updateApplicationStatus("HIRED")}
+      >
+        Hired
+      </li>
+    </ul>
   );
 }
 

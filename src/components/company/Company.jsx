@@ -30,7 +30,7 @@ const Company = () => {
         <DashboardInput />
       </div>
       <div className="d-flex gap-4 w-100">
-        <div className="my-md-4">
+        <div className="my-md-4 my-3 mx-2 mx-md-0">
           <div className="row">
             <div className="col">
               <select className="form-select rounded-3">
