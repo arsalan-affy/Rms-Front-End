@@ -32,7 +32,7 @@ const ApplicantProfile = () => {
       OFFERED: 75,
       HIRED: 100,
     };
-    setProgressCount(statusProgress[status] || 0);
+    setProgressCount(statusProgress[status] || 10);
   };
 
   const { jobId, applicantId } = useParams();

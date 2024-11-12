@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter,
@@ -30,11 +29,8 @@ import CreateCandidates from "./components/candidates/CreateCandidates";
 import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
 
+axios.defaults.baseURL = "http://192.168.1.45:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
-axios.defaults.baseURL = "http://192.168.1.40:8081/api/";
-// axios.defaults.baseURL = "http://localhost:8081/api/";
-// axios.defaults.baseURL = "http://192.168.1.38:8081/api/";
-// export const baseUrl = "http://localhost:3001";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
     const location = useLocation();

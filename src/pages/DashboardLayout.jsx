@@ -101,12 +101,12 @@ const DashboardLayout = () => {
       {
         path: "/recruitment_manager",
         name: "Dashboard",
-        icon: <ShieldMinus className="icon-size" />,
+        icon: <Grid2x2CheckIcon className="icon-size" />,
       },
       {
         path: "/recruitment_manager/jobs",
         name: "Jobs",
-        icon: <FaJoint className="icon-size" />,
+        icon: <BriefcaseBusiness className="icon-size" />,
       },
       {
         path: "/recruitment_manager/employee",

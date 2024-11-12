@@ -5,33 +5,57 @@ import DashboardInput from "./DashboardInput";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem("token");
   const getJobs = async () => {
+    const decodedToken = jwtDecode(token);
+    const id = decodedToken.claims.id;
+    const role = decodedToken.claims.role;
+    console.log(id);
+
     try {
       setLoading(true);
-      const response = await axios.get("/job/all");
-      console.log(response.data);
-      setJobs(response.data);
-      setError(null);
+
+      // Use a different API for ADMIN role
+      const endpoint =
+        role === "ADMIN"
+          ? `/job/byParent/${id}`
+          : `/job/jobs/by-recruiter-or-creator/${id}`;
+
+      const response = await axios.get(endpoint);
+      const meta = response.data;
+      console.log(meta);
+
+      if (meta.error === "false") {
+        setJobs(meta.meta);
+        setError(null);
+      } else {
+        setJobs([]);
+        setError(meta.message);
+        toast.error(meta.message);
+      }
     } catch (err) {
-      console.error("Error fetching jobs:", err);
+      console.log("Error fetching jobs:", err);
       setError("Failed to fetch jobs. Please try again later.");
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch jobs on component mount
   useEffect(() => {
     getJobs();
   }, []);
   const navigate = useNavigate();
   return (
     <div className="me-md-3">
+      <ToastContainer />
       <div>
         <Title icon={BaggageClaim} title={"Jobs"} />
       </div>
@@ -117,49 +141,54 @@ export function JobTable({ jobs = [] }) {
             <th scope="col">Job Additional Information</th> */}
           </tr>
         </thead>
-        <tbody className="jobs-table ">
-          {jobs?.map((job, index) => (
-            <tr
-              key={index}
-              className="cursor-pointer"
-              onClick={() => navigate("job-profile/" + job?.id)}
-            >
-              <td>{index + 1}</td>
-              <td className="text-capitalize">{job?.jobTitle}</td>
-              <td className="text-capitalize">
-                {job?.createdBy?.parent?.name}
+        <tbody className="jobs-table">
+          {jobs && jobs.length > 0 ? (
+            jobs.map((job, index) => (
+              <tr
+                key={index}
+                className="cursor-pointer"
+                onClick={() => navigate("job-profile/" + job?.id)}
+              >
+                <td>{index + 1}</td>
+                <td className="text-capitalize">{job?.jobTitle}</td>
+                <td className="text-capitalize">
+                  {job?.assignedRecruiterName}
+                </td>
+                <td className="text-capitalize">{job?.createdBy?.name}</td>
+                <td className="text-capitalize">
+                  <div className="card p-2">
+                    {job?.pending ? job?.pending : "-"}
+                  </div>
+                </td>
+                <td className="text-capitalize">
+                  <div className="card p-2">
+                    {job?.review ? job?.review : "-"}
+                  </div>
+                </td>
+                <td className="text-capitalize">
+                  <div className="card p-2">
+                    {job?.interview ? job?.interview : "-"}
+                  </div>
+                </td>
+                <td className="text-capitalize">
+                  <div className="card p-2">
+                    {job?.offered ? job?.offered : "-"}
+                  </div>
+                </td>
+                <td className="text-capitalize">
+                  <div className="card p-2">
+                    {job?.hired ? job?.hired : "-"}
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="9" className="text-center">
+                No jobs found.
               </td>
-              <td className="text-capitalize">{job?.createdBy?.name}</td>
-              <td className="text-capitalize">
-                <div className="card p-2">
-                  {job?.pending ? job?.pending : "-"}
-                </div>
-              </td>
-              <td className="text-capitalize">
-                <div className="card p-2">
-                  {job?.review ? job?.review : "-"}
-                </div>
-              </td>
-              <td className="text-capitalize">
-                <div className="card p-2">
-                  {job?.interview ? job?.interview : "-"}
-                </div>
-              </td>
-              <td className="text-capitalize">
-                <div className="card p-2">
-                  {job?.offered ? job?.offered : "-"}
-                </div>
-              </td>
-              <td className="text-capitalize">
-                <div className="card p-2">{job?.hired ? job?.hired : "-"}</div>
-              </td>
-              {/* <td dangerouslySetInnerHTML={{ __html: job?.jobDescription }}></td>
-              <td>{job?.jobLocation}</td>
-              <td dangerouslySetInnerHTML={{ __html: job?.companyDescription }}></td>
-              <td dangerouslySetInnerHTML={{ __html: job?.jobQualification }}></td>
-              <td dangerouslySetInnerHTML={{ __html: job?.jobAdditionalInformation }}></td> */}
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

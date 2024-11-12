@@ -1,10 +1,12 @@
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, BaggageClaimIcon } from "lucide-react";
 import { Button, Table } from "react-bootstrap";
 import Title from "./Title";
 import DashboardInput from "./DashboardInput";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function JobProfile() {
   const navigate = useNavigate();
@@ -12,17 +14,18 @@ export function JobProfile() {
   const [jobDetail, setJobDetail] = useState("");
   const [jobApplicant, setJobApplicant] = useState([]);
   const [time, setTime] = useState("-");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     // Fetch job data using the ID from the URL
     const fetchJobData = async () => {
       try {
         const response = await axios.get(`/job/${id}`);
-        
+
         const timeParse = new Date(response.data.createdAt).toUTCString();
         setTime(timeParse);
-
         setJobDetail(response.data);
+        setStatus(response.data.jobApproval); // Set initial status
       } catch (error) {
         console.error("Error fetching job data:", error);
       }
@@ -33,21 +36,33 @@ export function JobProfile() {
     const fetchJobApplicant = async () => {
       try {
         const response = await axios.get(`/job-applications/by-jobId/${id}`);
-        console.log(response);
         setJobApplicant(response.data);
-        // setTime(new Date(response?.data?.createdAt));
-        const time = response?.data?.createdAt;
-        console.log(time);
       } catch (error) {
-        console.error("Error fetching job data:", error);
+        console.error("Error fetching job applicants:", error);
       }
     };
 
     fetchJobApplicant();
   }, [id]);
 
+  const changeJobStatus = async (newStatus) => {
+    try {
+      const response = await axios.patch(
+        `/recruitment-manager/${id}/approval?jobApproval=${newStatus}`
+      );
+      if (response.data.error=="false") {
+        toast.success(`Job ${newStatus}`)
+        setStatus(newStatus);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="me-md-2">
+          <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
       {/* Profile Header */}
       <Title icon={BaggageClaimIcon} title={"Job-profile"} />
       <div
@@ -62,16 +77,35 @@ export function JobProfile() {
             <h4>{jobDetail?.jobTitle}</h4>
             <p className="mb-0">Created By: {jobDetail?.createdBy?.name}</p>
             <p className="mb-0">{jobDetail?.jobLocation}</p>
-            <p className="text-muted mb-0">{jobDetail?.jobApproval}</p>
+            <p className="text-muted mb-0">Current Status: {status || "-"}</p>
             <p className="text-muted mb-0">{time}</p>
           </div>
         </div>
         <div>
-          <Button variant="outline-dark" className="me-2 btn-sm font-black">
-            Add Candidate
-          </Button>
-          <Button variant="outline-dark" className="btn-sm ">
-            Publish
+          <Button
+            variant={
+              status === "PUBLISHED"
+                ? "danger"
+                : status === "APPROVED" || status === "UNPUBLISHED"
+                ? "outline-dark"
+                : "success"
+            }
+            className="me-2 btn-sm"
+            onClick={() => {
+              if (status === "PENDING") {
+                changeJobStatus("APPROVED"); // Approve
+              } else if (status === "PUBLISHED") {
+                changeJobStatus("UNPUBLISHED"); // Unpublish
+              } else if (status === "APPROVED" || status === "UNPUBLISHED") {
+                changeJobStatus("PUBLISHED"); // Publish
+              }
+            }}
+          >
+            {status === "PENDING"
+              ? "Approve"
+              : status === "PUBLISHED"
+              ? "Unpublish"
+              : "Publish"}
           </Button>
         </div>
       </div>
