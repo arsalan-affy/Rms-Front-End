@@ -5,7 +5,8 @@ import { Hotel, MoveLeft } from "lucide-react";
 import Title from "../dashboard/Title";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Create = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,7 +31,14 @@ const Create = () => {
     try {
       const response = await axios.post("/admin/create", formData);
       console.log(response);
-      navigate(-1);
+      
+      if (response.data.error == "false") {
+        console.log(response);
+        toast.success(response.data.message)
+        navigate(-1);
+      } else{
+        toast.warn(response.data.message)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +49,7 @@ const Create = () => {
       className=" d-flex justify-content-between flex-column"
       style={{ zIndex: 100 }}
     >
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <form onSubmit={handleSubmit}>
         <Title title={"Create Company"} icon={Hotel} />
 
