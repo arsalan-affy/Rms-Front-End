@@ -135,8 +135,6 @@ const DashboardLayout = () => {
   const role = localStorage.getItem("role");
 
   const linksToDisplay = role ? navLinks[role] : navLinks[0];
-  // const linksToDisplay = navLinks[role];
-  console.log(linksToDisplay);
 
   return (
     <div className="vh-100 d-md-flex w-100 ">

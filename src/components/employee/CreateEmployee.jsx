@@ -6,6 +6,7 @@ import Title from "../dashboard/Title";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { showToast } from "../global/showToast";
 
 const CreateEmployee = () => {
   const [formData, setFormData] = useState({
@@ -34,8 +35,14 @@ const CreateEmployee = () => {
         "/employee/create/" + userData.claims.id,
         formData
       );
-      console.log(response);
-      navigate(-1);
+
+      if (!response.data.error) {
+        console.log(response.data);
+        showToast("success", response.data.message);
+        navigate(-1);
+      } else if (response.data.error) {
+        showToast("warn", response.data.response);
+      }
     } catch (error) {
       console.log(error);
     }

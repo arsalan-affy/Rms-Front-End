@@ -271,3 +271,17 @@ select {
   width: 55px;
   height: 55px;
 }
+
+tr{
+  vertical-align: middle;
+}
+
+.page-item.active .page-link{
+  background-color: var(--secondary-color) !important;
+}
+
+.center-table tr,.center-table td,
+.center-table th{
+  text-align: center !important;
+  width: 100px !important;
+}

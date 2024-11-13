@@ -28,6 +28,7 @@ import Candidates from "./components/candidates/Candidates";
 import CreateCandidates from "./components/candidates/CreateCandidates";
 import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
+import { ToastContainer } from "react-toastify";
 
 axios.defaults.baseURL = "http://192.168.1.45:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
@@ -41,147 +42,157 @@ const App = () => {
     return children;
   }
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/careers/:parentId" element={<Careers />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/superadmin/*"
-          element={
-            <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/company" element={<Company />} />
-                  <Route path="/company/create" element={<Create />} />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/jobs/create-jobs" element={<CreateJob />} />
-                  <Route path="/managers" element={<Managers />} />
-                  <Route path="/managers/create" element={<CreateManager />} />
-                  <Route path="/sub-admin" element={<Employee />} />
-                  <Route
-                    path="/sub-admin/create"
-                    element={<CreateEmployee />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/employee/*"
-          element={
-            <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/users" element={<User />} />
-                  <Route path="/candidates" element={<Candidates />} />
-                  <Route path="/candidates/add" element={<AddCandidates />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/jobs/create-jobs" element={<CreateJob />} />
-                  <Route
-                    path="/candidates/create"
-                    element={<CreateCandidates />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/user/*"
-          element={
-            <ProtectedRoute allowedRoles={["USER"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/users" element={<User />} />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/recruitment_manager/*"
-          element={
-            <ProtectedRoute allowedRoles={["RECRUITMENT_MANAGER"]}>
-              <Routes>
-                <Route path="/" element={<DashboardLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/jobs" element={<Jobs />} />
-                  <Route path="/jobs/create-jobs" element={<CreateJob />} />
-                  <Route path="/users" element={<User />} />
-                  <Route path="/employee" element={<Employee />} />
-                  <Route path="/employee/create" element={<CreateEmployee />} />
-                  <Route
-                    path="/jobs/job-profile/:id"
-                    element={<JobProfile />}
-                  />
-                  <Route
-                    path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
-                    element={<ApplicantProfile />}
-                  />
-                </Route>
-              </Routes>
-            </ProtectedRoute>
-          }
-        />
+    <>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
-        <Route path="/not-found" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/not-found" />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/applicantProfile" element={<ApplicantProfile />} />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/careers/:parentId" element={<Careers />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/superadmin/*"
+            element={
+              <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/company" element={<Company />} />
+                    <Route path="/company/create" element={<Create />} />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs/create-jobs" element={<CreateJob />} />
+                    <Route path="/managers" element={<Managers />} />
+                    <Route
+                      path="/managers/create"
+                      element={<CreateManager />}
+                    />
+                    <Route path="/sub-admin" element={<Employee />} />
+                    <Route
+                      path="/sub-admin/create"
+                      element={<CreateEmployee />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/employee/*"
+            element={
+              <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/users" element={<User />} />
+                    <Route path="/candidates" element={<Candidates />} />
+                    <Route path="/candidates/add" element={<AddCandidates />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs/create-jobs" element={<CreateJob />} />
+                    <Route
+                      path="/candidates/create"
+                      element={<CreateCandidates />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/*"
+            element={
+              <ProtectedRoute allowedRoles={["USER"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/users" element={<User />} />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/recruitment_manager/*"
+            element={
+              <ProtectedRoute allowedRoles={["RECRUITMENT_MANAGER"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs/create-jobs" element={<CreateJob />} />
+                    <Route path="/users" element={<User />} />
+                    <Route path="/employee" element={<Employee />} />
+                    <Route
+                      path="/employee/create"
+                      element={<CreateEmployee />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/not-found" />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/applicantProfile" element={<ApplicantProfile />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 
