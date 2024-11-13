@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [showUser, setShowUser] = useState(false);
@@ -61,7 +62,7 @@ const Navbar = () => {
         <div className="d-flex justify-content-between align-items-center">
           <div className="w-100 rounded-5 d-flex justify-content-between px-4 align-items-center">
             <Link to={"/"} className="text-white text-decoration-none fs-2">
-              RMS
+             <img className="logo" src={logo} alt="logo" />
             </Link>
             {/* User Icon */}
             <div className=" ms-auto">

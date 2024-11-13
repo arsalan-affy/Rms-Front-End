@@ -266,3 +266,8 @@ select {
 .loader-box{
   height: fit-content;
 }
+
+.logo{
+  width: 55px;
+  height: 55px;
+}
