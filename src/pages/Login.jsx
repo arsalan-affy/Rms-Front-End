@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [show, setShow] = useState(true);
@@ -56,26 +57,27 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post("/login", data);
-      console.log(response);
-      const token = response.data.response;
-      const decoded = jwtDecode(token);
-      // console.log(decoded);
-
-      // Store token and user info in localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", decoded?.claims?.role);
-      // console.log(userData);
-      const role = localStorage.getItem("role");
-      console.log(role);
-      navigateByRole(role);
+      console.log(response.data);
+      if (response.data.error === true) {
+        console.log("hhh");
+        toast.error(response.data.message);
+      } else if (response.data.error === false) {
+        const token = response.data.response;
+        const decoded = jwtDecode(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", decoded?.claims?.role);
+        const role = localStorage.getItem("role");
+        console.log(role);
+        navigateByRole(role);
+      }
     } catch (error) {
+      console.log(error);
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Check authentication and role on page load
   useEffect(() => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
@@ -198,6 +200,8 @@ const Login = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
     </div>
   );
 };
