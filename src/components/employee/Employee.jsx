@@ -58,10 +58,10 @@ const Employee = () => {
       <div>
         <Title icon={SquareKanban} title={"Employee"} />
       </div>
-      <div className="w-75 mx-auto mt-4">
+      <div className="w-75 mx-auto mt-2">
         <DashboardInput />
       </div>
-      <div className="d-flex gap-4 w-100">
+      <div className="d-flex gap-4 w-100 align-items-center justify-content-center">
         <div className="my-md-4">
           <div className="row">
             <div className="col">
@@ -95,18 +95,18 @@ const Employee = () => {
             Create Employee
           </button>
         </div>
-      </div>
-      <div className="d-flex justify-content-end">
-        <select
-          className="form-select w-auto"
-          value={pageSize}
-          onChange={handlePageSizeChange}
-        >
-          <option value={25}>25</option>
-          <option value={50}>50</option>
-          <option value={75}>75</option>
-          <option value={100}>100</option>
-        </select>
+        <div className="col d-flex">
+          <select
+            className="form-select w-auto"
+            value={pageSize}
+            onChange={handlePageSizeChange}
+          >
+            <option value={5}>25</option>
+            <option value={50}>50</option>
+            <option value={75}>75</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
       </div>
       <JobTable
         jobs={managers}
@@ -156,54 +156,59 @@ export function JobTable({
 
   return (
     <div>
-      <table className="table table-striped table-hover border text-center center-table">
-        <thead className="table-light">
-          <tr>
-            <th scope="col" style={{ width: "15%" }} className="text-center">
-              Name
-            </th>
-            <th scope="col" style={{ width: "25%" }} className="text-center">
-              Email
-            </th>
-            <th scope="col" style={{ width: "15%" }} className="text-center">
-              Mobile
-            </th>
-            <th scope="col" style={{ width: "15%" }} className="text-center">
-              Username
-            </th>
-            <th scope="col" style={{ width: "10%" }} className="text-center">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.length > 0 ? (
-            jobs.map((job, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{job?.name}</td>
-                <td>{job?.email}</td>
-                <td>{job?.phoneNumber}</td>
-                <td>{job?.username}</td>
-                <td>
-                  <button
-                    className="btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
-                    onClick={() => setEmployeeIdToDelete(job?.id)}
-                  >
-                    <Trash2Icon color="red" />
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+      <div className="table-data">
+        <table className="table table-striped table-hover border text-center center-table">
+          <thead className="table-light">
             <tr>
-              <td colSpan={6}>No Employees Found</td>
+              <th>S No.</th>
+              <th scope="col" style={{ width: "15%" }} className="text-center">
+                Name
+              </th>
+              <th scope="col" style={{ width: "25%" }} className="text-center">
+                Email
+              </th>
+              <th scope="col" style={{ width: "15%" }} className="text-center">
+                Mobile
+              </th>
+              <th scope="col" style={{ width: "15%" }} className="text-center">
+                Username
+              </th>
+              <th scope="col" style={{ width: "10%" }} className="text-center">
+                Action
+              </th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {jobs.length > 0 ? (
+              jobs
+                .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+                .map((job, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{job?.name}</td>
+                    <td>{job?.email}</td>
+                    <td>{job?.phoneNumber}</td>
+                    <td>{job?.username}</td>
+                    <td>
+                      <button
+                        className="btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        onClick={() => setEmployeeIdToDelete(job?.id)}
+                      >
+                        <Trash2Icon color="red" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <tr>
+                <td colSpan={6}>No Employees Found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       {jobs.length > 0 ? (
         <nav aria-label="Page navigation">
           <ul className="pagination justify-content-center my-3">

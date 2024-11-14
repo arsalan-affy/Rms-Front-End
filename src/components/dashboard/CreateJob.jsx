@@ -29,7 +29,7 @@ const CreateJob = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -61,8 +61,7 @@ const CreateJob = () => {
     }
 
     try {
-
-      console.log(formData)
+      console.log(formData);
       const response = await axios.post(url, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,15 +82,19 @@ const CreateJob = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
-    const parentId = decodedToken.claims.parent.id;
-
+    let parentId;
+    if (decodedToken?.claims?.role === "ADMIN") {
+      parentId = decodedToken?.claims?.id;
+    } else {
+      parentId = decodedToken?.claims?.parent?.id;
+    }
     const fetchCompanyManagers = async () => {
       try {
         const response = await axios.get(
           `recruitment-manager/parent/${parentId}`
         );
         console.log(response.data);
-        setAllManager(() => response.data);
+        setAllManager(() => response.data.meta);
       } catch (error) {
         console.log(error.message);
       }

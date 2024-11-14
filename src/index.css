@@ -285,3 +285,8 @@ tr{
   text-align: center !important;
   width: 100px !important;
 }
+
+.table-data{
+  height: 300px;
+  overflow: auto;
+}
