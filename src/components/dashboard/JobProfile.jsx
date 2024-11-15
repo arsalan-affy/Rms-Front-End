@@ -94,7 +94,7 @@ export function JobProfile() {
   };
 
   return (
-    <div className="me-md-2">
+    <div className="me-md-2 container-scroll">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
       {/* Profile Header */}
@@ -155,7 +155,7 @@ export function JobProfile() {
           <div className="text-primary fs-4 fw-bolder text-center text-sm-start d-flex align-items-center justify-content-center">
             Applicants
           </div>
-          <div className="w-50">
+          <div className="w-75">
             <DashboardInput />
           </div>
 
