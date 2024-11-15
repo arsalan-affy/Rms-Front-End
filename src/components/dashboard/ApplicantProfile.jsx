@@ -14,6 +14,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { showToast } from "../global/showToast";
 
 const ApplicantProfile = () => {
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ const ApplicantProfile = () => {
 
   const token = localStorage.getItem("token");
   const userInfo = token && jwtDecode(token);
-  console.log(userInfo, "move forward");
 
   const handleProgress = (status) => {
     const statusProgress = {
@@ -42,10 +42,14 @@ const ApplicantProfile = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`job-applications/${applicantId}`);
-        console.log(response?.data);
-        setApplicantData(response?.data);
-        handleProgress(response?.data?.status);
-        setStatus(() => response?.data?.status);
+        console.log(response.data);
+        if (!response.data.error) {
+          setApplicantData(response.data.meta);
+          handleProgress(response.data.meta.status);
+          setStatus(() => response?.data?.meta.status);
+        } else if (response.data.error) {
+          showToast("error", response.data.message);
+        }
       } catch (error) {
         console.error("Error fetching job applicant data:", error);
       }
@@ -68,8 +72,6 @@ const ApplicantProfile = () => {
           ? "OFFERED"
           : status == "OFFERED"
           ? "HIRED"
-          : status == "HIRED"
-          ? "PENDING"
           : "";
       console.log(payloadStatus, "payload status sending");
       const response = await axios.put("/job-applications/status", {
@@ -77,10 +79,13 @@ const ApplicantProfile = () => {
         status: payloadStatus,
         updatedBy: userInfo?.claims?.id,
       });
-
-      console.log(response.data, "status response");
-      handleProgress(response?.data?.status);
-      setStatus(response?.data?.status);
+      if (!response.data.error) {
+        console.log(response.data, "status response");
+        handleProgress(response?.data?.status);
+        setStatus(response?.data?.status);
+      } else if (response.data.error) {
+        showToast("error", response.data.message);
+      }
     } catch (error) {
       console.log("Error moving forward", error);
     }
@@ -88,7 +93,7 @@ const ApplicantProfile = () => {
 
   const [file, setFile] = useState(null);
   const handleFetchAndUpload = async () => {
-    console.log(applicantData?.resumeUrl)
+    console.log(applicantData?.resumeUrl);
     try {
       const response = await fetch(applicantData?.resumeUrl, {
         method: "GET",
@@ -96,15 +101,15 @@ const ApplicantProfile = () => {
           "Content-Type": "application/pdf",
         },
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch file");
       }
-  
+
       const blob = await response.blob();
       const fileName = applicantData?.resumeUrl.split("/").pop();
       const file = new File([blob], fileName, { type: blob.type });
-  
+
       setFile(file); // Sets the file to state for further processing
       console.log("File ready for upload:", file);
     } catch (error) {
@@ -291,6 +296,7 @@ const ApplicantProfile = () => {
                           style={{ background: "#29b447" }}
                           className="btn text-white d-flex justify-content-between gap-2 align-items-center "
                           onClick={onMoveForward}
+                          disabled={status === "HIRED"}
                         >
                           Move Forward
                         </button>
@@ -373,9 +379,15 @@ export function StatusPanel({ setApplicantData, handleProgress, setStatus }) {
         status: newStatus,
         updatedBy: userInfo.claims.id,
       });
-      setApplicantData((prev) => ({ ...prev, status: newStatus }));
-      setStatus(newStatus);
-      handleProgress(newStatus);
+
+      console.log(response.data.error);
+      if (!response.data.error) {
+        setApplicantData((prev) => ({ ...prev, status: newStatus }));
+        setStatus(newStatus);
+        handleProgress(newStatus);
+      } else if (response.data.error) {
+        showToast("error", response.data.message);
+      }
     } catch (error) {
       console.error("Error updating application status:", error);
     }
