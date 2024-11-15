@@ -62,7 +62,8 @@ const Navbar = () => {
         <div className="d-flex justify-content-between align-items-center">
           <div className="w-100 rounded-5 d-flex justify-content-between px-4 align-items-center">
             <Link to={"/"} className="text-white text-decoration-none fs-2">
-             <img className="logo" src={logo} alt="logo" />
+             {/* <img className="logo" src={logo} alt="logo" /> */}
+             <h4 className="my-0">What A Recruiter</h4>
             </Link>
             {/* User Icon */}
             <div className=" ms-auto">

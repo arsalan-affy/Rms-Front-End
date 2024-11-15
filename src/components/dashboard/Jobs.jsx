@@ -152,7 +152,7 @@ export function JobTable({ jobs = [] }) {
                 <td>{index + 1}</td>
                 <td className="text-capitalize">{job?.jobTitle}</td>
                 <td className="text-capitalize">
-                  {job?.assignedRecruiterName}
+                  {job?.recruiterAssigned?.name}
                 </td>
                 <td className="text-capitalize">{job?.createdBy?.name}</td>
                 <td className="text-capitalize">

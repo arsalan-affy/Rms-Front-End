@@ -52,7 +52,7 @@ const CreateJob = () => {
         ? `/employee/job/create/${createdBy}`
         : role === "RECRUITMENT_MANAGER"
         ? `/recruitment-manager/job/create/${createdBy}`
-        : null;
+        : `/admin/job/create/${createdBy}`;
 
     if (!url) {
       console.error("Invalid role");
@@ -62,14 +62,18 @@ const CreateJob = () => {
 
     try {
       console.log(formData);
+      console.log(url);
+      
       const response = await axios.post(url, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-      navigate(-1);
       console.log("Job created successfully:", response.data);
+
+      // return
+      navigate(-1);
     } catch (error) {
       console.error("Error creating job:", error);
     } finally {
