@@ -17,43 +17,64 @@ export function JobProfile() {
   const [jobApplicant, setJobApplicant] = useState([]);
   const [time, setTime] = useState("-");
   const [status, setStatus] = useState("");
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
 
+  const fetchJobData = async () => {
+    try {
+      const response = await axios.get(`/job/${id}`);
+      console.log(response.data);
+      if (!response.data.error) {
+        const timeParse = formatDateTime(response.data.meta.createdAt);
+
+        setTime(timeParse);
+        setJobDetail(response.data.meta);
+        setStatus(response.data.meta.jobApproval);
+      } else if (response.data.error) {
+        showToast("error", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching job data:", error);
+    }
+  };
+
+  const fetchJobApplicant = async () => {
+    try {
+      const response = await axios.get(
+        `/job-applications/by-jobId/${id}/page?page=${currentPage}&size=${pageSize}`
+      );
+      console.log(response.data);
+
+      if (!response.data.error) {
+        setJobApplicant(response.data.meta.applications);
+        setTotalItems(response.data.meta.totalItems);
+        setCurrentPage(response.data.meta.currentPage);
+        setTotalPages(response.data.meta.totalPages);
+      } else if (response.data.error) {
+        showToast("warn", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching job applicants:", error);
+    }
+  };
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePageSizeChange = (event) => {
+    const newSize = parseInt(event.target.value, 10);
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
+
+  // Add a new `useEffect` to handle page or pageSize changes
   useEffect(() => {
-    const fetchJobData = async () => {
-      try {
-        const response = await axios.get(`/job/${id}`);
-        console.log(response.data);
-        if (!response.data.error) {
-          const timeParse = formatDateTime(response.data.meta.createdAt);
-
-          setTime(timeParse);
-          setJobDetail(response.data.meta);
-          setStatus(response.data.meta.jobApproval);
-        } else if (response.data.error) {
-          showToast("error", response.data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching job data:", error);
-      }
-    };
-
-    fetchJobData();
-
-    const fetchJobApplicant = async () => {
-      try {
-        const response = await axios.get(`/job-applications/by-jobId/${id}`);
-        if (!response.data.error) {
-          setJobApplicant(response.data.meta);
-        } else if (response.data.error) {
-          showToast("warn", response.data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching job applicants:", error);
-      }
-    };
-
     fetchJobApplicant();
-  }, [id]);
+    fetchJobData();
+  }, [currentPage, pageSize]);
 
   const changeJobStatus = async (newStatus) => {
     try {
@@ -134,40 +155,118 @@ export function JobProfile() {
           <div className="text-primary fs-4 fw-bolder text-center text-sm-start d-flex align-items-center justify-content-center">
             Applicants
           </div>
-          <div className="w-75">
+          <div className="w-50">
             <DashboardInput />
+          </div>
+
+          <div className="col d-flex">
+            <select
+              className="form-select w-auto"
+              value={pageSize}
+              onChange={handlePageSizeChange}
+            >
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </select>
           </div>
         </div>
       </div>
 
       {/* Applicants Table */}
       <div className="mt-4 text-center mx-2">
-        <Table striped bordered hover>
-          <thead className="table-light">
-            <tr>
-              <th>Applicant</th>
-              <th>Company</th>
-              <th>Location</th>
-              <th>Status</th>
-              <th>Application Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {jobApplicant?.map((data, index) => (
-              <tr
-                key={index}
-                className="cursor-pointer"
-                onClick={() => navigate("job-applicants/" + data?.id)}
-              >
-                <td>{data?.candidateName || "-"}</td>
-                <td>{data?.company || "-"}</td>
-                <td>{data?.location || "-"}</td>
-                <td>{data?.status || "-"}</td>
-                <td>{formatDateTime(data?.appliedAt) || "-"}</td>
+        <div>
+          <Table striped bordered hover>
+            <thead className="table-light">
+              <tr>
+                <th>Applicant</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Application Date</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {jobApplicant?.map((data, index) => (
+                <tr
+                  key={index}
+                  className="cursor-pointer"
+                  onClick={() => navigate("job-applicants/" + data?.id)}
+                >
+                  <td>{data?.candidateName || "-"}</td>
+                  <td>{data?.company || "-"}</td>
+                  <td>{data?.location || "-"}</td>
+                  <td>{data?.status || "-"}</td>
+                  <td>{formatDateTime(data?.appliedAt) || "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        <div>
+          {jobApplicant.length > 0 ? (
+            <nav aria-label="Page navigation">
+              <ul className="pagination justify-content-center my-3">
+                <li
+                  className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => goToPage(currentPage - 1)}
+                  >
+                    Previous
+                  </button>
+                </li>
+
+                {/* Previous Page */}
+                {currentPage > 1 && (
+                  <li className="page-item">
+                    <button
+                      className="page-link"
+                      onClick={() => goToPage(currentPage - 1)}
+                    >
+                      {currentPage - 1}
+                    </button>
+                  </li>
+                )}
+
+                {/* Current Page */}
+                <li className="page-item active">
+                  <span className="page-link">{currentPage}</span>
+                </li>
+
+                {/* Next Page */}
+                {currentPage < totalPages && (
+                  <li className="page-item">
+                    <button
+                      className="page-link"
+                      onClick={() => goToPage(currentPage + 1)}
+                    >
+                      {currentPage + 1}
+                    </button>
+                  </li>
+                )}
+
+                {/* Next Button */}
+                <li
+                  className={`page-item ${
+                    currentPage === totalPages ? "disabled" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => goToPage(currentPage + 1)}
+                  >
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

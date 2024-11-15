@@ -30,7 +30,7 @@ import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
 import { ToastContainer } from "react-toastify";
 
-axios.defaults.baseURL = "http://192.168.1.45:8080/api/";
+axios.defaults.baseURL = "http://192.168.1.67:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {

@@ -16,7 +16,7 @@ const Employee = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25); // Default page size
+  const [pageSize, setPageSize] = useState(25);
   const navigate = useNavigate();
 
   const fetchCompanies = async (page = 1, size = 25) => {
