@@ -7,6 +7,7 @@ import Title from "./Title";
 import DashboardInput from "./DashboardInput";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { showToast } from "../global/showToast";
 
 export function JobProfile() {
   const navigate = useNavigate();
@@ -50,9 +51,14 @@ export function JobProfile() {
       const response = await axios.patch(
         `/recruitment-manager/${id}/approval?jobApproval=${newStatus}`
       );
-      if (response.data.error=="false") {
-        toast.success(`Job ${newStatus}`)
+
+      console.log(response.data);
+
+      if (!response.data.error) {
+        showToast("success", `Job ${newStatus}`);
         setStatus(newStatus);
+      } else if (response.data.error) {
+        showToast("warn", response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -61,7 +67,7 @@ export function JobProfile() {
 
   return (
     <div className="me-md-2">
-          <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
       {/* Profile Header */}
       <Title icon={BaggageClaimIcon} title={"Job-profile"} />
