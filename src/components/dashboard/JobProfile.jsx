@@ -8,6 +8,7 @@ import DashboardInput from "./DashboardInput";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToast } from "../global/showToast";
+import { formatDateTime } from "../global/formatDateTime";
 
 export function JobProfile() {
   const navigate = useNavigate();
@@ -18,15 +19,19 @@ export function JobProfile() {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    // Fetch job data using the ID from the URL
     const fetchJobData = async () => {
       try {
         const response = await axios.get(`/job/${id}`);
+        console.log(response.data);
+        if (!response.data.error) {
+          const timeParse = formatDateTime(response.data.meta.createdAt);
 
-        const timeParse = new Date(response.data.createdAt).toUTCString();
-        setTime(timeParse);
-        setJobDetail(response.data);
-        setStatus(response.data.jobApproval); // Set initial status
+          setTime(timeParse);
+          setJobDetail(response.data.meta);
+          setStatus(response.data.meta.jobApproval);
+        } else if (response.data.error) {
+          showToast("error", response.data.message);
+        }
       } catch (error) {
         console.error("Error fetching job data:", error);
       }
@@ -37,7 +42,11 @@ export function JobProfile() {
     const fetchJobApplicant = async () => {
       try {
         const response = await axios.get(`/job-applications/by-jobId/${id}`);
-        setJobApplicant(response.data);
+        if (!response.data.error) {
+          setJobApplicant(response.data.meta);
+        } else if (response.data.error) {
+          showToast("warn", response.data.message);
+        }
       } catch (error) {
         console.error("Error fetching job applicants:", error);
       }
@@ -51,8 +60,6 @@ export function JobProfile() {
       const response = await axios.patch(
         `/recruitment-manager/${id}/approval?jobApproval=${newStatus}`
       );
-
-      console.log(response.data);
 
       if (!response.data.error) {
         showToast("success", `Job ${newStatus}`);
@@ -74,14 +81,19 @@ export function JobProfile() {
       <div
         className="d-flex justify-content-between align-items-start align-items-md-center p-3 flex-sm-row flex-column rounded border mt-3 mx-2"
         style={{
-          background: "linear-gradient(to bottom right, #B9C0FF, #fff)", // Gradient from top left to bottom right
+          background: "linear-gradient(to bottom right, #B9C0FF, #fff)",
         }}
       >
         <div className="d-flex align-items-start gap-4 justify-content-center ">
           <ArrowLeft onClick={() => navigate(-1)} className="cursor-pointer" />
           <div>
-            <h4>{jobDetail?.jobTitle}</h4>
-            <p className="mb-0">Created By: {jobDetail?.createdBy?.name}</p>
+            <h4>
+              {jobDetail?.jobTitle} <span> #{jobDetail?.jobCode}</span>
+            </h4>
+            <p className="mb-0">Hiring Manager: {jobDetail?.createdBy?.name}</p>
+            <p className="mb-0">
+              Recruiter: {jobDetail?.recruiterAssigned?.name}
+            </p>
             <p className="mb-0">{jobDetail?.jobLocation}</p>
             <p className="text-muted mb-0">Current Status: {status || "-"}</p>
             <p className="text-muted mb-0">{time}</p>
@@ -151,7 +163,7 @@ export function JobProfile() {
                 <td>{data?.company || "-"}</td>
                 <td>{data?.location || "-"}</td>
                 <td>{data?.status || "-"}</td>
-                <td>{data?.appliedAt || "-"}</td>
+                <td>{formatDateTime(data?.appliedAt) || "-"}</td>
               </tr>
             ))}
           </tbody>
