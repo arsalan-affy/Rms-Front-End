@@ -9,6 +9,7 @@ import {
   UserIcon,
   Users,
   BriefcaseBusiness,
+  Settings 
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaJoint } from "react-icons/fa6";
@@ -112,6 +113,11 @@ const DashboardLayout = () => {
         path: "/recruitment_manager/employee",
         name: "Employee",
         icon: <Users className="icon-size" />,
+      },
+      {
+        path: "/recruitment_manager/settings",
+        name: "Settings",
+        icon: <Settings className="icon-size" />,
       },
     ],
     EMPLOYEE: [

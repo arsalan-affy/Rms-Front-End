@@ -29,8 +29,11 @@ import CreateCandidates from "./components/candidates/CreateCandidates";
 import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
 import { ToastContainer } from "react-toastify";
+import LoginPassword from "./components/setting/LoginPassword";
+import SettingsProfile from "./pages/SettingsProfile";
+import MyProfile from "./pages/Settings/MyProfile";
 
-axios.defaults.baseURL = "http://192.168.1.67:8080/api/";
+axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -84,6 +87,10 @@ const App = () => {
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/managers" element={<Managers />} />
                     <Route
+                      path="/setting/login-password"
+                      element={<LoginPassword />}
+                    />
+                    <Route
                       path="/managers/create"
                       element={<CreateManager />}
                     />
@@ -116,6 +123,8 @@ const App = () => {
                     <Route path="/candidates" element={<Candidates />} />
                     <Route path="/candidates/add" element={<AddCandidates />} />
                     <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/settings" element={<SettingsProfile />} />
+                    <Route path="settings/my-profile" element={<MyProfile />} />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route
                       path="/candidates/create"
@@ -143,6 +152,8 @@ const App = () => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/users" element={<User />} />
+                    <Route path="/settings" element={<SettingsProfile />} />
+                    <Route path="settings/my-profile" element={<MyProfile />} />
                     <Route
                       path="/jobs/job-profile/:id"
                       element={<JobProfile />}
@@ -167,6 +178,8 @@ const App = () => {
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/users" element={<User />} />
                     <Route path="/employee" element={<Employee />} />
+                    <Route path="/settings" element={<SettingsProfile />} />
+                    <Route path="settings/my-profile" element={<MyProfile />} />
                     <Route
                       path="/employee/create"
                       element={<CreateEmployee />}

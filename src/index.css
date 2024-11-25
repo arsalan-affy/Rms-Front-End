@@ -245,11 +245,9 @@ select {
   background: rgba(0, 0, 0, 0.089) !important ;
 }
 
-
-.careers-job-modal p{
+.careers-job-modal p {
   margin-bottom: 0 !important;
 }
-
 
 /* overlay */
 .overlay {
@@ -263,35 +261,50 @@ select {
   border-radius: 5px;
 }
 
-.loader-box{
+.loader-box {
   height: fit-content;
 }
 
-.logo{
+.logo {
   width: 55px;
   height: 55px;
 }
 
-tr{
+tr {
   vertical-align: middle;
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
   background-color: var(--secondary-color) !important;
 }
 
-.center-table tr,.center-table td,
-.center-table th{
+.center-table tr,
+.center-table td,
+.center-table th {
   text-align: center !important;
   width: 100px !important;
 }
 
-.table-data{
+.table-data {
   height: 300px;
   overflow: auto;
 }
 
-.container-scroll{
+.container-scroll {
   height: 100vh;
   overflow: auto;
+}
+
+.user-img {
+  height: 50px;
+  width: 50px;
+}
+
+.setting-container .section-item {
+  cursor: pointer;
+}
+
+.setting-container .section-item:hover {
+  color: #001a78;
+  font-weight: 500;
 }

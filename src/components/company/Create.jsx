@@ -27,6 +27,7 @@ const Create = () => {
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    console.log(1111)
     e.preventDefault();
     try {
       const response = await axios.post("/admin/create", formData);
