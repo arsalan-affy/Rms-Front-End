@@ -132,7 +132,7 @@ const CreateJob = () => {
                 <Col>
                   <div>
                     <label className="mx-2 my-1 fs-5 fw-semibold">
-                      Select Manager
+                      Select Recruiter
                     </label>
                     <select
                       name="assignedRecruiter"
@@ -141,7 +141,7 @@ const CreateJob = () => {
                       className="form-select"
                       required
                     >
-                      <option value="">Select a Manager</option>
+                      <option value="">Select a Recruiter</option>
                       {allManager.map((item, index) => (
                         <option key={index} value={item.id}>
                           {item.name}
