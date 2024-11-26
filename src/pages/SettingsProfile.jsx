@@ -86,27 +86,29 @@ const SettingsProfile = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="me-md-3">
+    <div className="me-md-3 ">
       <div>
         <Title icon={Settings} title={"Settings"} />
       </div>
-      <div className="container setting-container">
-        <div className="row align-items-center">
-          <div className="col-md-4 my-3">
+      <div className="container setting-container mt-2 gap-1">
+        <div className="row  justify-content-between ">
+          <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
             <img
               className="user-img"
               src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
               alt="user"
             />
-            <h5>{profileData?.name}</h5>
-            <h6>
+            <div className="mt-2 fw-semibold fs-4">
+              {profileData?.name || "Placeholder Name"}
+            </div>
+            <div className="fw-semibold fs-5">
               {profileData?.role === "RECRUITMENT_MANAGER"
                 ? "RECRUITMENT MANAGER"
-                : profileData?.role}
-            </h6>
+                : profileData?.role || "role-unknown"}
+            </div>
           </div>
-          <div className="col-md-4 my-3">
-            {accessibleFields.includes("My Account") && (
+          {accessibleFields.includes("My Account") && (
+            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>My Account</strong>
@@ -142,10 +144,10 @@ const SettingsProfile = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-          <div className="col-md-4 my-3">
-            {accessibleFields.includes("Configuration") && (
+            </div>
+          )}
+          {accessibleFields.includes("Configuration") && (
+            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>Configuration</strong>
@@ -171,10 +173,10 @@ const SettingsProfile = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-          <div className="col-md-4 my-3">
-            {accessibleFields.includes("Permissions") && (
+            </div>
+          )}
+          {accessibleFields.includes("Permissions") && (
+            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>Permissions</strong>
@@ -200,8 +202,8 @@ const SettingsProfile = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

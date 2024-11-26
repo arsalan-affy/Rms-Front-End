@@ -33,7 +33,7 @@ import SettingsProfile from "./pages/SettingsProfile";
 import MyProfile from "./pages/Settings/MyProfile";
 import LoginPassword from "./pages/Settings/LoginPassword";
 
-axios.defaults.baseURL = "http://193.203.160.57:8085/api";
+axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
 // axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
@@ -89,7 +89,10 @@ const App = () => {
                     <Route path="/managers" element={<Managers />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
-                    <Route path="settings/login-password" element={<LoginPassword />} />
+                    <Route
+                      path="settings/login-password"
+                      element={<LoginPassword />}
+                    />
                     <Route
                       path="/managers/create"
                       element={<CreateManager />}

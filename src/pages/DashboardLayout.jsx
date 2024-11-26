@@ -4,7 +4,6 @@ import {
   Grid2x2Check,
   Grid2x2CheckIcon,
   LogOut,
-  ShieldMinus,
   User2,
   UserIcon,
   Users,
