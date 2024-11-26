@@ -97,6 +97,11 @@ const DashboardLayout = () => {
         name: "Jobs",
         icon: <BriefcaseBusiness className="icon-size" />,
       },
+      {
+        path: "/admin/settings",
+        name: "Settings",
+        icon: <Settings className="icon-size" />,
+      },
     ],
     RECRUITMENT_MANAGER: [
       {

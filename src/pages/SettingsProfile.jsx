@@ -1,34 +1,3 @@
-// import { Settings } from "lucide-react";
-// import Title from "../components/dashboard/Title";
-// import DashboardInput from "../components/dashboard/DashboardInput";
-// import { useNavigate } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { jwtDecode } from "jwt-decode";
-// import { showToast } from "../components/global/showToast";
-// import { Trash2Icon } from "lucide-react";
-
-// const token = localStorage.getItem("token");
-// const userData = token && jwtDecode(token);
-
-// const SettingsProfile = () => {
-//   return (
-//     <div className="me-md-3">
-//       <div>
-//         <Title icon={Settings} title={"Settings"} />
-//       </div>
-//       <div className="w-75 mx-auto mt-2">
-//         <DashboardInput />
-//       </div>
-//       <div className="d-flex gap-4 w-100 align-items-center justify-content-center">
-//         <div className="my-md-4"></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SettingsProfile;
-
 import { Settings } from "lucide-react";
 import Title from "../components/dashboard/Title";
 import DashboardInput from "../components/dashboard/DashboardInput";
@@ -38,6 +7,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // Fixed import
 import { showToast } from "../components/global/showToast";
 import { Trash2Icon } from "lucide-react";
+import { useProfileData } from "../components/global/profileData";
 
 const token = localStorage.getItem("token");
 const userData = token && jwtDecode(token);
@@ -61,24 +31,24 @@ const fieldsByRole = {
 const routesByRole = {
   SUPER_ADMIN: {
     myProfile: "/my-profile",
-    loginPassword: "/my-account/login-password",
-    emailPreferences: "/my-account/email-preferences",
+    loginPassword: "/login-password",
+    emailPreferences: "/email-preferences",
     jobFields: "/configuration/job-fields",
     screeningQuestions: "/configuration/screening-questions",
     userManagement: "/permissions/user-management",
     systemRoles: "/permissions/system-roles",
   },
   ADMIN: {
-    myProfile: "/my-profile",
-    loginPassword: "/my-account/login-password",
-    emailPreferences: "/my-account/email-preferences",
-    jobFields: "/configuration/job-fields",
-    screeningQuestions: "/configuration/screening-questions",
+    myProfile: "/admin/settings/my-profile",
+    loginPassword: "/admin/settings/login-password",
+    emailPreferences: "/admin/settings/email-preferences",
+    jobFields: "/admin/settings/configuration/job-fields",
+    screeningQuestions: "/admin/settings/configuration/screening-questions",
   },
   RECRUITMENT_MANAGER: {
     myProfile: "/recruitment_manager/settings/my-profile",
-    loginPassword: "/my-account/login-password",
-    emailPreferences: "/my-account/email-preferences",
+    loginPassword: "/login-password",
+    emailPreferences: "/email-preferences",
     jobFields: "/configuration/job-fields",
     screeningQuestions: "/configuration/screening-questions",
     userManagement: "/permissions/user-management",
@@ -86,17 +56,18 @@ const routesByRole = {
   },
   USER: {
     myProfile: "/my-profile",
-    loginPassword: "/my-account/login-password",
-    emailPreferences: "/my-account/email-preferences",
+    loginPassword: "/login-password",
+    emailPreferences: "/email-preferences",
   },
   EMPLOYEE: {
     myProfile: "/my-profile",
-    loginPassword: "/my-account/login-password",
-    emailPreferences: "/my-account/email-preferences",
+    loginPassword: "/login-password",
+    emailPreferences: "/email-preferences",
   },
 };
 
 const SettingsProfile = () => {
+  const { profileData, loading } = useProfileData();
   const [accessibleFields, setAccessibleFields] = useState([]);
 
   useEffect(() => {
@@ -127,8 +98,12 @@ const SettingsProfile = () => {
               src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
               alt="user"
             />
-            <h5>Name</h5>
-            <h6>role</h6>
+            <h5>{profileData?.name}</h5>
+            <h6>
+              {profileData?.role === "RECRUITMENT_MANAGER"
+                ? "RECRUITMENT MANAGER"
+                : profileData?.role}
+            </h6>
           </div>
           <div className="col-md-4 my-3">
             {accessibleFields.includes("My Account") && (

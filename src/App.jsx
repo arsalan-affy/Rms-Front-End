@@ -29,11 +29,12 @@ import CreateCandidates from "./components/candidates/CreateCandidates";
 import CreateJob from "./components/dashboard/CreateJob";
 import Careers from "./pages/Careers";
 import { ToastContainer } from "react-toastify";
-import LoginPassword from "./components/setting/LoginPassword";
 import SettingsProfile from "./pages/SettingsProfile";
 import MyProfile from "./pages/Settings/MyProfile";
+import LoginPassword from "./pages/Settings/LoginPassword";
 
-axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
+axios.defaults.baseURL = "http://193.203.160.57:8085/api";
+// axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -86,10 +87,9 @@ const App = () => {
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/managers" element={<Managers />} />
-                    <Route
-                      path="/setting/login-password"
-                      element={<LoginPassword />}
-                    />
+                    <Route path="/settings" element={<SettingsProfile />} />
+                    <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route path="settings/login-password" element={<LoginPassword />} />
                     <Route
                       path="/managers/create"
                       element={<CreateManager />}

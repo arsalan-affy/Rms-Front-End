@@ -35,7 +35,14 @@ const Managers = () => {
         showToast("warn", response.data.message);
       }
     } catch (error) {
-      showToast("error", error.response?.data?.message || "An error occurred");
+      if (error.status === 404) {
+        console.log("No Manager Found");
+      } else {
+        showToast(
+          "error",
+          error.response?.data?.message || "An error occurred"
+        );
+      }
     }
   };
 
@@ -205,7 +212,7 @@ export function JobTable({
                 ))
             ) : (
               <tr>
-                <td colSpan={6}>No Employees Found</td>
+                <td colSpan={6}>No Manager Found</td>
               </tr>
             )}
           </tbody>

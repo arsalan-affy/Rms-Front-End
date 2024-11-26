@@ -34,7 +34,14 @@ const Employee = () => {
         showToast("warn", response.data.message);
       }
     } catch (error) {
-      showToast("error", error.response?.data?.message || "An error occurred");
+      if (error.status === 404) {
+        console.log("No Employees Found");
+      } else {
+        showToast(
+          "error",
+          error.response?.data?.message || "An error occurred"
+        );
+      }
     }
   };
 

@@ -21,7 +21,14 @@ const Candidates = () => {
       console.log(response.data);
       setManagers(() => response.data);
     } catch (error) {
-      console.log(error.message);
+      if (error.status === 404) {
+        console.log("No Candidates Found");
+      } else {
+        showToast(
+          "error",
+          error.response?.data?.message || "An error occurred"
+        );
+      }
     }
   };
   useEffect(() => {

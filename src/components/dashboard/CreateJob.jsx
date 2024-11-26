@@ -63,7 +63,7 @@ const CreateJob = () => {
     try {
       console.log(formData);
       console.log(url);
-      
+
       const response = await axios.post(url, formData, {
         headers: {
           Authorization: `Bearer ${token}`,

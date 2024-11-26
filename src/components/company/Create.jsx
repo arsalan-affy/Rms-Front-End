@@ -27,18 +27,17 @@ const Create = () => {
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
-    console.log(1111)
     e.preventDefault();
     try {
       const response = await axios.post("/admin/create", formData);
       console.log(response);
-      
+
       if (response.data.error == "false") {
         console.log(response);
-        toast.success(response.data.message)
+        toast.success(response.data.message);
         navigate(-1);
-      } else{
-        toast.warn(response.data.message)
+      } else {
+        toast.warn(response.data.message);
       }
     } catch (error) {
       console.log(error);

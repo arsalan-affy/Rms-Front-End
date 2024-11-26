@@ -15,7 +15,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
 import { ToastContainer, toast } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [show, setShow] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -57,11 +57,9 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post("/login", data);
-      console.log(response.data);
-      if (response.data.error === true) {
-        console.log("hhh");
-        toast.error(response.data.message);
-      } else if (response.data.error === false) {
+      if (response.data.error) {
+        toast.error(response.data.response);
+      } else if (!response.data.error) {
         const token = response.data.response;
         const decoded = jwtDecode(token);
         localStorage.setItem("token", token);
@@ -73,6 +71,7 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       console.error(error);
+      toast.error(error.response);
     } finally {
       setLoading(false);
     }
@@ -201,7 +200,6 @@ const Login = () => {
         </Row>
       </Container>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-
     </div>
   );
 };
