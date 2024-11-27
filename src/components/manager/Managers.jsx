@@ -36,7 +36,7 @@ const Managers = () => {
       }
     } catch (error) {
       if (error.status === 404) {
-        console.log("No Manager Found");
+        console.log("No Recruiter Found");
       } else {
         showToast(
           "error",
@@ -64,7 +64,7 @@ const Managers = () => {
   return (
     <div className="me-md-3">
       <div>
-        <Title icon={SquareKanban} title={"Managers"} />
+        <Title icon={SquareKanban} title={"Recruiters"} />
       </div>
       <div className="w-75 mx-auto mt-4">
         <DashboardInput />
@@ -97,10 +97,10 @@ const Managers = () => {
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <button
-            className="btn btn-outline-dark"
+            className="btn btn-primary btn-theme"
             onClick={() => navigate("create")}
           >
-            Create Managers
+            Create Recruiter
           </button>
         </div>
         <div className="col d-flex">

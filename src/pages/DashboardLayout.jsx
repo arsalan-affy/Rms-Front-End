@@ -8,7 +8,7 @@ import {
   UserIcon,
   Users,
   BriefcaseBusiness,
-  Settings 
+  Settings,
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaJoint } from "react-icons/fa6";
@@ -113,11 +113,11 @@ const DashboardLayout = () => {
         name: "Jobs",
         icon: <BriefcaseBusiness className="icon-size" />,
       },
-      {
-        path: "/recruitment_manager/employee",
-        name: "Employee",
-        icon: <Users className="icon-size" />,
-      },
+      // {
+      //   path: "/recruitment_manager/employee",
+      //   name: "Employee",
+      //   icon: <Users className="icon-size" />,
+      // },
       {
         path: "/recruitment_manager/settings",
         name: "Settings",
@@ -136,10 +136,15 @@ const DashboardLayout = () => {
         icon: <BriefcaseBusiness className="icon-size" />,
       },
       {
-        path: "/employee/candidates",
-        name: "Candidates",
-        icon: <Users className="icon-size" />,
+        path: "/employee/settings",
+        name: "Settings",
+        icon: <Settings className="icon-size" />,
       },
+      // {
+      //   path: "/employee/candidates",
+      //   name: "Candidates",
+      //   icon: <Users className="icon-size" />,
+      // },
     ],
   };
   const role = localStorage.getItem("role");
@@ -153,7 +158,7 @@ const DashboardLayout = () => {
           className="logo fs-4  w-100 mb-2 text-center text-white cursor-pointer fw-semibold fs-4"
           onClick={() => navigate("/")}
         >
-          Logo
+          WAR
         </div>
         <ul className="nav flex-column mb-auto w-100 ">
           {linksToDisplay.map((link, index) => (

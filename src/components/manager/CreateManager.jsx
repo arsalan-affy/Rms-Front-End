@@ -64,7 +64,7 @@ const CreateManager = () => {
               <Row>
                 <div>
                   <button
-                    className="btn btn-outline-dark mx-2 btn-sm "
+                    className="btn btn-primary btn-theme mx-2 btn-sm "
                     onClick={() => navigate(-1)}
                   >
                     <MoveLeft />
@@ -143,7 +143,7 @@ const CreateManager = () => {
         <div className="p-3  d-flex align-items-center justify-content-end gap-5">
           <Button type="submit" variant="warning" className="fw-semibold">
             {" "}
-            Create Manager
+            Create Recruiter
           </Button>
         </div>
       </form>

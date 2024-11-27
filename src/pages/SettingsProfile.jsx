@@ -22,8 +22,8 @@ const roles = [
 ];
 const fieldsByRole = {
   SUPER_ADMIN: ["My Account", "Configuration", "Permissions"],
-  ADMIN: ["My Account", "Configuration"],
-  RECRUITMENT_MANAGER: ["My Account", "Configuration", "Permissions"],
+  ADMIN: ["My Account", "Configuration", "Permissions"],
+  RECRUITMENT_MANAGER: ["My Account"],
   USER: ["My Account"],
   EMPLOYEE: ["My Account"],
 };
@@ -32,27 +32,25 @@ const routesByRole = {
   SUPER_ADMIN: {
     myProfile: "/my-profile",
     loginPassword: "/login-password",
-    emailPreferences: "/email-preferences",
-    jobFields: "/configuration/job-fields",
-    screeningQuestions: "/configuration/screening-questions",
-    userManagement: "/permissions/user-management",
-    systemRoles: "/permissions/system-roles",
+    emailPreferences: "#",
+    jobFields: "#",
+    screeningQuestions: "#",
+    userManagement: "#",
+    systemRoles: "#",
   },
   ADMIN: {
     myProfile: "/admin/settings/my-profile",
     loginPassword: "/admin/settings/login-password",
-    emailPreferences: "/admin/settings/email-preferences",
-    jobFields: "/admin/settings/configuration/job-fields",
-    screeningQuestions: "/admin/settings/configuration/screening-questions",
+    emailPreferences: "#",
+    jobFields: "#",
+    screeningQuestions: "#",
+    userManagement: "#",
+    systemRoles: "#",
   },
   RECRUITMENT_MANAGER: {
     myProfile: "/recruitment_manager/settings/my-profile",
     loginPassword: "/login-password",
-    emailPreferences: "/email-preferences",
-    jobFields: "/configuration/job-fields",
-    screeningQuestions: "/configuration/screening-questions",
-    userManagement: "/permissions/user-management",
-    systemRoles: "/permissions/system-roles",
+    emailPreferences: "#",
   },
   USER: {
     myProfile: "/my-profile",
@@ -90,9 +88,9 @@ const SettingsProfile = () => {
       <div>
         <Title icon={Settings} title={"Settings"} />
       </div>
-      <div className="container setting-container mt-2 gap-1">
-        <div className="row  justify-content-between ">
-          <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
+      <div className="container setting-container my-3 gap-1">
+        <div className="row">
+          <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
             <img
               className="user-img"
               src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -101,14 +99,14 @@ const SettingsProfile = () => {
             <div className="mt-2 fw-semibold fs-4">
               {profileData?.name || "Placeholder Name"}
             </div>
-            <div className="fw-semibold fs-5">
+            <div className="fw-semibold fs-7">
               {profileData?.role === "RECRUITMENT_MANAGER"
                 ? "RECRUITMENT MANAGER"
-                : profileData?.role || "role-unknown"}
+                : profileData?.role || "N/A"}
             </div>
           </div>
           {accessibleFields.includes("My Account") && (
-            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
               <div className="section">
                 <h4>
                   <strong>My Account</strong>
@@ -147,7 +145,7 @@ const SettingsProfile = () => {
             </div>
           )}
           {accessibleFields.includes("Configuration") && (
-            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
               <div className="section">
                 <h4>
                   <strong>Configuration</strong>
@@ -176,7 +174,7 @@ const SettingsProfile = () => {
             </div>
           )}
           {accessibleFields.includes("Permissions") && (
-            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
               <div className="section">
                 <h4>
                   <strong>Permissions</strong>

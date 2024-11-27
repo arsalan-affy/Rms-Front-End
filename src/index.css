@@ -114,7 +114,8 @@ input:-ms-autofill {
   color: var(--text-secondary);
 }
 .dashboard-cards {
-  height: 200px;
+  /* height: 200px; */
+  height: 130px;
   background: linear-gradient(to right, #b9c0ff, white);
   border: 1px solid #ccc5c598;
   box-shadow: var(--card-shadow);
@@ -307,4 +308,8 @@ tr {
 .setting-container .section-item:hover {
   color: #001a78;
   font-weight: 500;
+}
+
+.btn-theme{
+  background-color: #444B8C !important;
 }

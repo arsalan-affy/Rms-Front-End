@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import { Grid2x2Check } from "lucide-react";
 import Title from "./Title";
-// import image from "../../assets/interview-scheduled.svg";
 
 import { Doughnut } from "react-chartjs-2";
 import DashboardInput from "./DashboardInput";
@@ -45,9 +43,7 @@ const Dashboard = ({ navlinks }) => {
                     <div className="d-flex align-items-start p-4 h-100 flex-column">
                       <h5 className="text-primary">{item.title}</h5>
                       {/* <p className="card-text">Content for new jobs</p> */}
-                      <h3 className="mt-auto text-yellow fs-1">
-                        {item.number}
-                      </h3>
+                      <h3 className="text-yellow fs-1">{item.number}</h3>
                     </div>
                   </div>
                 </div>

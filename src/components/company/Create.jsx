@@ -62,7 +62,7 @@ const Create = () => {
               <Row>
                 <div>
                   <button
-                    className="btn btn-outline-dark mx-2 btn-sm "
+                    className="btn btn-primary btn-theme mx-2 btn-sm "
                     onClick={() => navigate(-1)}
                   >
                     <MoveLeft />

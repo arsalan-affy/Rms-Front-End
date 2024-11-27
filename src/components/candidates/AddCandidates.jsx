@@ -97,7 +97,7 @@ const AddCandidates = () => {
               <Form.Group className="mb-3">
                 <Form.Label
                   htmlFor="profile"
-                  className="cursor-pointer btn btn-outline-dark"
+                  className="cursor-pointer btn btn-primary btn-theme"
                 >
                   Upload Image
                 </Form.Label>
@@ -114,7 +114,7 @@ const AddCandidates = () => {
                   </div>
                 )} */}
               </Form.Group>
-              <button className="btn btn-outline-dark">Cancel image</button>
+              <button className="btn btn-primary btn-theme">Cancel image</button>
             </Col>
           </Row>
         );

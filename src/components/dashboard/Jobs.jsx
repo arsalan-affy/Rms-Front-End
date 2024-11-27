@@ -104,7 +104,7 @@ const Jobs = () => {
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <button
-            className="btn  btn-outline-dark"
+            className="btn btn-primary btn-theme"
             onClick={() => navigate("create-jobs")}
           >
             Create Jobs
@@ -133,12 +133,6 @@ export function JobTable({ jobs = [] }) {
             <th scope="col">Interview</th>
             <th scope="col">Offered</th>
             <th scope="col">Hired</th>
-
-            {/* <th scope="col">Job Description</th>
-            <th scope="col">Job Location</th>
-            <th scope="col">Company Description</th>
-            <th scope="col">Job Qualification</th>
-            <th scope="col">Job Additional Information</th> */}
           </tr>
         </thead>
         <tbody className="jobs-table">

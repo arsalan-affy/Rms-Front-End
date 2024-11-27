@@ -70,7 +70,7 @@ const Candidates = () => {
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <button
-            className="btn btn-outline-dark"
+            className="btn btn-primary btn-theme"
             onClick={() => navigate("create")}
           >
             Create Candidates

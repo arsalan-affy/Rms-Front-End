@@ -123,7 +123,7 @@ const CreateJob = () => {
               <Row>
                 <div>
                   <button
-                    className="btn btn-outline-dark mx-2 btn-sm"
+                    className="btn btn-primary btn-theme mx-2 btn-sm"
                     onClick={() => navigate(-1)}
                   >
                     <MoveLeft />
@@ -232,7 +232,7 @@ const CreateJob = () => {
                   />
 
                   <label className="mx-2 my-1 fs-5 fw-semibold">
-                    Job Qualification
+                    Job Qualification or Required Skills
                   </label>
                   <ReactQuill
                     theme="snow"
@@ -262,7 +262,7 @@ const CreateJob = () => {
             className="fw-semibold"
             disabled={loading}
           >
-            {!loading ? "Create Jobs" : "loading"}
+            {!loading ? "Create Jobs" : "Creating"}
           </Button>
         </div>
       </form>
