@@ -112,7 +112,7 @@ const CreateJob = () => {
       style={{ zIndex: 100 }}
     >
       <form onSubmit={handleSubmit}>
-        <Title title={"Create Jobs"} icon={CloudUploadIcon} />
+        <Title title={"Create Job"} icon={CloudUploadIcon} />
 
         <div
           className="d-flex flex-grow-1 px-5 flex-column"
@@ -262,7 +262,7 @@ const CreateJob = () => {
             className="fw-semibold"
             disabled={loading}
           >
-            {!loading ? "Create Jobs" : "Creating"}
+            {!loading ? "Create Job" : "Creating"}
           </Button>
         </div>
       </form>

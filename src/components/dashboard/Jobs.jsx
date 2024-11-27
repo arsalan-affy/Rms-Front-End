@@ -107,7 +107,7 @@ const Jobs = () => {
             className="btn btn-primary btn-theme"
             onClick={() => navigate("create-jobs")}
           >
-            Create Jobs
+            Create Job
           </button>
         </div>
       </div>

@@ -92,6 +92,11 @@ const DashboardLayout = () => {
         icon: <Users className="icon-size" />,
       },
       {
+        path: "/admin/candidates",
+        name: "Candidates",
+        icon: <Users className="icon-size" />,
+      },
+      {
         path: "/admin/jobs",
         name: "Jobs",
         icon: <BriefcaseBusiness className="icon-size" />,

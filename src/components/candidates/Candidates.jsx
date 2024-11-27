@@ -12,17 +12,15 @@ const Candidates = () => {
   const token = localStorage.getItem("token");
   const userData = token && jwtDecode(token);
   const role = localStorage.getItem("role");
-  console.log(role, "CANDIDATES ROLE");
   const fetchCompanies = async () => {
+    console.log(111);
     try {
-      const response = await axios.get(
-        "/recruitment-manager/parent/" + userData?.claims?.id
-      );
+      const response = await axios.get("/job-applications/all");
       console.log(response.data);
       setManagers(() => response.data);
     } catch (error) {
       if (error.status === 404) {
-        console.log("No Candidates Found");
+        console.log("No Applicants Found");
       } else {
         showToast(
           "error",
@@ -32,12 +30,12 @@ const Candidates = () => {
     }
   };
   useEffect(() => {
-    role == "RECRUITMENT_MANAGER" && fetchCompanies();
+    fetchCompanies();
   }, []);
   return (
     <div className="me-md-3">
       <div>
-        <Title icon={SquareKanban} title={"Candidates"} />
+        <Title icon={SquareKanban} title={"Applicants"} />
       </div>
       <div className="w-75 mx-auto mt-4">
         <DashboardInput />
@@ -68,14 +66,14 @@ const Candidates = () => {
             </div>
           </div>
         </div>
-        <div className="d-flex align-items-center justify-content-center">
+        {/* <div className="d-flex align-items-center justify-content-center">
           <button
             className="btn btn-primary btn-theme"
             onClick={() => navigate("create")}
           >
             Create Candidates
           </button>
-        </div>
+        </div> */}
       </div>
       <JobTable jobs={managers} />
     </div>
@@ -88,31 +86,43 @@ export function JobTable({ jobs = [] }) {
 
   return (
     <div className="">
-      <table className="table table-striped table-hover border">
+      <table className="table table-striped table-hover border text-center">
         <thead className="table-light">
           <tr>
-            <th scope="col">name</th>
-            <th scope="col">companyName</th>
-            <th scope="col">email</th>
-            <th scope="col">phoneNumber</th>
-            <th scope="col">username</th>
+            <th scope="col">S No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Resume/CV</th>
           </tr>
         </thead>
         <tbody>
-          {/* Map through the jobs array */}
           {jobs?.map((job, index) => (
-            <tr
-              key={index}
-              className="cursor-pointer"
-              //   onClick={() => navigate("job-profile/" + job?.title)}
-            >
-              <td>{job?.name}</td>
-              <td>{job?.companyName}</td>
+            <tr key={index} className="cursor-pointer">
+              <td>{index + 1}</td>
+              <td>{job?.candidateName}</td>
               <td>{job?.email}</td>
-              <td>{job?.phoneNumber}</td>
-              <td>{job?.username}</td>
+              <td>{job?.phone}</td>
+              <td>
+                <a
+                  className="btn btn-primary"
+                  href={job?.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Resume/CV
+                </a>
+              </td>
             </tr>
           ))}
+
+          {jobs?.length === 0 ? (
+            <tr>
+              <td colSpan={5}>No Applicants Found</td>
+            </tr>
+          ) : (
+            ""
+          )}
         </tbody>
       </table>
     </div>

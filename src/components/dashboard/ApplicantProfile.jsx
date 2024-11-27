@@ -266,7 +266,7 @@ const ApplicantProfile = () => {
                   <div>Bangalore, Karnataka</div>
                   <div>{status == "PENDING" ? "NEW" : status || "-"}</div>
 
-                  <div className="mb-1 fs-4">Rating: ★★★☆☆</div>
+                  {/* <div className="mb-1 fs-4">Rating: ★★★☆☆</div> */}
                   <div className="d-flex align-content-center flex-column ">
                     <ProgressBar
                       now={progressCount}
@@ -277,7 +277,7 @@ const ApplicantProfile = () => {
                         (progressCount == 75 && "Offered") ||
                         (progressCount == 100 && "Hired")
                       }
-                      variant="success"
+                      variant="primary"
                       className="mb-2"
                     />
                     <div className="d-flex w-100 justify-content-between mb-3 align-items-center">
@@ -293,7 +293,7 @@ const ApplicantProfile = () => {
                     <div className="d-flex justify-content-start gap-3">
                       <div className="position-relative d-flex align-items-center justify-content-center gap-2">
                         <button
-                          style={{ background: "#29b447" }}
+                          style={{ background: "#444B8C" }}
                           className="btn text-white d-flex justify-content-between gap-2 align-items-center "
                           onClick={onMoveForward}
                           disabled={status === "HIRED"}
@@ -324,7 +324,7 @@ const ApplicantProfile = () => {
                         <div className="btn-group dropup text-white">
                           <button
                             type="button"
-                            style={{ background: "#29b447" }}
+                            style={{ background: "#444B8C" }}
                             className="btn  dropdown-toggle text-white"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"

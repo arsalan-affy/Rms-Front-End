@@ -89,6 +89,7 @@ const App = () => {
                     <Route path="/managers" element={<Managers />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route path="/candidates" element={<Candidates />} />
                     <Route
                       path="settings/login-password"
                       element={<LoginPassword />}

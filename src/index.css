@@ -310,7 +310,7 @@ tr {
   font-weight: 500;
 }
 
-.btn-theme{
+.btn-theme, .progress-bar.bg-primary{
   background-color: #444B8C !important;
 }
 
