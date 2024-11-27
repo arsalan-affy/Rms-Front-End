@@ -51,14 +51,14 @@ const Dashboard = ({ navlinks }) => {
             })}
           </div>
           <div className="row mt-md-4 mt-2">
-            <div className="fs-2 fw-semibold mb-2">Analytics</div>
+            <div className="fs-2 fw-semibold mb-2">Hiring</div>
             <div className="mx-auto w-full w-50">
               <Doughnut data={data} />
             </div>
           </div>
         </div>
         <div className="col-md-5 col-12  p-md-4 px-2">
-          <div className="fs-3 fw-bolder">Activity</div>
+          <div className="fs-3 fw-bolder">Jobs</div>
           <select
             onChange={(event) => {
               const value = event.target.value; //
