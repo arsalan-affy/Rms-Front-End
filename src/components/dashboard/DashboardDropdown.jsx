@@ -78,7 +78,7 @@ const DashboardDropdown = () => {
             Title:{jobOptions[selectJobs]?.title}
           </div>
           <div className="fs-5 fw-light">
-            Description:{jobOptions[selectJobs]?.description}
+            Description:<em>{jobOptions[selectJobs]?.description}</em>
           </div>
           <div className="fs-5 fw-light">
             Number of Jobs:{jobOptions[selectJobs]?.numberOfJobs}
@@ -88,7 +88,7 @@ const DashboardDropdown = () => {
             {jobOptions[selectJobs]?.categories?.map((item, index) => {
               return (
                 <div key={index} className="btn btn-outline-dark btn-sm me-2">
-                  {item}
+                  <em>{item}</em>
                 </div>
               );
             })}

@@ -67,7 +67,9 @@ const routesByRole = {
 };
 
 const SettingsProfile = () => {
-  const { profileData, loading } = useProfileData();
+  const { profileData, loading, error } = useProfileData();
+  console.log(error, "error");
+
   const [accessibleFields, setAccessibleFields] = useState([]);
 
   useEffect(() => {
@@ -90,25 +92,27 @@ const SettingsProfile = () => {
       <div>
         <Title icon={Settings} title={"Settings"} />
       </div>
-      <div className="container setting-container mt-2 gap-1">
-        <div className="row  justify-content-between ">
-          <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
-            <img
-              className="user-img"
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              alt="user"
-            />
-            <div className="mt-2 fw-semibold fs-4">
-              {profileData?.name || "Placeholder Name"}
-            </div>
-            <div className="fw-semibold fs-5">
-              {profileData?.role === "RECRUITMENT_MANAGER"
-                ? "RECRUITMENT MANAGER"
-                : profileData?.role || "role-unknown"}
+      <div className=" setting-container mt-2 ">
+        <div className=" row gx-3 w-100">
+          <div className="col mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div>
+              <img
+                className="user-img"
+                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                alt="user"
+              />
+              <div className="mt-2 fw-semibold fs-4">
+                {profileData?.name || "Placeholder Name"}
+              </div>
+              <div className="fw-semibold fs-5">
+                {profileData?.role === "RECRUITMENT_MANAGER"
+                  ? "RECRUITMENT MANAGER"
+                  : profileData?.role || "role-unknown"}
+              </div>
             </div>
           </div>
           {accessibleFields.includes("My Account") && (
-            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className="mb-3 col border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>My Account</strong>
@@ -147,7 +151,7 @@ const SettingsProfile = () => {
             </div>
           )}
           {accessibleFields.includes("Configuration") && (
-            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className=" mb-3 border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>Configuration</strong>
@@ -176,7 +180,7 @@ const SettingsProfile = () => {
             </div>
           )}
           {accessibleFields.includes("Permissions") && (
-            <div className="col-md-4  mb-3 border p-4 border rounded-2 shadow-sm ">
+            <div className=" mb-3 border p-4 border rounded-2 shadow-sm ">
               <div className="section">
                 <h4>
                   <strong>Permissions</strong>

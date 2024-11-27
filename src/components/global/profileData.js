@@ -17,7 +17,7 @@ export const useProfileData = () => {
       }
 
       try {
-        const decodedToken = jwtDecode(token);
+        const decodedToken = token && jwtDecode(token);
         const role = decodedToken?.claims?.role;
         const id = decodedToken?.claims?.id;
 

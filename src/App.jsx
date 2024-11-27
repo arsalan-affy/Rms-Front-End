@@ -205,6 +205,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/applicantProfile" element={<ApplicantProfile />} />
+          <Route path="/settings" element={<SettingsProfile />} />
         </Routes>
       </BrowserRouter>
     </>
