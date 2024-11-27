@@ -48,7 +48,6 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />

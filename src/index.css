@@ -114,7 +114,7 @@ input:-ms-autofill {
   color: var(--text-secondary);
 }
 .dashboard-cards {
-  height: 200px;
+  height: 150px;
   background: linear-gradient(to right, #b9c0ff, white);
   border: 1px solid #ccc5c598;
   box-shadow: var(--card-shadow);
