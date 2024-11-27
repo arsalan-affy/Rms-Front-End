@@ -9,6 +9,7 @@ import {
   Users,
   BriefcaseBusiness,
   Settings,
+  FileUser,
 } from "lucide-react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaJoint } from "react-icons/fa6";
@@ -94,7 +95,7 @@ const DashboardLayout = () => {
       {
         path: "/admin/candidates",
         name: "Candidates",
-        icon: <Users className="icon-size" />,
+        icon: <FileUser  className="icon-size" />,
       },
       {
         path: "/admin/jobs",

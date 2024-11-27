@@ -1,4 +1,4 @@
-import { SquareKanban } from "lucide-react";
+import { FileUser, SquareKanban } from "lucide-react";
 import Title from "../dashboard/Title";
 import DashboardInput from "../dashboard/DashboardInput";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ const Candidates = () => {
   return (
     <div className="me-md-3">
       <div>
-        <Title icon={SquareKanban} title={"Applicants"} />
+        <Title icon={FileUser} title={"Applicants"} />
       </div>
       <div className="w-75 mx-auto mt-4">
         <DashboardInput />
@@ -117,7 +117,7 @@ export function JobTable({ jobs = [] }) {
           ))}
 
           {jobs?.length === 0 ? (
-            <tr>
+            <tr>  
               <td colSpan={5}>No Applicants Found</td>
             </tr>
           ) : (
