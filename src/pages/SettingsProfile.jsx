@@ -49,18 +49,18 @@ const routesByRole = {
   },
   RECRUITMENT_MANAGER: {
     myProfile: "/recruitment_manager/settings/my-profile",
-    loginPassword: "/login-password",
+    loginPassword: "/recruitment_manager/settings/login-password",
     emailPreferences: "#",
   },
   USER: {
     myProfile: "/my-profile",
-    loginPassword: "/login-password",
-    emailPreferences: "/email-preferences",
+    loginPassword: "/user/settings/login-password",
+    emailPreferences: "#",
   },
   EMPLOYEE: {
     myProfile: "/my-profile",
-    loginPassword: "/login-password",
-    emailPreferences: "/email-preferences",
+    loginPassword: "/employee/settings/login-password",
+    emailPreferences: "#",
   },
 };
 

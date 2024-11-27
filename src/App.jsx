@@ -128,6 +128,10 @@ const App = () => {
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route
+                      path="settings/login-password"
+                      element={<LoginPassword />}
+                    />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route
                       path="/candidates/create"
@@ -158,6 +162,10 @@ const App = () => {
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
                     <Route
+                      path="settings/login-password"
+                      element={<LoginPassword />}
+                    />
+                    <Route
                       path="/jobs/job-profile/:id"
                       element={<JobProfile />}
                     />
@@ -183,6 +191,10 @@ const App = () => {
                     <Route path="/employee" element={<Employee />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route
+                      path="settings/login-password"
+                      element={<LoginPassword />}
+                    />
                     <Route
                       path="/employee/create"
                       element={<CreateEmployee />}

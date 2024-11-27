@@ -33,8 +33,7 @@ export const useProfileData = () => {
         }
 
         const response = await axios.get(endpoint);
-        console.log(response.data); // Debugging: Log API response structure
-        setProfileData(response.data.meta); // Ensure meta contains the expected data
+        setProfileData(response.data.meta); 
         setLoading(false);
       } catch (err) {
         setError(err.message || "Error fetching profile data.");

@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToast } from "../global/showToast";
 import { formatDateTime } from "../global/formatDateTime";
+import { useProfileData } from "../global/profileData";
 
 export function JobProfile() {
   const navigate = useNavigate();
@@ -21,11 +22,22 @@ export function JobProfile() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [generatedLink, setGeneratedLink] = useState("");
+  const { profileData } = useProfileData();
+  const role = localStorage.getItem("role");
+  useEffect(() => {
+    if (role === "ADMIN") {
+      setGeneratedLink(`/careers/${profileData?.id}`);
+      console.log(`/careers/${profileData?.id}`);
+    } else {
+      setGeneratedLink(`/careers/${profileData?.parent?.id}`);
+      console.log(`/careers/${profileData?.parent?.id}`);
+    }
+  }, [profileData]);
 
   const fetchJobData = async () => {
     try {
       const response = await axios.get(`/job/${id}`);
-      console.log(response.data);
       if (!response.data.error) {
         const timeParse = formatDateTime(response.data.meta.createdAt);
 
@@ -45,7 +57,6 @@ export function JobProfile() {
       const response = await axios.get(
         `/job-applications/by-jobId/${id}/page?page=${currentPage}&size=${pageSize}`
       );
-      console.log(response.data);
 
       if (!response.data.error) {
         setJobApplicant(response.data.meta.applications);
@@ -129,7 +140,7 @@ export function JobProfile() {
                 ? "outline-dark"
                 : "success"
             }
-            className="me-2 btn-sm"
+            className="me-2 btn-sm w-100"
             onClick={() => {
               if (status === "PENDING") {
                 changeJobStatus("APPROVED"); // Approve
@@ -146,6 +157,18 @@ export function JobProfile() {
               ? "Unpublish"
               : "Publish"}
           </Button>
+          <br />
+          {status === "PUBLISHED" ? (
+            <Button
+              className="my-2 w-100 btn-sm"
+              variant="secondary"
+              onClick={() => window.open(generatedLink, "_blank")}
+            >
+              See Job
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 

@@ -104,16 +104,10 @@ const MyProfile = () => {
                   <MoveLeft />
                 </button>
                 {!isEditingName ? (
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setIsEditingName(true)}
-                  >
-                    <Edit />
-                  </Button>
+                  <Edit onClick={() => setIsEditingName(true)} />
                 ) : (
                   <Button
-                    variant="success"
+                    variant="warning"
                     size="sm"
                     onClick={handleEditName}
                     disabled={loading}
