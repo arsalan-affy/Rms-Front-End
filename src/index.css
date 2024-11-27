@@ -313,3 +313,9 @@ tr {
 .btn-theme{
   background-color: #444B8C !important;
 }
+
+.jobs-dashboard-container{
+  height: 350px;
+  overflow: auto;
+  max-height: 350px;
+}
