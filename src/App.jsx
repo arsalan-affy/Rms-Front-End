@@ -32,9 +32,13 @@ import { ToastContainer } from "react-toastify";
 import SettingsProfile from "./pages/SettingsProfile";
 import MyProfile from "./pages/Settings/MyProfile";
 import LoginPassword from "./pages/Settings/LoginPassword";
+import CreateJobFields from "./pages/Settings/CreateJobFields";
+import JobFields from "./pages/Settings/JobFields";
+import UserManagement from "./pages/Settings/UserManagement";
+import CreateUser from "./pages/Settings/CreateUser";
 
-axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
-// axios.defaults.baseURL = "http://192.168.1.57:8080/api/";
+// axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
+axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -89,6 +93,19 @@ const App = () => {
                     <Route path="/managers" element={<Managers />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route
+                      path="settings/job-fields/create"
+                      element={<CreateJobFields />}
+                    />
+                    <Route path="settings/job-fields" element={<JobFields />} />
+                    <Route
+                      path="settings/user-management"
+                      element={<UserManagement />}
+                    />
+                    <Route
+                      path="settings/user-management/create-user"
+                      element={<CreateUser />}
+                    />
                     <Route path="/candidates" element={<Candidates />} />
                     <Route
                       path="settings/login-password"

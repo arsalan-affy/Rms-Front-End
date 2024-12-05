@@ -30,8 +30,8 @@ const fieldsByRole = {
 
 const routesByRole = {
   SUPER_ADMIN: {
-    myProfile: "/my-profile",
-    loginPassword: "/login-password",
+    myProfile: "my-profile",
+    loginPassword: "login-password",
     emailPreferences: "#",
     jobFields: "#",
     screeningQuestions: "#",
@@ -39,27 +39,27 @@ const routesByRole = {
     systemRoles: "#",
   },
   ADMIN: {
-    myProfile: "/admin/settings/my-profile",
-    loginPassword: "/admin/settings/login-password",
+    myProfile: "my-profile",
+    loginPassword: "login-password",
     emailPreferences: "#",
-    jobFields: "#",
+    jobFields: "job-fields",
     screeningQuestions: "#",
-    userManagement: "#",
+    userManagement: "user-management",
     systemRoles: "#",
   },
   RECRUITMENT_MANAGER: {
-    myProfile: "/recruitment_manager/settings/my-profile",
-    loginPassword: "/recruitment_manager/settings/login-password",
+    myProfile: "my-profile",
+    loginPassword: "login-password",
     emailPreferences: "#",
   },
   USER: {
-    myProfile: "/my-profile",
-    loginPassword: "/user/settings/login-password",
+    myProfile: "my-profile",
+    loginPassword: "login-password",
     emailPreferences: "#",
   },
   EMPLOYEE: {
-    myProfile: "/my-profile",
-    loginPassword: "/employee/settings/login-password",
+    myProfile: "my-profile",
+    loginPassword: "login-password",
     emailPreferences: "#",
   },
 };

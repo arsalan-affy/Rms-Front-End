@@ -319,3 +319,9 @@ tr {
   overflow: auto;
   max-height: 350px;
 }
+
+.job-field-required{
+ height: 15px;
+ width: 15px;
+ accent-color: #444B8C;
+}

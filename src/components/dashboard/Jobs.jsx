@@ -22,7 +22,6 @@ const Jobs = () => {
     try {
       setLoading(true);
 
-      // Use a different API for ADMIN role
       const endpoint =
         role === "ADMIN"
           ? `/job/byParent/${id}`
@@ -151,27 +150,37 @@ export function JobTable({ jobs = [] }) {
                 <td className="text-capitalize">{job?.createdBy?.name}</td>
                 <td className="text-capitalize">
                   <div className="card p-2">
-                    {job?.pending ? job?.pending : "-"}
+                    {job?.applicationStatusCounts?.PENDING
+                      ? job?.applicationStatusCounts?.PENDING
+                      : "-"}
                   </div>
                 </td>
                 <td className="text-capitalize">
                   <div className="card p-2">
-                    {job?.review ? job?.review : "-"}
+                    {job?.applicationStatusCounts?.IN_REVIEW
+                      ? job?.applicationStatusCounts?.IN_REVIEW
+                      : "-"}
                   </div>
                 </td>
                 <td className="text-capitalize">
                   <div className="card p-2">
-                    {job?.interview ? job?.interview : "-"}
+                    {job?.applicationStatusCounts?.INTERVIEW
+                      ? job?.applicationStatusCounts?.INTERVIEW
+                      : "-"}
                   </div>
                 </td>
                 <td className="text-capitalize">
                   <div className="card p-2">
-                    {job?.offered ? job?.offered : "-"}
+                    {job?.applicationStatusCounts?.OFFERED
+                      ? job?.applicationStatusCounts?.OFFERED
+                      : "-"}
                   </div>
                 </td>
                 <td className="text-capitalize">
                   <div className="card p-2">
-                    {job?.hired ? job?.hired : "-"}
+                    {job?.applicationStatusCounts?.HIRED
+                      ? job?.applicationStatusCounts?.HIRED
+                      : "-"}
                   </div>
                 </td>
               </tr>

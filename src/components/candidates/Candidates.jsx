@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { showToast } from "../global/showToast";
 
 const Candidates = () => {
   const [managers, setManagers] = useState([]);
@@ -12,12 +13,16 @@ const Candidates = () => {
   const token = localStorage.getItem("token");
   const userData = token && jwtDecode(token);
   const role = localStorage.getItem("role");
-  const fetchCompanies = async () => {
-    console.log(111);
+  const fetchApplicants = async () => {
     try {
-      const response = await axios.get("/job-applications/all");
-      console.log(response.data);
-      setManagers(() => response.data);
+      const response = await axios.get(
+        `/job-applications/by-parent-id/${userData.claims.id}`
+      );
+      if (!response.error) {
+        setManagers(() => response.data.meta);
+      } else if (response.data.error) {
+        showToast("error", response.data.message);
+      }
     } catch (error) {
       if (error.status === 404) {
         console.log("No Applicants Found");
@@ -30,7 +35,7 @@ const Candidates = () => {
     }
   };
   useEffect(() => {
-    fetchCompanies();
+    fetchApplicants();
   }, []);
   return (
     <div className="me-md-3">
@@ -90,9 +95,10 @@ export function JobTable({ jobs = [] }) {
         <thead className="table-light">
           <tr>
             <th scope="col">S No.</th>
-            <th scope="col">Name</th>
+            <th scope="col">Applicant Name</th>
             <th scope="col">Email</th>
             <th scope="col">Mobile</th>
+            <th scope="col">Job Title</th>
             <th scope="col">Resume/CV</th>
           </tr>
         </thead>
@@ -103,6 +109,7 @@ export function JobTable({ jobs = [] }) {
               <td>{job?.candidateName}</td>
               <td>{job?.email}</td>
               <td>{job?.phone}</td>
+              <td>{job?.jobTitle}</td>
               <td>
                 <a
                   className="btn btn-primary"
@@ -117,8 +124,8 @@ export function JobTable({ jobs = [] }) {
           ))}
 
           {jobs?.length === 0 ? (
-            <tr>  
-              <td colSpan={5}>No Applicants Found</td>
+            <tr>
+              <td colSpan={6}>No Applicants Found</td>
             </tr>
           ) : (
             ""

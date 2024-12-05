@@ -105,7 +105,7 @@ const Login = () => {
             to="/"
             className="text-decoration-none bg-transparent text-white fs-2"
           >
-            Logo
+            WAR
           </Link>
         </Container>
       </Navbar>
@@ -189,12 +189,12 @@ const Login = () => {
               >
                 Login
               </Button>
-              <p className="text-center mt-3 d-flex align-items-center justify-content-center gap-2">
+              {/* <p className="text-center mt-3 d-flex align-items-center justify-content-center gap-2">
                 {"Don't"} have an account?{" "}
                 <Link to="/signup" className="text-blue text-decoration-none">
                   Create Account
                 </Link>
-              </p>
+              </p> */}
             </Form>
           </Col>
         </Row>

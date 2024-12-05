@@ -263,8 +263,8 @@ const ApplicantProfile = () => {
                     {" "}
                     {applicantData?.jobTitle || "-"}
                   </div>
-                  <div>Bangalore, Karnataka</div>
-                  <div>{status == "PENDING" ? "NEW" : status || "-"}</div>
+                  {/* <div>Bangalore, Karnataka</div> */}
+                  {/* <div>{status == "PENDING" ? "NEW" : status || "-"}</div> */}
 
                   {/* <div className="mb-1 fs-4">Rating: ★★★☆☆</div> */}
                   <div className="d-flex align-content-center flex-column ">
