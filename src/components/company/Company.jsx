@@ -161,7 +161,7 @@ const Company = () => {
 
   const fetchCompanies = async () => {
     try {
-      const response = await axios.get("/admin/all");
+      const response = await axios.get("/company/all");
       console.log(response.data);
       if (response.data.error === "false") {
         setCompanies(response.data.meta);

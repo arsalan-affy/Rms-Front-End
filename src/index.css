@@ -310,18 +310,24 @@ tr {
   font-weight: 500;
 }
 
-.btn-theme, .progress-bar.bg-primary{
-  background-color: #444B8C !important;
+.btn-theme,
+.progress-bar.bg-primary {
+  background-color: #444b8c !important;
 }
 
-.jobs-dashboard-container{
+.jobs-dashboard-container {
   height: 350px;
   overflow: auto;
   max-height: 350px;
 }
 
-.job-field-required{
- height: 15px;
- width: 15px;
- accent-color: #444B8C;
+.job-field-required {
+  height: 15px;
+  width: 15px;
+  accent-color: #444b8c;
+}
+
+thead {
+  position: sticky;
+  top: 0;
 }

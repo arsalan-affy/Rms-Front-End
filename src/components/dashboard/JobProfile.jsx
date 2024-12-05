@@ -90,7 +90,7 @@ export function JobProfile() {
   const changeJobStatus = async (newStatus) => {
     try {
       const response = await axios.patch(
-        `/recruitment-manager/${id}/approval?jobApproval=${newStatus}`
+        `/recruiter/${id}/approval?jobApproval=${newStatus}`
       );
 
       if (!response.data.error) {

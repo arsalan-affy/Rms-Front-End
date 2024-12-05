@@ -76,6 +76,38 @@ const DashboardLayout = () => {
         ),
       },
     ],
+    COMPANY: [
+      {
+        path: "/company",
+        name: "Dashboard",
+        icon: <Grid2x2CheckIcon className="icon-size" />,
+      },
+      {
+        path: "/company/sub-company",
+        name: "Sub-company",
+        icon: <UserIcon className="icon-size" />,
+      },
+      {
+        path: "/company/managers",
+        name: "Managers",
+        icon: <Users className="icon-size" />,
+      },
+      {
+        path: "/company/candidates",
+        name: "Candidates",
+        icon: <FileUser  className="icon-size" />,
+      },
+      {
+        path: "/company/jobs",
+        name: "Jobs",
+        icon: <BriefcaseBusiness className="icon-size" />,
+      },
+      {
+        path: "/company/settings",
+        name: "Settings",
+        icon: <Settings className="icon-size" />,
+      },
+    ],
     ADMIN: [
       {
         path: "/admin",
@@ -108,24 +140,24 @@ const DashboardLayout = () => {
         icon: <Settings className="icon-size" />,
       },
     ],
-    RECRUITMENT_MANAGER: [
+    RECRUITER: [
       {
-        path: "/recruitment_manager",
+        path: "/recruiter",
         name: "Dashboard",
         icon: <Grid2x2CheckIcon className="icon-size" />,
       },
       {
-        path: "/recruitment_manager/jobs",
+        path: "/recruiter/jobs",
         name: "Jobs",
         icon: <BriefcaseBusiness className="icon-size" />,
       },
       // {
-      //   path: "/recruitment_manager/employee",
+      //   path: "/recruiter/employee",
       //   name: "Employee",
       //   icon: <Users className="icon-size" />,
       // },
       {
-        path: "/recruitment_manager/settings",
+        path: "/recruiter/settings",
         name: "Settings",
         icon: <Settings className="icon-size" />,
       },

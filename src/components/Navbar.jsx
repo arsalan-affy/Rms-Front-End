@@ -19,10 +19,11 @@ const Navbar = () => {
 
   const navLinks = {
     SUPER_ADMIN: [{ path: "/superadmin", name: "Dashboard" }],
+    COMPANY: [{ path: "/company", name: "Dashboard" }],
     ADMIN: [{ path: "/admin", name: "Dashboard" }],
     EMPLOYEE: [{ path: "/employee", name: "Dashboard" }],
     STUDENT: [{ path: "/student", name: "Dashboard" }],
-    RECRUITMENT_MANAGER: [{ path: "/recruitment_manager", name: "Dashboard" }],
+    RECRUITER: [{ path: "/RECRUITER", name: "Dashboard" }],
   };
   const linksToDisplay = role ? navLinks[role][0] : [];
 

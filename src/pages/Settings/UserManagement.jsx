@@ -22,7 +22,8 @@ const UserManagement = () => {
   const fetchCompanies = async (page = 1, size = 25) => {
     try {
       const response = await axios.get(
-        `/employee/page/parent/${userData.claims?.id}?page=${page}&size=${size}`
+        `/user/page/parent/${userData.claims?.id}?page=${page}&size=${size}`
+        // `/user/page/created-by/${userData.claims?.id}?page=${page}&size=${size}`
       );
 
       if (!response.data.error) {

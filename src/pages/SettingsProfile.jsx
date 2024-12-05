@@ -15,15 +15,17 @@ const userData = token && jwtDecode(token);
 // Define roles and fields
 const roles = [
   "SUPER_ADMIN",
+  "COMPANY",
   "ADMIN",
-  "RECRUITMENT_MANAGER",
+  "RECRUITER",
   "USER",
   "EMPLOYEE",
 ];
 const fieldsByRole = {
   SUPER_ADMIN: ["My Account", "Configuration", "Permissions"],
+  COMPANY: ["My Account", "Configuration", "Permissions"],
   ADMIN: ["My Account", "Configuration", "Permissions"],
-  RECRUITMENT_MANAGER: ["My Account"],
+  RECRUITER: ["My Account"],
   USER: ["My Account"],
   EMPLOYEE: ["My Account"],
 };
@@ -38,6 +40,15 @@ const routesByRole = {
     userManagement: "#",
     systemRoles: "#",
   },
+  COMPANY: {
+    myProfile: "my-profile",
+    loginPassword: "login-password",
+    emailPreferences: "#",
+    jobFields: "job-fields",
+    screeningQuestions: "#",
+    userManagement: "user-management",
+    systemRoles: "#",
+  },
   ADMIN: {
     myProfile: "my-profile",
     loginPassword: "login-password",
@@ -47,7 +58,7 @@ const routesByRole = {
     userManagement: "user-management",
     systemRoles: "#",
   },
-  RECRUITMENT_MANAGER: {
+  RECRUITER: {
     myProfile: "my-profile",
     loginPassword: "login-password",
     emailPreferences: "#",
@@ -77,7 +88,7 @@ const SettingsProfile = () => {
       setAccessibleFields(fieldsByRole[userData.claims.role] || []);
     } else {
       showToast("error", "Unauthorized access!");
-      navigate("/login"); // Redirect if role not found
+      navigate("/login");
     }
   }, []);
 
@@ -100,9 +111,7 @@ const SettingsProfile = () => {
               {profileData?.name || "Placeholder Name"}
             </div>
             <div className="fw-semibold fs-7">
-              {profileData?.role === "RECRUITMENT_MANAGER"
-                ? "RECRUITMENT MANAGER"
-                : profileData?.role || "N/A"}
+              {profileData?.role || "N/A"}
             </div>
           </div>
           {accessibleFields.includes("My Account") && (

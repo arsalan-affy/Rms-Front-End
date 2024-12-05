@@ -38,7 +38,8 @@ import UserManagement from "./pages/Settings/UserManagement";
 import CreateUser from "./pages/Settings/CreateUser";
 
 // axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
-axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
+// axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
+axios.defaults.baseURL = "http://192.168.1.44:8081/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {
@@ -68,6 +69,58 @@ const App = () => {
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/company" element={<Company />} />
                     <Route path="/company/create" element={<Create />} />
+                    <Route
+                      path="/jobs/job-profile/:id"
+                      element={<JobProfile />}
+                    />
+                    <Route
+                      path="/jobs/job-profile/:jobId/job-applicants/:applicantId"
+                      element={<ApplicantProfile />}
+                    />
+                  </Route>
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/company/*"
+            element={
+              <ProtectedRoute allowedRoles={["COMPANY"]}>
+                <Routes>
+                  <Route path="/" element={<DashboardLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs/create-jobs" element={<CreateJob />} />
+                    <Route path="/managers" element={<Managers />} />
+                    <Route path="/settings" element={<SettingsProfile />} />
+                    <Route path="settings/my-profile" element={<MyProfile />} />
+                    <Route
+                      path="settings/job-fields/create"
+                      element={<CreateJobFields />}
+                    />
+                    <Route path="settings/job-fields" element={<JobFields />} />
+                    <Route
+                      path="settings/user-management"
+                      element={<UserManagement />}
+                    />
+                    <Route
+                      path="settings/user-management/create-user"
+                      element={<CreateUser />}
+                    />
+                    <Route path="/candidates" element={<Candidates />} />
+                    <Route
+                      path="settings/login-password"
+                      element={<LoginPassword />}
+                    />
+                    <Route
+                      path="/managers/create"
+                      element={<CreateManager />}
+                    />
+                    <Route path="/sub-admin" element={<Employee />} />
+                    <Route
+                      path="/sub-admin/create"
+                      element={<CreateEmployee />}
+                    />
                     <Route
                       path="/jobs/job-profile/:id"
                       element={<JobProfile />}
@@ -197,9 +250,9 @@ const App = () => {
             }
           />
           <Route
-            path="/recruitment_manager/*"
+            path="/recruiter/*"
             element={
-              <ProtectedRoute allowedRoles={["RECRUITMENT_MANAGER"]}>
+              <ProtectedRoute allowedRoles={["RECRUITER"]}>
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />

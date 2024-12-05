@@ -33,7 +33,7 @@ const CreateCandidates = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/recruitment-manager/create/" + userData.claims.id,
+        "/recruiter/create/" + userData.claims.id,
         formData
       );
       console.log(response);

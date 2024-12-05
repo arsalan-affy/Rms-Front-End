@@ -36,11 +36,14 @@ const Login = () => {
       case "SUPER_ADMIN":
         navigate("/superadmin");
         break;
+        case "COMPANY":
+          navigate("/company");
+          break;
       case "ADMIN":
         navigate("/admin");
         break;
-      case "RECRUITMENT_MANAGER":
-        navigate("/recruitment_manager");
+      case "RECRUITER":
+        navigate("/recruiter");
         break;
       case "USER":
         navigate("/user");

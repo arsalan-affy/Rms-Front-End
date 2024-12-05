@@ -50,8 +50,8 @@ const CreateJob = () => {
     const url =
       role === "EMPLOYEE"
         ? `/employee/job/create/${createdBy}`
-        : role === "RECRUITMENT_MANAGER"
-        ? `/recruitment-manager/job/create/${createdBy}`
+        : role === "RECRUITER"
+        ? `/recruiter/job/create/${createdBy}`
         : `/admin/job/create/${createdBy}`;
 
     if (!url) {
@@ -86,16 +86,11 @@ const CreateJob = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
-    let parentId;
-    if (decodedToken?.claims?.role === "ADMIN") {
-      parentId = decodedToken?.claims?.id;
-    } else {
-      parentId = decodedToken?.claims?.parent?.id;
-    }
+    let parentId = decodedToken?.claims?.id;;
     const fetchCompanyManagers = async () => {
       try {
         const response = await axios.get(
-          `recruitment-manager/parent/${parentId}`
+          `recruiter/parent/${parentId}`
         );
         console.log(response.data);
         setAllManager(() => response.data.meta);

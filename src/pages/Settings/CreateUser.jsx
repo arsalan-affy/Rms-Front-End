@@ -15,6 +15,7 @@ const CreateUser = () => {
     phoneNumber: "",
     username: "",
     password: "",
+    role: "EMPLOYEE",
   });
   const token = localStorage.getItem("token");
   const userData = token && jwtDecode(token);
@@ -30,9 +31,11 @@ const CreateUser = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
+    // return;
     try {
       const response = await axios.post(
-        "/employee/create/" + userData.claims.id,
+        "user/create/" + userData.claims.id,
         formData
       );
 
@@ -116,11 +119,23 @@ const CreateUser = () => {
                     value={formData.username}
                     required
                   />
-                  <label className="mx-2 my-1 fs-5 fw-semibold">User Role</label>
-                  <select className="form-select">
-                  <option selected value="employee">Employee</option>
-                  <option selected value="recruiter">Recruiter</option>
-                  <option selected value="admin">Admin</option>
+                  <label className="mx-2 my-1 fs-5 fw-semibold">
+                    User Role
+                  </label>
+                  <select
+                    className="form-select"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                  >
+                    <option selected value="EMPLOYEE">
+                      Employee
+                    </option>
+                    <option selected value="HIRING_MANAGER">
+                      Hiring Manager
+                    </option>
+                    <option value="RECRUITER">Recruiter</option>
+                    <option value="ADMIN">Admin</option>
                   </select>
                   <label className="mx-2 my-1 fs-5 fw-semibold">Password</label>
                   <ReusableInput

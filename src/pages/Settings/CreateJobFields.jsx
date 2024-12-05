@@ -89,7 +89,7 @@ const CreateJobFields = () => {
 
       try {
         const response = await axios.get(
-          `recruitment-manager/parent/${parentId}`
+          `recruiter/parent/${parentId}`
         );
         setAllManager(response.data.meta || []);
       } catch (error) {

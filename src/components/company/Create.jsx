@@ -29,7 +29,7 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/admin/create", formData);
+      const response = await axios.post("/company/create", formData);
       console.log(response);
 
       if (response.data.error == "false") {

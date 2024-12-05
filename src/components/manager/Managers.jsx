@@ -23,7 +23,7 @@ const Managers = () => {
     try {
       const response = await axios.get(
         // `/employee/page/parent/${userData.claims?.id}?page=${page}&size=${size}`
-        `/recruitment-manager/page/parent/${userData.claims?.id}?page=${page}&size=${size}`
+        `/recruiter/page/parent/${userData.claims?.id}?page=${page}&size=${size}`
       );
 
       if (!response.data.error) {
@@ -146,7 +146,7 @@ export function JobTable({
     const parentId = userData.claims.id;
     try {
       const response = await axios.delete(
-        `/recruitment-manager/${employeeIdToDelete}/parent/${parentId}`
+        `/recruiter/${employeeIdToDelete}/parent/${parentId}`
       );
       if (!response.data.error) {
         showToast("success", "Employee deleted successfully");

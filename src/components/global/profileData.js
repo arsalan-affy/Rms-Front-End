@@ -22,8 +22,10 @@ export const useProfileData = () => {
         const id = decodedToken?.claims?.id;
 
         let endpoint;
-        if (role === "RECRUITMENT_MANAGER") {
-          endpoint = `recruitment-manager/${id}`;
+        if (role === "COMPANY") {
+          endpoint = `company/${id}`;
+        } else if (role === "RECRUITER") {
+          endpoint = `recruiter/${id}`;
         } else if (role === "EMPLOYEE") {
           endpoint = `employee/${id}`;
         } else if (role === "ADMIN") {
@@ -33,7 +35,7 @@ export const useProfileData = () => {
         }
 
         const response = await axios.get(endpoint);
-        setProfileData(response.data.meta); 
+        setProfileData(response.data.meta);
         setLoading(false);
       } catch (err) {
         setError(err.message || "Error fetching profile data.");

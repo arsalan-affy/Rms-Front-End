@@ -26,8 +26,10 @@ const MyProfile = () => {
     const fetchProfileData = async () => {
       try {
         let endpoint;
-        if (role === "RECRUITMENT_MANAGER") {
-          endpoint = `recruitment-manager/${id}`;
+        if (role === "COMPANY") {
+          endpoint = `company/${id}`;
+        } else if (role === "RECRUITER") {
+          endpoint = `recruiter/${id}`;
         } else if (role === "EMPLOYEE") {
           endpoint = `employee/${id}`;
         } else if (role === "ADMIN") {
@@ -157,6 +159,23 @@ const MyProfile = () => {
                     disabled
                   />
                 </div>
+                {profileDetails?.role === "COMPANY" ? (
+                  <div>
+                    <label className="mx-2 my-1 fs-5 fw-semibold">
+                      Company Name
+                    </label>
+                    <ReusableInput
+                      label="position"
+                      name="position"
+                      placeholder="Position"
+                      value={profileDetails.companyName || ""}
+                      disabled
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 <div>
                   <label className="mx-2 my-1 fs-5 fw-semibold">Position</label>
                   <ReusableInput
@@ -164,7 +183,7 @@ const MyProfile = () => {
                     name="position"
                     placeholder="Position"
                     value={
-                      profileDetails.role === "RECRUITMENT_MANAGER"
+                      profileDetails.role === "RECRUITER"
                         ? "RECRUITMENT MANAGER"
                         : profileDetails.role
                     }
