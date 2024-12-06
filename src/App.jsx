@@ -38,8 +38,8 @@ import UserManagement from "./pages/Settings/UserManagement";
 import CreateUser from "./pages/Settings/CreateUser";
 
 // axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
-// axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
-axios.defaults.baseURL = "http://192.168.1.44:8081/api/";
+axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
+// axios.defaults.baseURL = "http://192.168.1.44:8081/api/";
 // axios.defaults.baseURL = "http://localhost:8081/api/";
 const App = () => {
   function ProtectedRoute({ children, allowedRoles = "" }) {

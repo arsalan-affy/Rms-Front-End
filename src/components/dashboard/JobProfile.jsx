@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, BaggageClaimIcon } from "lucide-react";
@@ -10,8 +10,47 @@ import "react-toastify/dist/ReactToastify.css";
 import { showToast } from "../global/showToast";
 import { formatDateTime } from "../global/formatDateTime";
 import { useProfileData } from "../global/profileData";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { dataCompany } from "../../assets/jsonData/data";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 export function JobProfile() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const navigate = useNavigate();
   const { id } = useParams();
   const [jobDetail, setJobDetail] = useState("");
@@ -25,13 +64,12 @@ export function JobProfile() {
   const [generatedLink, setGeneratedLink] = useState("");
   const { profileData } = useProfileData();
   const role = localStorage.getItem("role");
+  console.log(dataCompany)
   useEffect(() => {
-    if (role === "ADMIN") {
+    if (role === "COMPANY") {
       setGeneratedLink(`/careers/${profileData?.id}`);
-      console.log(`/careers/${profileData?.id}`);
     } else {
       setGeneratedLink(`/careers/${profileData?.parent?.id}`);
-      console.log(`/careers/${profileData?.parent?.id}`);
     }
   }, [profileData]);
 
@@ -171,126 +209,264 @@ export function JobProfile() {
           )}
         </div>
       </div>
-
-      {/* Search & Filters */}
       <div className="mt-4 p-3 bg-white rounded border mx-2">
-        <div className="d-flex align-items-md-center gap-2 justify-content-between flex-column flex-sm-row">
-          <div className="text-primary fs-4 fw-bolder text-center text-sm-start d-flex align-items-center justify-content-center">
-            Applicants
-          </div>
-          <div className="w-75">
-            <DashboardInput />
-          </div>
-
-          <div className="col d-flex">
-            <select
-              className="form-select w-auto"
-              value={pageSize}
-              onChange={handlePageSizeChange}
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
             >
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={75}>75</option>
-              <option value={100}>100</option>
-            </select>
-          </div>
-        </div>
-      </div>
+              <Tab label="Applicants" {...a11yProps(0)} />
+              <Tab label="Job ad" {...a11yProps(1)} />
+              <Tab label="Job details" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <CustomTabPanel value={value} index={0}>
+            <div className="mt-4 p-3 bg-white rounded border mx-2">
+              <div className="d-flex align-items-md-center gap-2 justify-content-between flex-column flex-sm-row">
+                {/* <div className="text-primary fs-4 fw-bolder text-center text-sm-start d-flex align-items-center justify-content-center">
+                  Applicants
+                </div> */}
+                <div className="w-75">
+                  <DashboardInput />
+                </div>
 
-      {/* Applicants Table */}
-      <div className="mt-4 text-center mx-2">
-        <div>
-          <Table striped bordered hover>
-            <thead className="table-light">
-              <tr>
-                <th>Applicant</th>
-                <th>Company</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Application Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobApplicant?.map((data, index) => (
-                <tr
-                  key={index}
-                  className="cursor-pointer"
-                  onClick={() => navigate("job-applicants/" + data?.id)}
-                >
-                  <td>{data?.candidateName || "-"}</td>
-                  <td>{data?.company || "-"}</td>
-                  <td>{data?.location || "-"}</td>
-                  <td>{data?.status || "-"}</td>
-                  <td>{formatDateTime(data?.appliedAt) || "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-        <div>
-          {jobApplicant.length > 0 ? (
-            <nav aria-label="Page navigation">
-              <ul className="pagination justify-content-center my-3">
-                <li
-                  className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
-                >
-                  <button
-                    className="page-link"
-                    onClick={() => goToPage(currentPage - 1)}
+                <div className="col d-flex">
+                  <select
+                    className="form-select w-auto"
+                    value={pageSize}
+                    onChange={handlePageSizeChange}
                   >
-                    Previous
-                  </button>
-                </li>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                    <option value={75}>75</option>
+                    <option value={100}>100</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
-                {/* Previous Page */}
-                {currentPage > 1 && (
-                  <li className="page-item">
-                    <button
-                      className="page-link"
-                      onClick={() => goToPage(currentPage - 1)}
-                    >
-                      {currentPage - 1}
-                    </button>
-                  </li>
+            {/* Applicants Table */}
+            <div className="mt-4 text-center mx-2">
+              <div>
+                <Table striped bordered hover>
+                  <thead className="table-light">
+                    <tr>
+                      <th>Applicant</th>
+                      <th>Company</th>
+                      <th>Location</th>
+                      <th>Status</th>
+                      <th>Application Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {jobApplicant?.map((data, index) => (
+                      <tr
+                        key={index}
+                        className="cursor-pointer"
+                        onClick={() => navigate("job-applicants/" + data?.id)}
+                      >
+                        <td>{data?.candidateName || "-"}</td>
+                        <td>{data?.company || "-"}</td>
+                        <td>{data?.location || "-"}</td>
+                        <td>{data?.status || "-"}</td>
+                        <td>{formatDateTime(data?.appliedAt) || "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+              <div>
+                {jobApplicant.length > 0 ? (
+                  <nav aria-label="Page navigation">
+                    <ul className="pagination justify-content-center my-3">
+                      <li
+                        className={`page-item ${
+                          currentPage === 1 ? "disabled" : ""
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                        >
+                          Previous
+                        </button>
+                      </li>
+
+                      {/* Previous Page */}
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => goToPage(currentPage - 1)}
+                          >
+                            {currentPage - 1}
+                          </button>
+                        </li>
+                      )}
+
+                      {/* Current Page */}
+                      <li className="page-item active">
+                        <span className="page-link">{currentPage}</span>
+                      </li>
+
+                      {/* Next Page */}
+                      {currentPage < totalPages && (
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => goToPage(currentPage + 1)}
+                          >
+                            {currentPage + 1}
+                          </button>
+                        </li>
+                      )}
+
+                      {/* Next Button */}
+                      <li
+                        className={`page-item ${
+                          currentPage === totalPages ? "disabled" : ""
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                        >
+                          Next
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                ) : (
+                  ""
                 )}
-
-                {/* Current Page */}
-                <li className="page-item active">
-                  <span className="page-link">{currentPage}</span>
-                </li>
-
-                {/* Next Page */}
-                {currentPage < totalPages && (
-                  <li className="page-item">
-                    <button
-                      className="page-link"
-                      onClick={() => goToPage(currentPage + 1)}
-                    >
-                      {currentPage + 1}
-                    </button>
-                  </li>
-                )}
-
-                {/* Next Button */}
-                <li
-                  className={`page-item ${
-                    currentPage === totalPages ? "disabled" : ""
-                  }`}
-                >
+              </div>
+            </div>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            Job Ad
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <div className="accordion" id="accordionExample">
+              <div className="accordion-item my-3">
+                <h2 className="accordion-header d-flex" id="headingOne">
                   <button
-                    className="page-link"
-                    onClick={() => goToPage(currentPage + 1)}
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
                   >
-                    Next
+                    Job Fields
                   </button>
-                </li>
-              </ul>
-            </nav>
-          ) : (
-            ""
-          )}
-        </div>
+                </h2>
+                <div
+                  id="collapseOne"
+                  className="accordion-collapse collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">
+                    <div className="container">
+                      <div className="row my-1">
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Company*</h6>
+                          <p className="mb-0">
+                            Renesas Electronics (China) Co., Ltd. (31A0)
+                          </p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Business Unit*</h6>
+                          <p className="mb-0">
+                            Power Product Group (300000000000)
+                          </p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Division *</h6>
+                          <p className="mb-0">
+                            Combined R&D & Methodology Division (301300000000)
+                          </p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Dept</h6>
+                          <p className="mb-0">
+                            R&D Validation Infrastructure (301314000000)
+                          </p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Cost Center *</h6>
+                          <p className="mb-0">37001 (37001)</p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Location *</h6>
+                          <p className="mb-0">RECH(Beijing) (31AT)</p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Designation *</h6>
+                          <p className="mb-0">
+                            Application Engineer (EN-AE.AE.P2)
+                          </p>
+                        </div>
+                        <div className="col-md-6 my-3">
+                          <h6 className="mb-0">Grade *</h6>
+                          <p className="mb-0">C (C)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="accordion-item my-3">
+                <h2 className="accordion-header" id="headingTwo">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    Internal Notes
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">No Internal Notes yet</div>
+                </div>
+              </div>
+              <div className="accordion-item my-3">
+                <h2 className="accordion-header" id="headingThree">
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    Attachments
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">No Attachments yet</div>
+                </div>
+              </div>
+            </div>
+          </CustomTabPanel>
+        </Box>
       </div>
+      {/* Search & Filters */}
     </div>
   );
 }
