@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { showToast } from "../components/global/showToast";
 
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
@@ -97,7 +98,7 @@ export default function Careers() {
         }
       );
       console.log("Application submitted successfully:", response.data);
-      toast.success("Application submitted successfully!");
+      showToast("success","Application submitted successfully!");
       setFormData();
       setShowSuccess(true); // Show success alert
       setIsSubmitting(false); // Enable button

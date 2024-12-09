@@ -36,6 +36,7 @@ import CreateJobFields from "./pages/Settings/CreateJobFields";
 import JobFields from "./pages/Settings/JobFields";
 import UserManagement from "./pages/Settings/UserManagement";
 import CreateUser from "./pages/Settings/CreateUser";
+import { Toaster } from "react-hot-toast";
 
 // axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
 axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
@@ -52,8 +53,8 @@ const App = () => {
   }
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-
+      {/* <ToastContainer position="top-right" autoClose={3000} hideProgressBar /> */}
+      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />

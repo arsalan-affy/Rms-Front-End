@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { toast, ToastContainer } from "react-toastify";
+import { showToast } from "../global/showToast";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -37,12 +38,14 @@ const Jobs = () => {
       } else {
         setJobs([]);
         setError(meta.message);
-        toast.error(meta.message);
+        showToast("success", meta.message)
+        // toast.error(meta.message);
       }
     } catch (err) {
       console.log("Error fetching jobs:", err);
       setError("Failed to fetch jobs. Please try again later.");
-      toast.error(err.response.data.message);
+      showToast("error", err.response.data.message)
+      // toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }

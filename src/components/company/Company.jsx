@@ -1,149 +1,3 @@
-// import { BaggageClaim } from "lucide-react";
-// import { useNavigate } from "react-router-dom";
-// import Title from "../dashboard/Title";
-// import DashboardInput from "../dashboard/DashboardInput";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { toast, ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import Toggle from "react-toggle";
-// import "react-toggle/style.css";
-
-// const Company = () => {
-//   const [companies, setCompanies] = useState([]);
-//   const navigate = useNavigate();
-//   const fetchCompanies = async () => {
-//     try {
-//       const response = await axios.get("/admin/all");
-//       console.log(response.data);
-//       if (response.data.error == "false") {
-//         setCompanies(() => response.data.meta);
-//       } else {
-//         toast.error(response.data.message);
-//       }
-//     } catch (error) {
-//       console.log(error.message);
-//       toast.error(error.data.message);
-//     }
-//   };
-//   useEffect(() => {
-//     fetchCompanies();
-//   }, []);
-
-//   return (
-//     <div className="me-md-3">
-//       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-//       <div>
-//         <Title icon={BaggageClaim} title={"Company"} />
-//       </div>
-//       <div className="w-75 mx-auto mt-4">
-//         <DashboardInput />
-//       </div>
-//       <div className="d-flex gap-4 w-100">
-//         <div className="my-md-4 my-3 mx-2 mx-md-0">
-//           <div className="row">
-//             <div className="col">
-//               <select className="form-select rounded-3">
-//                 <option>Job Shows</option>
-//                 <option>Option 1</option>
-//                 <option>Option 2</option>
-//               </select>
-//             </div>
-//             <div className="col">
-//               <select className="form-select rounded-3">
-//                 <option>Department</option>
-//                 <option>Option 1</option>
-//                 <option>Option 2</option>
-//               </select>
-//             </div>
-//             <div className="col">
-//               <select className="form-select rounded-3">
-//                 <option>Location</option>
-//                 <option>Option 1</option>
-//                 <option>Option 2</option>
-//               </select>
-//             </div>
-//           </div>
-//         </div>
-//         <div className="d-flex align-items-center justify-content-center">
-//           <button
-//             className="btn btn-primary btn-theme"
-//             onClick={() => navigate("create")}
-//           >
-//             Create Company
-//           </button>
-//         </div>
-//       </div>
-//       <JobTable jobs={companies} />
-//     </div>
-//   );
-// };
-// export function JobTable({ jobs = [] }) {
-//   const navigate = useNavigate();
-//   // Job data array
-//   const handleStatusToggle = async (id) => {
-//     console.log(id);
-
-//     try {
-//       const response = await axios.put(`/admin/soft-delete/${id}`);
-//       if (response.data.error == "false") {
-//         toast.success(response.data.message);
-//         fetchCompanies()
-//       } else{
-//         toast.error(response.data.message);
-//       }
-//     } catch (error) {
-//       console.error("Failed to update job status:", error);
-//       toast.error("Failed to update job status.");
-//     }
-//   };
-//   return (
-//     <div className="">
-//       <table className="table table-striped table-hover border">
-//         <thead className="table-light">
-//           <tr>
-//             <th scope="col">name</th>
-//             <th scope="col">companyName</th>
-//             <th scope="col">email</th>
-//             <th scope="col">phoneNumber</th>
-//             <th scope="col">username</th>
-//             <th scope="col">Status</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {/* Map through the jobs array */}
-//           {jobs?.map((job, index) => (
-//             <tr
-//               key={index}
-//               className="cursor-pointer"
-//               //   onClick={() => navigate("job-profile/" + job?.title)}
-//             >
-//               <td>{job?.name}</td>
-//               <td>{job?.companyName}</td>
-//               <td>{job?.email}</td>
-
-//               <td>{job?.phoneNumber}</td>
-//               <td>{job?.username}</td>
-//               <td>{job?.deleted}</td>
-//               <td>
-//                 <Toggle
-//                   checked={job?.deleted}
-//                   icons={false}
-//                   onChange={() => handleStatusToggle(job?.id)}
-//                   aria-label="Toggle job status"
-//                 />
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default Company;
-
-
 import { BaggageClaim } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Title from "../dashboard/Title";
@@ -154,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
+import { showToast } from "../global/showToast";
 
 const Company = () => {
   const [companies, setCompanies] = useState([]);
@@ -234,15 +89,15 @@ export function JobTable({ jobs = [], fetchCompanies }) {
     try {
       const response = await axios.put(`/admin/soft-delete/${id}`);
       if (response.data.error === "false") {
-        toast.success(response.data.message);
+        showToast("success",response.data.message);
         fetchCompanies(); // Refresh company data after status update
       } else {
-        toast.error(response.data.message);
+        showToast("error",response.data.message);
       }
     } catch (error) {
       console.error("Failed to update job status:", error);
-      toast.error("Failed to update job status.");
-    }
+      showToast("error","Failed to update job status.");
+    } 
   };
 
   return (

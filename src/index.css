@@ -335,3 +335,30 @@ thead {
 .MuiBox-root {
   padding: 0 !important;
 }
+
+
+.draggable {
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.droppable {
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  min-height: 30px;
+}
+
+.droppable-over {
+  background-color: #e1e1e1;
+}
+
+.nested {
+  margin-left: 20px;
+}

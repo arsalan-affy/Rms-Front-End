@@ -82,16 +82,16 @@ const DashboardLayout = () => {
         name: "Dashboard",
         icon: <Grid2x2CheckIcon className="icon-size" />,
       },
-      {
-        path: "/company/sub-company",
-        name: "Sub-company",
-        icon: <UserIcon className="icon-size" />,
-      },
-      {
-        path: "/company/managers",
-        name: "Managers",
-        icon: <Users className="icon-size" />,
-      },
+      // {
+      //   path: "/company/sub-company",
+      //   name: "Sub-company",
+      //   icon: <UserIcon className="icon-size" />,
+      // },
+      // {
+      //   path: "/company/managers",
+      //   name: "Managers",
+      //   icon: <Users className="icon-size" />,
+      // },
       {
         path: "/company/candidates",
         name: "Candidates",
@@ -114,21 +114,21 @@ const DashboardLayout = () => {
         name: "Dashboard",
         icon: <Grid2x2CheckIcon className="icon-size" />,
       },
-      {
-        path: "/admin/sub-admin",
-        name: "Sub-admin",
-        icon: <UserIcon className="icon-size" />,
-      },
-      {
-        path: "/admin/managers",
-        name: "Managers",
-        icon: <Users className="icon-size" />,
-      },
-      {
-        path: "/admin/candidates",
-        name: "Candidates",
-        icon: <FileUser  className="icon-size" />,
-      },
+      // {
+      //   path: "/admin/sub-admin",
+      //   name: "Sub-admin",
+      //   icon: <UserIcon className="icon-size" />,
+      // },
+      // {
+      //   path: "/admin/managers",
+      //   name: "Managers",
+      //   icon: <Users className="icon-size" />,
+      // },
+      // {
+      //   path: "/admin/candidates",
+      //   name: "Candidates",
+      //   icon: <FileUser  className="icon-size" />,
+      // },
       {
         path: "/admin/jobs",
         name: "Jobs",

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { showToast } from "../global/showToast";
 const Create = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -34,10 +35,10 @@ const Create = () => {
 
       if (response.data.error == "false") {
         console.log(response);
-        toast.success(response.data.message);
+        showToast("success",response.data.message);
         navigate(-1);
       } else {
-        toast.warn(response.data.message);
+        showToast("warn",response.data.message);
       }
     } catch (error) {
       console.log(error);
