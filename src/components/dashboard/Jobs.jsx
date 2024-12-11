@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { BaggageClaim } from "lucide-react";
 import Title from "./Title";
 import DashboardInput from "./DashboardInput";
@@ -14,7 +13,7 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
-  const getJobs = async () => {
+  const getJobs = async () => { 
     const decodedToken = jwtDecode(token);
     const id = decodedToken.claims.id;
     const role = decodedToken.claims.role;
@@ -38,13 +37,13 @@ const Jobs = () => {
       } else {
         setJobs([]);
         setError(meta.message);
-        showToast("success", meta.message)
+        showToast("success", meta.message);
         // toast.error(meta.message);
       }
     } catch (err) {
       console.log("Error fetching jobs:", err);
       setError("Failed to fetch jobs. Please try again later.");
-      showToast("error", err.response.data.message)
+      showToast("error", err.response.data.message);
       // toast.error(err.response.data.message);
     } finally {
       setLoading(false);

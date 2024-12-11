@@ -95,7 +95,7 @@ const DashboardLayout = () => {
       {
         path: "/company/candidates",
         name: "Candidates",
-        icon: <FileUser  className="icon-size" />,
+        icon: <FileUser className="icon-size" />,
       },
       {
         path: "/company/jobs",

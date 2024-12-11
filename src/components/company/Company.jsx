@@ -89,15 +89,15 @@ export function JobTable({ jobs = [], fetchCompanies }) {
     try {
       const response = await axios.put(`/admin/soft-delete/${id}`);
       if (response.data.error === "false") {
-        showToast("success",response.data.message);
+        showToast("success", response.data.message);
         fetchCompanies(); // Refresh company data after status update
       } else {
-        showToast("error",response.data.message);
+        showToast("error", response.data.message);
       }
     } catch (error) {
       console.error("Failed to update job status:", error);
-      showToast("error","Failed to update job status.");
-    } 
+      showToast("error", "Failed to update job status.");
+    }
   };
 
   return (
