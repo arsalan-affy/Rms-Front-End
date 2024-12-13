@@ -84,7 +84,7 @@ const Calendar = () => {
               className="text-muted border rounded-pill p-2 w-2 h-2 text-center"
             >
               {day}
-            </div>
+            </div>  
           ))}
           {Array?.from({ length: 31 }).map((_, index) => (
             <div
