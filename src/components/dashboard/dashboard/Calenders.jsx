@@ -50,7 +50,7 @@ const interviews = [
 
 const Calendar = () => {
   return (
-    <div className="card border-1   shadow-main">
+    <div className="card border-1  shadow-main overflow-hidden">
       {/* Header Section */}
       <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">
@@ -81,7 +81,7 @@ const Calendar = () => {
               className="d-flex overflow-hidden"
               style={{ position: "relative" }}
             >
-              <h6 className="mb-0 p-3">{item.job}</h6>
+              <div className="mb-0 p-3 fs-6">{item.job}</div>
               <small className="text-muted p-3">
                 {item.day}, {item.month}
               </small>

@@ -63,7 +63,7 @@ const JobsPipeline = () => {
   return (
     <div className="bg-white  rounded-3 border shadow-main h-auto ">
       <div className="pipeline-container">
-        <h2 className="p-2 px-3 border-bottom">Jobs Pipeline</h2>
+        <h3 className="p-2 px-3 border-bottom">Jobs Pipeline</h3>
         <MDBTable responsive className="pipeline-table p-4 w-full">
           <MDBTableHead className="p-2 bg-white ">
             <tr>

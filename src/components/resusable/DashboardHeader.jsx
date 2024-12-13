@@ -6,7 +6,10 @@ const DashboardHeader = ({ title, onchange }) => {
   return (
     <>
       <div className=" bg-white p-2 d-flex align-items-center justify-content-between">
-        <div className="fs-2 fw-semibold " style={{ color: "#012169" }}>
+        <div
+          className="fs-4 fw-semibold "
+          style={{ color: "#012169", overflowY: "hidden" }}
+        >
           {title}
         </div>
         <div className="w-1/2 d-none d-md-block">
@@ -18,7 +21,7 @@ const DashboardHeader = ({ title, onchange }) => {
           />
         </div>
         <div className="d-flex align-items-center justify-content-between gap-3 me-2 ">
-          <Bell className="cursor-pointer"  />
+          <Bell className="cursor-pointer" />
           <img src={image} className="w-20 h-20 cursor-pointer" />
         </div>
       </div>

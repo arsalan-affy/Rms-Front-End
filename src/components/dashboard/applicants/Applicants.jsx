@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DashboardHeader from "../../resusable/DashboardHeader";
 import { MDBTable, MDBTableBody, MDBTableHead } from "mdb-react-ui-kit";
+import { Select } from "@mui/material";
 
 const Applicants = () => {
   // Sample array of objects for the table data
@@ -107,6 +108,8 @@ const Applicants = () => {
     // Add more items as needed...
   ];
 
+  const [applicant, setApplicantData] = useState(applicants);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -128,11 +131,18 @@ const Applicants = () => {
         style={{
           minHeight: "92vh",
           background: "#EDF5FD",
-          marginLeft: "-.5em",
+          marginLeft: "-.1em",
           padding: "1rem",
         }}
       >
-        <MDBTable responsive className="table  rounded-5">
+        <div className="d-flex align-items-center gap-3">
+          <div className="fs-3">{applicant.length} Applicants</div>
+          <select>
+            <option>sort</option>
+          </select>
+        </div>
+
+        <MDBTable responsive className="table  rounded-5 shadow mt-1">
           <MDBTableHead className="table-light">
             <tr>
               <th></th>

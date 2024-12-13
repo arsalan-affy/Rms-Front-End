@@ -8,12 +8,7 @@ const JobSummaryChart = () => {
     datasets: [
       {
         data: [41, 32, 23, 19], // Values for each section
-        backgroundColor: [
-          "#74b9ff",
-          "#0984e3",
-          "#3EB5E1",
-          "#015C92",
-        ], // Colors
+        backgroundColor: ["#74b9ff", "#0984e3", "#3EB5E1", "#015C92"], // Colors
         hoverBackgroundColor: ["#81ecec", "#74b9ff", "#a29bfe", "#636e72"], // Hover colors
       },
     ],

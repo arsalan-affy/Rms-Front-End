@@ -15,26 +15,27 @@ const Dashboard = ({ navlinks }) => {
   return (
     <>
       <DashboardHeader title={"Dashboard"} />
-
-      <div
-        className="row"
-        style={{
-          // minHeight: "92vh",
-          background: "#EDF5FD",
-          marginLeft: "-.5em",
-          padding: "1rem",
-        }}
-      >
+      <div className="container-fluid">
         <div
-          className=" rounded-3  shadow-md d-flex flex-column gap-3 col-md-6 col-lg-8 col-sm-12"
-          style={{ minHeight: "85vh" }}
+          className="row"
+          style={{
+            // minHeight: "92vh",
+            background: "#EDF5FD",
+            marginLeft: "-1em",
+            padding: "1rem",
+          }}
         >
-          <JobsPipeline />
-          <NewJobs />
-        </div>
+          <div
+            className="rounded-3 shadow-md d-flex flex-column gap-3 col-md-6 col-lg-8 col-sm-12"
+            style={{ minHeight: "85vh" }}
+          >
+            <JobsPipeline />
+            <NewJobs />
+          </div>
 
-        <div className="bg-white  h-50 rounded-3 shadow-md col-lg-4 col-md-6 col-sm-12">
-          <Calendar />
+          <div className="rounded-3 shadow-md col-lg-4 col-md-6 col-sm-12">
+            <Calendar />
+          </div>
         </div>
       </div>
     </>
