@@ -36,6 +36,7 @@ import CreateJobFields from "./pages/Settings/CreateJobFields";
 import JobFields from "./pages/Settings/JobFields";
 import UserManagement from "./pages/Settings/UserManagement";
 import CreateUser from "./pages/Settings/CreateUser";
+import Applicants from "./components/dashboard/applicants/Applicants";
 
 // axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
 axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
@@ -107,7 +108,7 @@ const App = () => {
                       path="settings/user-management/create-user"
                       element={<CreateUser />}
                     />
-                    <Route path="/candidates" element={<Candidates />} />
+                    <Route path="/candidates" element={<Applicants />} />
                     <Route
                       path="settings/login-password"
                       element={<LoginPassword />}

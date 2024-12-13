@@ -275,7 +275,9 @@ const DashboardLayout = () => {
             </div>
           </div>
         </div>
-        <Outlet />
+        <div>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

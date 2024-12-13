@@ -52,6 +52,8 @@ input:-ms-autofill {
   -ms-text-fill-color: white !important;
 }
 
+
+
 /* utils */
 .text-primary {
   color: var(--primary-color) !important;

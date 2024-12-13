@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { CalendarCheck } from "lucide-react";
+import CalendarContainer from "./CalendarContainer";
 
 const interviews = [
   {
@@ -51,10 +53,12 @@ const Calendar = () => {
     <div className="card border-1   shadow-main">
       {/* Header Section */}
       <div className="card-header d-flex justify-content-between align-items-center">
-        <h5 className="mb-0">Interview 📅</h5>
+        <h5 className="mb-0">
+          Interview <CalendarCheck size={20} />
+        </h5>
         <div>
           <button
-            className="btn btn-light dropdown-toggle btn-sm"
+            className="btn dropdown-toggle btn-sm"
             type="button"
             data-bs-toggle="dropdown"
           >
@@ -62,43 +66,8 @@ const Calendar = () => {
           </button>
         </div>
       </div>
-
       {/* Calendar Section */}
-      <div className="card-body">
-        {/* Calendar Grid */}
-        <div className="mb-2 d-flex align-items-center justify-content-between  w-full">
-          <button className="btn btn-sm btn-light border">&lt;</button>
-          <div>December 2024</div>
-
-          <button className="btn btn-sm btn-light border">&gt;</button>
-        </div>
-
-        {/* Calendar Days */}
-        <div
-          className="d-grid gap-2"
-          style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
-        >
-          {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-            <div
-              key={day}
-              className="text-muted border rounded-pill p-2 w-2 h-2 text-center"
-            >
-              {day}
-            </div>
-          ))}
-          {Array?.from({ length: 31 }).map((_, index) => (
-            <div
-              key={index}
-              className={`p-2 rounded-pill border text-center ${
-                index === 8 || index === 21 ? "bg-blue-calendar text-white  " : ""
-              }`}
-            >
-              {index + 1}
-            </div>
-          ))}
-        </div>
-      </div>
-
+      <CalendarContainer />
       {/* Interview List Section */}
       <div className="card-footer">
         {interviews.map((item, index) => (
@@ -106,13 +75,10 @@ const Calendar = () => {
             key={index}
             className="d-flex justify-content-between align-items-center border rounded shadow-sm overflow-hidden  bg-white mb-2"
           >
-            <div className="d-flex">
-              <div
-                className="h-full w-4  bg-main bg-blue p-3"
-                style={{ color: "#3B6ABC" }}
-              >
-                {" -"}
-              </div>
+            <div
+              className="d-flex overflow-hidden"
+              style={{ position: "relative" }}
+            >
               <h6 className="mb-0 p-3">{item.job}</h6>
               <small className="text-muted p-3">
                 {item.day}, {item.month}

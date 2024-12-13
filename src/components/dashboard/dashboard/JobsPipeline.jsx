@@ -1,4 +1,5 @@
 import "./JobsPipeline.css";
+import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 const JobsPipeline = () => {
   const jobPipelineData = [
     {
@@ -60,11 +61,11 @@ const JobsPipeline = () => {
   ];
 
   return (
-    <div className="bg-white  rounded-3 border-1 shadow-main h-auto ">
+    <div className="bg-white  rounded-3 border shadow-main h-auto ">
       <div className="pipeline-container">
         <h2 className="p-2 px-3 border-bottom">Jobs Pipeline</h2>
-        <table className="pipeline-table p-4 w-full">
-          <thead className="p-2 bg-white ">
+        <MDBTable responsive className="pipeline-table p-4 w-full">
+          <MDBTableHead className="p-2 bg-white ">
             <tr>
               <th className="p-3">Jobs</th>
               <th className="p-3">New</th>
@@ -73,8 +74,8 @@ const JobsPipeline = () => {
               <th className="p-3">Offered</th>
               <th className="p-3">Hired</th>
             </tr>
-          </thead>
-          <tbody>
+          </MDBTableHead>
+          <MDBTableBody>
             {jobPipelineData?.map((job, index) => (
               <tr key={index} className="m-2">
                 <td className=" p-2 px-3 bullet-div">{job.job}</td>
@@ -120,8 +121,8 @@ const JobsPipeline = () => {
                 </td>
               </tr>
             ))}
-          </tbody>
-        </table>
+          </MDBTableBody>
+        </MDBTable>
       </div>
     </div>
   );

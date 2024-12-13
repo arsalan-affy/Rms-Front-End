@@ -60,7 +60,7 @@ const NewJobs = () => {
           </div>
         </div>
       </div>
-      <div className="col-md-6 ">
+      <div className="col-md-6 mt-3 mt-md-0">
         <JobSummaryChart />
       </div>
     </div>
