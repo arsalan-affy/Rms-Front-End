@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { showToast } from "../global/showToast";
 
 const Jobs = () => {
@@ -13,11 +13,10 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
-  const getJobs = async () => { 
+  const getJobs = async () => {
     const decodedToken = jwtDecode(token);
     const id = decodedToken.claims.id;
     const role = decodedToken.claims.role;
-    console.log(id);
 
     try {
       setLoading(true);
@@ -38,13 +37,11 @@ const Jobs = () => {
         setJobs([]);
         setError(meta.message);
         showToast("success", meta.message);
-        // toast.error(meta.message);
       }
     } catch (err) {
       console.log("Error fetching jobs:", err);
       setError("Failed to fetch jobs. Please try again later.");
       showToast("error", err.response.data.message);
-      // toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
