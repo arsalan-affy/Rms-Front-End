@@ -90,7 +90,9 @@ const Calendar = () => {
             <div
               key={index}
               className={`p-2 rounded-pill border text-center ${
-                index === 8 || index === 21 ? "bg-blue-calendar text-white  " : ""
+                index === 8 || index === 21
+                  ? "bg-blue-calendar text-white  "
+                  : ""
               }`}
             >
               {index + 1}

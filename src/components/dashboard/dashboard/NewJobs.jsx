@@ -18,6 +18,14 @@ const NewJobs = () => {
       title: "Backend Developer",
       level: "Fresher",
     },
+    {
+      title: "Backend Developer",
+      level: "Fresher",
+    },
+    {
+      title: "Backend Developer",
+      level: "Fresher",
+    },
   ];
 
   return (
