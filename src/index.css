@@ -1,19 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
+  --calendar-color: #88cdf680;
   --bs-primary: #3b6abc;
   --primary-color: #3b6abc;
   --secondary-color: #444b8c;
   --text-secondary: #fec445;
-  --card-shadow: 5px 5px 4px rgba(0, 0, 0, 0.233);
+  --card-shadow: 6px 6px 6px rgba(0, 0, 0, 0.133);
 }
 
+.bullet-div {
+  clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+}
 /* utils */
 
 .text-primary-main {
   background: #3b6abc !important;
 }
 
+.bg-blue {
+  background-color: var(--bs-primary);
+}
+.bg-blue-calendar {
+  background-color: var(--calendar-color);
+}
 .border-main-secondary {
   border-bottom: 2px solid var(--text-secondary);
 }
@@ -100,9 +110,8 @@ input:-ms-autofill {
 /* dashboard */
 .dashboard-nav {
   margin: 0;
-  background: var(--secondary-color);
-  box-shadow: 4px 4px 6.9px 4px #001a78;
-  border-radius: 0 10px 10px 0;
+  background: #012a4a;
+  box-shadow: 4px 4px 6.9px 4px #012a4a99;
   width: 95px;
 }
 
@@ -335,7 +344,6 @@ thead {
 .MuiBox-root {
   padding: 0 !important;
 }
-
 
 .draggable {
   margin: 5px 0;

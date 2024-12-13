@@ -1,0 +1,25 @@
+/* .angleRight {
+  padding: 8px;
+  border-radius: 0 40px 40px 0;
+} */
+.first {
+  background-color: #c9ebff;
+}
+.second {
+  background-color: #88cdff;
+}
+
+.third {
+  background-color: #3eb5e1;
+}
+.forth {
+  background-color: #2d82b5;
+}
+.fifth {
+  background-color: #015c92;
+}
+
+.triangle {
+  border-top-right-radius: 50px solid transparent;
+  border-bottom-right-radius: 50px solid transparent;
+}
