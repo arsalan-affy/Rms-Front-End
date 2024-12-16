@@ -191,7 +191,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="vh-100 d-md-flex w-100">
-      <div className="dashboard-nav d-flex align-items-center flex-column  d-md-block me-md-3 py-md-5 d-none d-md-block  position-relative position-fixed h-100  ">
+      <div className="dashboard-nav d-flex align-items-center flex-column  py-md-5 d-none d-md-block  position-relative position-fixed h-100">
         <div
           className="logo fs-4  w-100 mb-2 text-center text-white fw-semibold fs-4"
           // onClick={() => navigate("/")}
@@ -275,7 +275,13 @@ const DashboardLayout = () => {
             </div>
           </div>
         </div>
-        <Outlet />
+        <div
+          style={{
+            background: "#EDF5FD",
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
     </div>
   );

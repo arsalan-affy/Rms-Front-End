@@ -37,6 +37,7 @@ import JobFields from "./pages/Settings/JobFields";
 import UserManagement from "./pages/Settings/UserManagement";
 import CreateUser from "./pages/Settings/CreateUser";
 import Applicants from "./components/dashboard/applicants/Applicants";
+import JobsNew from "./components/dashboard/jobs/JobsNew";
 
 // axios.defaults.baseURL = "https://app.whatarecruiter.com/api";
 axios.defaults.baseURL = "http://193.203.160.57:8083/api/";
@@ -67,7 +68,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/company" element={<Company />} />
                     <Route path="/company/create" element={<Create />} />
                     <Route
@@ -90,7 +91,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/managers" element={<Managers />} />
                     <Route path="/settings" element={<SettingsProfile />} />
@@ -142,7 +143,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/managers" element={<Managers />} />
                     <Route path="/settings" element={<SettingsProfile />} />
@@ -197,7 +198,7 @@ const App = () => {
                     <Route path="/users" element={<User />} />
                     <Route path="/candidates" element={<Candidates />} />
                     <Route path="/candidates/add" element={<AddCandidates />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
                     <Route
@@ -229,7 +230,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/users" element={<User />} />
                     <Route path="/settings" element={<SettingsProfile />} />
                     <Route path="settings/my-profile" element={<MyProfile />} />
@@ -257,7 +258,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<DashboardLayout />}>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/jobs" element={<JobsNew />} />
                     <Route path="/jobs/create-jobs" element={<CreateJob />} />
                     <Route path="/users" element={<User />} />
                     <Route path="/employee" element={<Employee />} />
