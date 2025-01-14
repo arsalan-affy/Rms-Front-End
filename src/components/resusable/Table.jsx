@@ -28,7 +28,7 @@ const Table = ({ applicants, isApplicant = false }) => {
       ]);
     } else if (location.pathname.includes("/candidates")) {
       // candidates
-      setTableHeaders(["ID", "NAME", "Email", "DATE", "JOB", "RESUME"]);
+      setTableHeaders(["ID", "NAME", "Email","Job Title","Status", "Applied Date" , "RESUME"]);
     }
   }, []);
 
@@ -90,6 +90,25 @@ const Table = ({ applicants, isApplicant = false }) => {
                     />
                   </td>
                 )}
+                {location.pathname.includes("/candidates") &&
+                  applicant &&
+                  applicants?.map((item, index) => {
+                    const date = new Date(item.createdAt);
+                    const lastDate = new Date(item.updatedAt);
+                    return (
+                      <>
+                        <td key={index}>{item.id}</td>
+                        <td key={index} className="d-flex align-items-center">
+                          {item.candidateName}
+                        </td>
+                        <td>{item.email}</td>
+                        <td>{item.jobTitle}</td>
+                        <td>{item?.status}</td>
+                        <td>{item?.appliedAt}</td>
+                      </>
+                    );
+                  })}
+
                 {location.pathname.includes("/job") &&
                   applicant &&
                   applicants?.map((item, index) => {
@@ -108,7 +127,6 @@ const Table = ({ applicants, isApplicant = false }) => {
                       </>
                     );
                   })}
-
                 {isApplicant && (
                   <td>
                     <button
