@@ -109,7 +109,6 @@ const ApplicantProfile = () => {
       const blob = await response.blob();
       const fileName = applicantData?.resumeUrl.split("/").pop();
       const file = new File([blob], fileName, { type: blob.type });
-
       setFile(file); // Sets the file to state for further processing
       console.log("File ready for upload:", file);
     } catch (error) {
@@ -431,22 +430,22 @@ export function StatusPanel({ setApplicantData, handleProgress, setStatus }) {
 export function ActionPanel() {
   return (
     <ul className="list-unstyled">
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Mark as withdrawn
       </li>
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Add to job
       </li>
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Add to community
       </li>
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Remove from this job
       </li>
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Defer
       </li>
-      <li className="cursor-pointer p-2 cursor-pointer status-list-item ">
+      <li className="cursor-pointer p-2 status-list-item ">
         Add employee badge
       </li>
       <li className="text-danger p-2 cursor-pointer status-list-item">

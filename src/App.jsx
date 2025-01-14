@@ -11,7 +11,7 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./components/dashboard/Dashboard";
 import axios from "axios";
 import DashboardLayout from "./pages/DashboardLayout";
-import Jobs from "./components/dashboard/Jobs";
+// import Jobs from "./components/dashboard/Jobs";
 import { JobProfile } from "./components/dashboard/JobProfile";
 import ApplicantProfile from "./components/dashboard/ApplicantProfile";
 import AddCandidates from "./components/candidates/AddCandidates";

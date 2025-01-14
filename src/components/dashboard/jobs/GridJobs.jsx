@@ -6,14 +6,15 @@ import { Clock, Watch } from "lucide-react";
 const GridJobs = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
+  console.log(data);
 
   // Calculate indices for pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Total pages
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Handle page change
   const handlePageChange = (pageNumber) => {
@@ -24,7 +25,7 @@ const GridJobs = ({ data }) => {
     <div className="container-fluid">
       {/* Parent container */}
       <div className="row g-4 mx-auto" /* g-4 adds spacing */>
-        {currentItems.map((item) => (
+        {currentItems?.map((item) => (
           <div className="col-12 col-lg-4 px-2">
             <div
               key={item.id}
@@ -45,9 +46,15 @@ const GridJobs = ({ data }) => {
                 }}
               >
                 <div className="fs-4 fw-semibold" style={{ color: "#0B2B82" }}>
-                  {item.title}
+                  {item.jobTitle}
                 </div>
-                <div style={{ color: "#787878" }}>{item.description}</div>
+                <div style={{ color: "#787878" }}>
+                  <h6
+                    dangerouslySetInnerHTML={{
+                      __html: item.companyDescription,
+                    }}
+                  />
+                </div>
                 <div className="d-flex gap-2 my-2">
                   {item?.tags?.map((item) => {
                     return (
@@ -77,7 +84,7 @@ const GridJobs = ({ data }) => {
                     }}
                   >
                     <div>
-                      <IoLocationOutline /> {item.location}
+                      <IoLocationOutline /> {item.jobLocation}
                     </div>
                     <button
                       className="fs-6 blue btn fw-semibold"

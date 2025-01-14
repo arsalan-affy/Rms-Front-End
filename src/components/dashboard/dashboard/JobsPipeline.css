@@ -2,6 +2,11 @@
   padding: 8px;
   border-radius: 0 40px 40px 0;
 } */
+
+.active-btn {
+  background-color: #015c92;
+  color: #fff;
+}
 .first {
   background-color: #c9ebff;
 }

@@ -9,6 +9,11 @@
   --card-shadow: 6px 6px 6px rgba(0, 0, 0, 0.133);
 }
 
+
+.not-active{
+  background: white;
+}
+/* triangle div */
 .bullet-div {
   clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
   white-space: nowrap;

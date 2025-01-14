@@ -5,7 +5,7 @@ import image from "../../assets/icons/Vector.svg";
 const DashboardHeader = ({ title, onchange }) => {
   return (
     <>
-      <div className=" bg-white p-2 d-flex align-items-center justify-content-between">
+      <div className=" bg-white p-2 d-flex align-items-center justify-content-between border-bottom">
         <div
           className="fs-4 fw-semibold "
           style={{ color: "#012169", overflowY: "hidden" }}

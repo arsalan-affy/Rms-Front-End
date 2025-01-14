@@ -79,7 +79,7 @@ const Calendar = () => {
           >
             <div
               className="d-flex overflow-hidden"
-              style={{ position: "relative" }}
+              style={{ position: "relative", borderLeft: "6px solid #015C92" }}
             >
               <div className="mb-0 p-3 fs-6">{item.job}</div>
               <small className="text-muted p-3">

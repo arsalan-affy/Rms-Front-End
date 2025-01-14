@@ -1,9 +1,10 @@
 import { Filter, Grid, List } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import DashboardHeader from "../../resusable/DashboardHeader";
 import DashboardMainContainer from "../../resusable/Dashboard-main-container";
 import Table from "../../resusable/Table";
 import GridJobs from "./GridJobs";
+import { useGetJobs } from "../../../hooks/UseGetJobs";
 
 const jobDetails = [
   {
@@ -192,6 +193,8 @@ const JobsNew = () => {
     JSON.parse(localStorage.getItem("isGrid")) || false
   );
 
+  const { jobs, error, loading } = useGetJobs();
+  console.log(jobs);
   console.log("isGrid", localStorage.getItem("isGrid"));
 
   const handleSetIsGridView = () => {
@@ -204,7 +207,7 @@ const JobsNew = () => {
   return (
     <div>
       <DashboardHeader title={"Jobs"} />
-      <DashboardMainContainer className={""}>
+      <DashboardMainContainer>
         <div className="d-flex align-items-center justify-content-between px-3">
           <div className="d-flex gap-3 align-items-center ">
             <div className="fw-medium" style={{ fontSize: "28px" }}>
@@ -223,13 +226,8 @@ const JobsNew = () => {
           <div className="btn btn-primary border-0">Create Jobs</div>
         </div>
         <div className="mt-3">
-          {isGrid ? (
-            <Table applicants={jobDetails} />
-          ) : (
-            <>
-              <GridJobs data={jobListings} />
-            </>
-          )}
+          {isGrid && <Table applicants={jobs} />}
+          {!isGrid && <GridJobs data={jobs} />}
         </div>
       </DashboardMainContainer>
     </div>

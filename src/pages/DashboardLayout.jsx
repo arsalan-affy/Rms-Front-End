@@ -276,9 +276,11 @@ const DashboardLayout = () => {
           </div>
         </div>
         <div
-          style={{
-            background: "#EDF5FD",
-          }}
+          style={
+            {
+              // background: "#EDF5FD",
+            }
+          }
         >
           <Outlet />
         </div>

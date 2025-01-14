@@ -9,47 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { showToast } from "../global/showToast";
 
 const Jobs = () => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const token = localStorage.getItem("token");
-  const getJobs = async () => {
-    const decodedToken = jwtDecode(token);
-    const id = decodedToken.claims.id;
-    const role = decodedToken.claims.role;
-
-    try {
-      setLoading(true);
-
-      const endpoint =
-        role === "ADMIN"
-          ? `/job/byParent/${id}`
-          : `/job/jobs/by-recruiter-or-creator/${id}`;
-
-      const response = await axios.get(endpoint);
-      const meta = response.data;
-      console.log(meta);
-
-      if (meta.error === "false") {
-        setJobs(meta.meta);
-        setError(null);
-      } else {
-        setJobs([]);
-        setError(meta.message);
-        showToast("success", meta.message);
-      }
-    } catch (err) {
-      console.log("Error fetching jobs:", err);
-      setError("Failed to fetch jobs. Please try again later.");
-      showToast("error", err.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getJobs();
-  }, []);
+  
   const navigate = useNavigate();
   return (
     <div className="me-md-3">
@@ -94,7 +54,7 @@ const Jobs = () => {
             <div className="col d-none d-md-block">
               <select className="form-select rounded-3">
                 <option>Hiring Manager</option>
-                <option>Option 1</option>
+                <otion>Option 1</otion>
                 <option>Option 2</option>
               </select>
             </div>

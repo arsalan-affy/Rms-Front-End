@@ -53,11 +53,8 @@ const Create = () => {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <form onSubmit={handleSubmit}>
         <Title title={"Create Company"} icon={Hotel} />
-
-        <div
-          className=" d-flex flex-grow-1 px-5 flex-column"
-          style={{ height: "100%" }}
-        >
+        <div className=" d-flex flex-grow-1 px-5 flex-column"
+          style={{ height: "100%" }}>
           <Row>
             <Col xs={12} className="mt-3">
               <Row>

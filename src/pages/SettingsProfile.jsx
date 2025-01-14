@@ -83,7 +83,7 @@ const SettingsProfile = () => {
     if (
       userData &&
       userData.claims.role &&
-      roles.includes(userData.claims.role)
+      roles.includes(userData?.claims?.role)
     ) {
       setAccessibleFields(fieldsByRole[userData.claims.role] || []);
     } else {
@@ -101,7 +101,7 @@ const SettingsProfile = () => {
       </div>
       <div className="container setting-container my-3 gap-1">
         <div className="row">
-          <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
+          <div className="col-md-4 mb-3  p-4 border rounded-2 shadow-sm">
             <img
               className="user-img"
               src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -115,7 +115,7 @@ const SettingsProfile = () => {
             </div>
           </div>
           {accessibleFields.includes("My Account") && (
-            <div className="col-md-4 mb-3 border p-4 border rounded-2 shadow-sm">
+            <div className="col-md-4 mb-3  p-4 border rounded-2 shadow-sm">
               <div className="section">
                 <h4>
                   <strong>My Account</strong>
